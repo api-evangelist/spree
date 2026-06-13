@@ -1,0 +1,85 @@
+aid: spree
+name: Spree Commerce
+description: Open-source headless e-commerce framework with a REST API for managing products, variants, orders, customers, inventory, promotions, and payment processing. Spree provides two OpenAPI 3.0-documented APIs — a Store API for customer-facing operations and an Admin API for back-office management — along with a TypeScript SDK, CLI, and Next.js storefront starter.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/spree/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - E-Commerce
+  - Headless Commerce
+  - Products
+  - Orders
+  - Inventory
+  - Payments
+  - Promotions
+  - Open Source
+  - Ruby on Rails
+apis:
+  - aid: spree:spree-store-api
+    name: Spree Store API
+    description: Customer-facing REST API for browsing products, managing carts, placing orders, and handling checkout. Documented with OpenAPI 3.0.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://spreecommerce.org/docs/api-reference/introduction
+    baseURL: https://yourdomain.com/api/v3/store
+    tags:
+      - Products
+      - Cart
+      - Checkout
+      - Orders
+      - Customers
+      - Storefront
+    properties:
+      - type: Documentation
+        url: https://spreecommerce.org/docs/api-reference/introduction
+      - type: OpenAPI
+        url: https://github.com/spree/spree/tree/main/api
+
+  - aid: spree:spree-admin-api
+    name: Spree Admin API
+    description: Back-office REST API for managing products, variants, inventory, promotions, orders, users, and store configuration. Documented with OpenAPI 3.0.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://spreecommerce.org/docs/api-reference/introduction
+    baseURL: https://yourdomain.com/api/v3/admin
+    tags:
+      - Products
+      - Variants
+      - Inventory
+      - Promotions
+      - Orders
+      - Users
+      - Administration
+    properties:
+      - type: Documentation
+        url: https://spreecommerce.org/docs/api-reference/introduction
+      - type: OpenAPI
+        url: https://github.com/spree/spree/tree/main/api
+
+common:
+  - type: Website
+    url: https://spreecommerce.org/
+  - type: Documentation
+    url: https://spreecommerce.org/docs/developer/getting-started/quickstart
+  - type: GitHubOrg
+    url: https://github.com/spree
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/spree-commerce
+  - type: Blog
+    url: https://spreecommerce.org/blog/
+  - type: Pricing
+    url: https://spreecommerce.org/enterprise/
+  - type: StatusPage
+    url: https://spreecommerce.org/
+  - type: X
+    url: https://x.com/spreecommerce
+  - type: Plans
+    url: plans/spree-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/spree-rate-limits.yml
+  - type: FinOps
+    url: finops/spree-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

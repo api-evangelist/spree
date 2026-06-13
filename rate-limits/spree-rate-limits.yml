@@ -1,0 +1,21 @@
+name: Spree Commerce Rate Limits
+description: Spree Commerce is a self-hosted open-source platform. There are no platform-imposed API rate limits from Spree itself — rate limiting is the responsibility of the operator and can be implemented via Rails middleware (e.g., rack-attack) or at the infrastructure layer (e.g., nginx, CDN).
+url: https://spreecommerce.org/docs/api-reference/introduction
+limits:
+  - type: platform
+    enforced: false
+    note: Spree does not impose default API rate limits. The platform is open-source and self-hosted; operators must configure rate limiting independently.
+  - type: recommended_operator
+    enforced: operator-defined
+    mechanisms:
+      - name: rack-attack
+        description: Ruby gem for throttling and blocking abusive requests at the Rack layer; commonly used with Spree/Rails.
+        url: https://github.com/rack/rack-attack
+      - name: nginx rate limiting
+        description: Infrastructure-level rate limiting via nginx limit_req_zone directives.
+      - name: CDN/WAF throttling
+        description: Rate limiting via CDN providers (Cloudflare, AWS CloudFront, etc.) in front of the Spree application.
+notes:
+  - Spree 5.4 introduced a rewritten REST API claimed to be 10x faster than API v2, reducing the likelihood of needing aggressive rate limits for typical workloads.
+  - The Community Edition gives operators full control over their infrastructure and rate-limiting strategy.
+  - Enterprise Edition customers may receive guidance on rate-limiting best practices as part of dedicated engineering support.

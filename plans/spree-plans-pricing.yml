@@ -1,0 +1,51 @@
+name: Spree Commerce Plans and Pricing
+description: Spree Commerce offers two editions — a free open-source Community Edition and a commercially licensed Enterprise Edition with additional modules and support services.
+url: https://spreecommerce.org/enterprise/
+plans:
+  - name: Community Edition
+    description: Free and open-source edition for self-hosted deployments targeting small or hobby projects and direct-to-consumer stores.
+    license: BSD-3 Open Source
+    price:
+      amount: 0
+      currency: USD
+      period: free
+    features:
+      - Store API (REST, OpenAPI 3.0)
+      - Admin API (REST, OpenAPI 3.0)
+      - TypeScript SDK
+      - CLI tooling
+      - Next.js storefront starter
+      - Multi-region support
+      - Multi-currency support
+      - Multi-language support
+      - Docker deployment
+      - Self-hosted
+      - Source code modification
+      - Basic security and compliance features
+    hosting:
+      - Self-hosted
+    target: Small or hobby projects; direct-to-consumer
+
+  - name: Enterprise Edition
+    description: Commercially licensed edition for medium to large projects requiring B2B, multi-tenant, or multi-vendor marketplace capabilities with enterprise support.
+    license: Commercial Enterprise License Agreement
+    price:
+      amount: custom
+      currency: USD
+      period: annual
+      note: Custom pricing; typically five to six figures in the first year
+    features:
+      - Everything in Community Edition
+      - Multi-vendor marketplace module
+      - B2B features (price lists, approval workflows)
+      - Multi-tenant white-label SaaS capabilities
+      - Dedicated success manager
+      - SLA-backed response times by severity
+      - Priority fixes and dedicated engineering access
+      - Long-term support releases
+      - 24/7 managed hosting monitoring
+      - Advanced compliance support
+    hosting:
+      - Self-hosted
+      - Private Cloud (managed)
+    target: Medium to large projects; B2B, multi-tenant, multi-vendor

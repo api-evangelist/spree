@@ -1,0 +1,32 @@
+name: Spree Commerce FinOps
+description: Financial operations guidance for teams running Spree Commerce. Because Spree is open-source and self-hosted there are no per-call API fees or SaaS subscription costs — cost drivers are infrastructure, development, and optional enterprise licensing.
+url: https://spreecommerce.org/enterprise/
+cost_model: self-hosted-open-source
+platform_fees: none
+transaction_fees: none
+cost_drivers:
+  - category: Infrastructure
+    description: Hosting costs for the Spree Rails application, database (PostgreSQL), Redis cache, object storage, and CDN. Scales with traffic and catalog size.
+    examples:
+      - Small store on a single VPS (e.g., DigitalOcean/Hetzner): $20–$100/month
+      - Mid-size store with managed database and CDN: $200–$1,000/month
+      - Large multi-tenant/marketplace: $2,000+/month depending on architecture
+
+  - category: Development
+    description: Engineering time for initial setup, customization, and ongoing maintenance. The largest variable cost for most teams.
+    notes: Spree CLI and Next.js starter kit reduce initial scaffolding time. OpenAPI specs support code generation to reduce integration cost.
+
+  - category: Enterprise License
+    description: For teams requiring multi-vendor marketplace, B2B, or multi-tenant modules plus enterprise support. Custom pricing, typically five to six figures annually.
+    url: https://spreecommerce.org/enterprise/
+
+  - category: Third-party Integrations
+    description: Payment gateways (Stripe, Adyen, PayPal), shipping carriers, tax services, and other integrations may incur their own transaction or subscription fees.
+
+optimization_tips:
+  - Use Docker and container orchestration (Kubernetes) to right-size compute resources.
+  - Leverage Spree's built-in caching and the new faster API v3 (Spree 5.4+) to reduce server load.
+  - Use a CDN in front of the storefront and API to offload static assets and reduce origin traffic costs.
+  - Monitor database query performance; optimizing N+1 queries in product/order listings significantly reduces infrastructure spend at scale.
+  - Community Edition is zero licensing cost — evaluate Enterprise Edition only when B2B, multi-tenant, or marketplace modules provide clear ROI vs. building custom.
+  - Use the free Spree sandbox (demo.spreecommerce.org) for prototyping before committing to infrastructure spend.
