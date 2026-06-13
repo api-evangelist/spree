@@ -1,0 +1,1555 @@
+{
+  "title": "Spree Admin API Examples",
+  "description": "Example requests and responses for the Spree Admin API",
+  "schema_examples": {
+    "Product": {
+      "id": "string",
+      "name": "string",
+      "slug": "string",
+      "meta_title": "string",
+      "meta_description": "string",
+      "meta_keywords": "string",
+      "variant_count": 0.0,
+      "available_on": "string",
+      "purchasable": true,
+      "in_stock": true,
+      "backorderable": true,
+      "available": true,
+      "description": "string",
+      "description_html": "string",
+      "default_variant_id": "string",
+      "thumbnail_url": "string",
+      "tags": [
+        "string"
+      ],
+      "price": {},
+      "original_price": {},
+      "primary_media": {
+        "id": "string",
+        "product_id": "string",
+        "variant_ids": [
+          {}
+        ],
+        "position": 0.0,
+        "alt": "string",
+        "media_type": "string",
+        "focal_point_x": 0.0,
+        "focal_point_y": 0.0,
+        "external_video_url": "string",
+        "original_url": "string",
+        "mini_url": "string",
+        "small_url": "string",
+        "medium_url": "string",
+        "large_url": "string",
+        "xlarge_url": "string",
+        "og_image_url": "string",
+        "created_at": "string",
+        "updated_at": "string",
+        "viewable_id": "string",
+        "download_url": "string",
+        "metadata": {},
+        "viewable_type": "string"
+      },
+      "media": [
+        {
+          "id": {},
+          "product_id": {},
+          "variant_ids": {},
+          "position": {},
+          "alt": {},
+          "media_type": {},
+          "focal_point_x": {},
+          "focal_point_y": {},
+          "external_video_url": {},
+          "original_url": {},
+          "mini_url": {},
+          "small_url": {},
+          "medium_url": {},
+          "large_url": {},
+          "xlarge_url": {},
+          "og_image_url": {},
+          "created_at": {},
+          "updated_at": {},
+          "viewable_id": {},
+          "download_url": {},
+          "metadata": {},
+          "viewable_type": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": {},
+          "product_id": {},
+          "sku": {},
+          "options_text": {},
+          "track_inventory": {},
+          "media_count": {},
+          "thumbnail_url": {},
+          "purchasable": {},
+          "in_stock": {},
+          "backorderable": {},
+          "weight": {},
+          "height": {},
+          "width": {},
+          "depth": {},
+          "price": {},
+          "original_price": {},
+          "primary_media": {},
+          "media": {},
+          "option_values": {},
+          "custom_fields": {},
+          "prior_price": {},
+          "metadata": {},
+          "position": {},
+          "cost_price": {},
+          "cost_currency": {},
+          "barcode": {},
+          "weight_unit": {},
+          "dimensions_unit": {},
+          "deleted_at": {},
+          "created_at": {},
+          "updated_at": {},
+          "tax_category_id": {},
+          "available_stock": {},
+          "reserved_quantity": {},
+          "total_on_hand": {},
+          "product_name": {},
+          "prices": {},
+          "stock_items": {}
+        }
+      ],
+      "default_variant": {
+        "id": "string",
+        "product_id": "string",
+        "sku": "string",
+        "options_text": "string",
+        "track_inventory": true,
+        "media_count": 0.0,
+        "thumbnail_url": "string",
+        "purchasable": true,
+        "in_stock": true,
+        "backorderable": true,
+        "weight": 0.0,
+        "height": 0.0,
+        "width": 0.0,
+        "depth": 0.0,
+        "price": {},
+        "original_price": {},
+        "primary_media": {},
+        "media": [
+          {}
+        ],
+        "option_values": [
+          {}
+        ],
+        "custom_fields": [
+          {}
+        ],
+        "prior_price": {},
+        "metadata": {},
+        "position": 0.0,
+        "cost_price": "string",
+        "cost_currency": "string",
+        "barcode": "string",
+        "weight_unit": "string",
+        "dimensions_unit": "string",
+        "deleted_at": "string",
+        "created_at": "string",
+        "updated_at": "string",
+        "tax_category_id": "string",
+        "available_stock": 0.0,
+        "reserved_quantity": 0.0,
+        "total_on_hand": 0.0,
+        "product_name": "string",
+        "prices": [
+          {}
+        ],
+        "stock_items": [
+          {}
+        ]
+      },
+      "option_types": [
+        {
+          "id": {},
+          "name": {},
+          "label": {},
+          "position": {},
+          "kind": {},
+          "metadata": {},
+          "filterable": {},
+          "created_at": {},
+          "updated_at": {},
+          "option_values": {}
+        }
+      ],
+      "option_values": [
+        {
+          "id": {},
+          "option_type_id": {},
+          "name": {},
+          "label": {},
+          "position": {},
+          "color_code": {},
+          "option_type_name": {},
+          "option_type_label": {},
+          "image_url": {},
+          "metadata": {},
+          "created_at": {},
+          "updated_at": {},
+          "option_type": {}
+        }
+      ],
+      "categories": [
+        {
+          "id": {},
+          "name": {},
+          "permalink": {},
+          "position": {},
+          "depth": {},
+          "meta_title": {},
+          "meta_description": {},
+          "meta_keywords": {},
+          "children_count": {},
+          "parent_id": {},
+          "description": {},
+          "description_html": {},
+          "image_url": {},
+          "square_image_url": {},
+          "is_root": {},
+          "is_child": {},
+          "is_leaf": {},
+          "parent": {},
+          "children": {},
+          "ancestors": {},
+          "custom_fields": {},
+          "metadata": {},
+          "pretty_name": {},
+          "lft": {},
+          "rgt": {},
+          "created_at": {},
+          "updated_at": {}
+        }
+      ],
+      "custom_fields": [
+        {
+          "id": {},
+          "label": {},
+          "type": {},
+          "field_type": {},
+          "key": {},
+          "value": {},
+          "created_at": {},
+          "updated_at": {},
+          "storefront_visible": {},
+          "custom_field_definition_id": {}
+        }
+      ],
+      "prior_price": {},
+      "status": "string",
+      "metadata": {},
+      "deleted_at": "string",
+      "created_at": "string",
+      "updated_at": "string",
+      "tax_category_id": "string",
+      "product_publications": [
+        {
+          "id": {},
+          "published_at": {},
+          "unpublished_at": {},
+          "product_id": {},
+          "channel_id": {},
+          "created_at": {},
+          "updated_at": {}
+        }
+      ],
+      "channels": [
+        {
+          "id": {},
+          "name": {},
+          "code": {},
+          "active": {},
+          "default": {},
+          "preferred_order_routing_strategy": {},
+          "created_at": {},
+          "updated_at": {}
+        }
+      ]
+    },
+    "Order": {
+      "id": "string",
+      "market_id": "string",
+      "channel_id": "string",
+      "number": "string",
+      "email": "string",
+      "customer_note": "string",
+      "currency": "string",
+      "locale": "string",
+      "total_quantity": 0.0,
+      "item_total": "string",
+      "display_item_total": "string",
+      "adjustment_total": "string",
+      "display_adjustment_total": "string",
+      "discount_total": "string",
+      "display_discount_total": "string",
+      "tax_total": "string",
+      "display_tax_total": "string",
+      "included_tax_total": "string",
+      "display_included_tax_total": "string",
+      "additional_tax_total": "string",
+      "display_additional_tax_total": "string",
+      "total": "string",
+      "display_total": "string",
+      "gift_card_total": "string",
+      "display_gift_card_total": "string",
+      "amount_due": "string",
+      "display_amount_due": "string",
+      "delivery_total": "string",
+      "display_delivery_total": "string",
+      "fulfillment_status": "string",
+      "payment_status": "string",
+      "completed_at": "string",
+      "store_credit_total": "string",
+      "display_store_credit_total": "string",
+      "covered_by_store_credit": true,
+      "discounts": [
+        {
+          "id": {},
+          "promotion_id": {},
+          "name": {},
+          "description": {},
+          "code": {},
+          "amount": {},
+          "display_amount": {},
+          "created_at": {},
+          "updated_at": {}
+        }
+      ],
+      "items": [
+        {
+          "id": {},
+          "variant_id": {},
+          "quantity": {},
+          "currency": {},
+          "name": {},
+          "slug": {},
+          "options_text": {},
+          "price": {},
+          "display_price": {},
+          "total": {},
+          "display_total": {},
+          "adjustment_total": {},
+          "display_adjustment_total": {},
+          "additional_tax_total": {},
+          "display_additional_tax_total": {},
+          "included_tax_total": {},
+          "display_included_tax_total": {},
+          "discount_total": {},
+          "display_discount_total": {},
+          "pre_tax_amount": {},
+          "display_pre_tax_amount": {},
+          "discounted_amount": {},
+          "display_discounted_amount": {},
+          "display_compare_at_amount": {},
+          "compare_at_amount": {},
+          "thumbnail_url": {},
+          "option_values": {},
+          "digital_links": {},
+          "metadata": {},
+          "created_at": {},
+          "updated_at": {},
+          "cost_price": {},
+          "tax_category_id": {},
+          "variant": {},
+          "tax_category": {},
+          "adjustments": {}
+        }
+      ],
+      "fulfillments": [
+        {
+          "id": {},
+          "number": {},
+          "tracking": {},
+          "tracking_url": {},
+          "cost": {},
+          "display_cost": {},
+          "total": {},
+          "display_total": {},
+          "discount_total": {},
+          "display_discount_total": {},
+          "additional_tax_total": {},
+          "display_additional_tax_total": {},
+          "included_tax_total": {},
+          "display_included_tax_total": {},
+          "tax_total": {},
+          "display_tax_total": {},
+          "status": {},
+          "fulfillment_type": {},
+          "fulfilled_at": {},
+          "items": {},
+          "delivery_method": {},
+          "stock_location": {},
+          "delivery_rates": {},
+          "metadata": {},
+          "adjustment_total": {},
+          "pre_tax_amount": {},
+          "created_at": {},
+          "updated_at": {},
+          "order_id": {},
+          "stock_location_id": {},
+          "order": {},
+          "adjustments": {}
+        }
+      ],
+      "payments": [
+        {
+          "id": {},
+          "payment_method_id": {},
+          "response_code": {},
+          "number": {},
+          "amount": {},
+          "display_amount": {},
+          "status": {},
+          "source_type": {},
+          "source_id": {},
+          "source": {},
+          "payment_method": {},
+          "metadata": {},
+          "avs_response": {},
+          "cvv_response_code": {},
+          "cvv_response_message": {},
+          "created_at": {},
+          "updated_at": {},
+          "captured_amount": {},
+          "order_id": {},
+          "order": {},
+          "refunds": {}
+        }
+      ],
+      "billing_address": {},
+      "shipping_address": {},
+      "gift_card": {},
+      "market": {},
+      "status": "string",
+      "last_ip_address": "string",
+      "considered_risky": true,
+      "confirmation_delivered": true,
+      "store_owner_notification_delivered": true,
+      "payment_total": "string",
+      "display_payment_total": "string",
+      "metadata": {},
+      "canceled_at": "string",
+      "approved_at": "string",
+      "created_at": "string",
+      "updated_at": "string",
+      "preferred_stock_location_id": "string",
+      "tags": [
+        "string"
+      ],
+      "internal_note": "string",
+      "approver_id": "string",
+      "canceler_id": "string",
+      "created_by_id": "string",
+      "customer_id": "string",
+      "channel": {
+        "id": "string",
+        "name": "string",
+        "code": "string",
+        "active": true,
+        "default": true,
+        "preferred_order_routing_strategy": "string",
+        "created_at": "string",
+        "updated_at": "string"
+      },
+      "preferred_stock_location": {
+        "id": "string",
+        "state_abbr": "string",
+        "name": "string",
+        "address1": "string",
+        "city": "string",
+        "zipcode": "string",
+        "country_iso": "string",
+        "country_name": "string",
+        "state_text": "string",
+        "admin_name": "string",
+        "address2": "string",
+        "state_name": "string",
+        "phone": "string",
+        "company": "string",
+        "active": true,
+        "default": true,
+        "backorderable_default": true,
+        "propagate_all_variants": true,
+        "kind": "string",
+        "pickup_enabled": true,
+        "pickup_stock_policy": "string",
+        "pickup_ready_in_minutes": 0.0,
+        "pickup_instructions": "string",
+        "created_at": "string",
+        "updated_at": "string"
+      },
+      "payment_methods": [
+        {
+          "id": {},
+          "name": {},
+          "description": {},
+          "type": {},
+          "session_required": {},
+          "source_required": {},
+          "metadata": {},
+          "active": {},
+          "auto_capture": {},
+          "storefront_visible": {},
+          "position": {},
+          "created_at": {},
+          "updated_at": {},
+          "preferences": {},
+          "preference_schema": {}
+        }
+      ],
+      "customer": {
+        "id": "string",
+        "email": "string",
+        "first_name": "string",
+        "last_name": "string",
+        "phone": "string",
+        "accepts_email_marketing": true,
+        "full_name": "string",
+        "available_store_credit_total": "string",
+        "display_available_store_credit_total": "string",
+        "addresses": [
+          {}
+        ],
+        "default_billing_address": {},
+        "default_shipping_address": {},
+        "login": "string",
+        "metadata": {},
+        "last_sign_in_at": "string",
+        "current_sign_in_at": "string",
+        "created_at": "string",
+        "updated_at": "string",
+        "sign_in_count": 0.0,
+        "failed_attempts": 0.0,
+        "last_sign_in_ip": "string",
+        "current_sign_in_ip": "string",
+        "tags": [
+          {}
+        ],
+        "internal_note_html": "string",
+        "default_billing_address_id": "string",
+        "default_shipping_address_id": "string",
+        "orders_count": 0.0,
+        "total_spent": "string",
+        "display_total_spent": "string",
+        "last_order_completed_at": "string",
+        "orders": [
+          {}
+        ],
+        "store_credits": [
+          {}
+        ],
+        "customer_groups": [
+          {}
+        ]
+      },
+      "approver": {
+        "id": "string",
+        "email": "string",
+        "first_name": "string",
+        "last_name": "string",
+        "phone": "string",
+        "accepts_email_marketing": true,
+        "full_name": "string",
+        "available_store_credit_total": "string",
+        "display_available_store_credit_total": "string",
+        "addresses": [
+          {}
+        ],
+        "default_billing_address": {},
+        "default_shipping_address": {},
+        "login": "string",
+        "metadata": {},
+        "last_sign_in_at": "string",
+        "current_sign_in_at": "string",
+        "created_at": "string",
+        "updated_at": "string",
+        "sign_in_count": 0.0,
+        "failed_attempts": 0.0,
+        "last_sign_in_ip": "string",
+        "current_sign_in_ip": "string",
+        "tags": [
+          {}
+        ],
+        "internal_note_html": "string",
+        "default_billing_address_id": "string",
+        "default_shipping_address_id": "string",
+        "orders_count": 0.0,
+        "total_spent": "string",
+        "display_total_spent": "string",
+        "last_order_completed_at": "string",
+        "orders": [
+          {}
+        ],
+        "store_credits": [
+          {}
+        ],
+        "customer_groups": [
+          {}
+        ]
+      },
+      "canceler": {
+        "id": "string",
+        "email": "string",
+        "first_name": "string",
+        "last_name": "string",
+        "phone": "string",
+        "accepts_email_marketing": true,
+        "full_name": "string",
+        "available_store_credit_total": "string",
+        "display_available_store_credit_total": "string",
+        "addresses": [
+          {}
+        ],
+        "default_billing_address": {},
+        "default_shipping_address": {},
+        "login": "string",
+        "metadata": {},
+        "last_sign_in_at": "string",
+        "current_sign_in_at": "string",
+        "created_at": "string",
+        "updated_at": "string",
+        "sign_in_count": 0.0,
+        "failed_attempts": 0.0,
+        "last_sign_in_ip": "string",
+        "current_sign_in_ip": "string",
+        "tags": [
+          {}
+        ],
+        "internal_note_html": "string",
+        "default_billing_address_id": "string",
+        "default_shipping_address_id": "string",
+        "orders_count": 0.0,
+        "total_spent": "string",
+        "display_total_spent": "string",
+        "last_order_completed_at": "string",
+        "orders": [
+          {}
+        ],
+        "store_credits": [
+          {}
+        ],
+        "customer_groups": [
+          {}
+        ]
+      },
+      "created_by": {
+        "id": "string",
+        "email": "string",
+        "first_name": "string",
+        "last_name": "string",
+        "phone": "string",
+        "accepts_email_marketing": true,
+        "full_name": "string",
+        "available_store_credit_total": "string",
+        "display_available_store_credit_total": "string",
+        "addresses": [
+          {}
+        ],
+        "default_billing_address": {},
+        "default_shipping_address": {},
+        "login": "string",
+        "metadata": {},
+        "last_sign_in_at": "string",
+        "current_sign_in_at": "string",
+        "created_at": "string",
+        "updated_at": "string",
+        "sign_in_count": 0.0,
+        "failed_attempts": 0.0,
+        "last_sign_in_ip": "string",
+        "current_sign_in_ip": "string",
+        "tags": [
+          {}
+        ],
+        "internal_note_html": "string",
+        "default_billing_address_id": "string",
+        "default_shipping_address_id": "string",
+        "orders_count": 0.0,
+        "total_spent": "string",
+        "display_total_spent": "string",
+        "last_order_completed_at": "string",
+        "orders": [
+          {}
+        ],
+        "store_credits": [
+          {}
+        ],
+        "customer_groups": [
+          {}
+        ]
+      },
+      "adjustments": [
+        {
+          "id": {},
+          "label": {},
+          "display_amount": {},
+          "included": {},
+          "created_at": {},
+          "updated_at": {},
+          "amount": {},
+          "order_id": {}
+        }
+      ],
+      "return_authorizations": [
+        {
+          "id": {},
+          "number": {},
+          "status": {},
+          "order_id": {},
+          "stock_location_id": {},
+          "return_authorization_reason_id": {},
+          "created_at": {},
+          "updated_at": {},
+          "order": {},
+          "stock_location": {}
+        }
+      ],
+      "reimbursements": [
+        {
+          "id": {},
+          "number": {},
+          "reimbursement_status": {},
+          "total": {},
+          "order_id": {},
+          "customer_return_id": {},
+          "created_at": {},
+          "updated_at": {},
+          "order": {}
+        }
+      ]
+    },
+    "AdminUser": {
+      "id": "string",
+      "email": "string",
+      "first_name": "string",
+      "last_name": "string",
+      "full_name": "string",
+      "created_at": "string",
+      "updated_at": "string",
+      "roles": [
+        {
+          "id": {},
+          "name": {}
+        }
+      ]
+    },
+    "Variant": {
+      "id": "string",
+      "product_id": "string",
+      "sku": "string",
+      "options_text": "string",
+      "track_inventory": true,
+      "media_count": 0.0,
+      "thumbnail_url": "string",
+      "purchasable": true,
+      "in_stock": true,
+      "backorderable": true,
+      "weight": 0.0,
+      "height": 0.0,
+      "width": 0.0,
+      "depth": 0.0,
+      "price": {
+        "id": "string",
+        "amount": "string",
+        "amount_in_cents": 0.0,
+        "compare_at_amount": "string",
+        "compare_at_amount_in_cents": 0.0,
+        "currency": "string",
+        "display_amount": "string",
+        "display_compare_at_amount": "string",
+        "price_list_id": "string",
+        "variant_id": "string",
+        "created_at": "string",
+        "updated_at": "string",
+        "variant": {}
+      },
+      "original_price": {},
+      "primary_media": {
+        "id": "string",
+        "product_id": "string",
+        "variant_ids": [
+          {}
+        ],
+        "position": 0.0,
+        "alt": "string",
+        "media_type": "string",
+        "focal_point_x": 0.0,
+        "focal_point_y": 0.0,
+        "external_video_url": "string",
+        "original_url": "string",
+        "mini_url": "string",
+        "small_url": "string",
+        "medium_url": "string",
+        "large_url": "string",
+        "xlarge_url": "string",
+        "og_image_url": "string",
+        "created_at": "string",
+        "updated_at": "string",
+        "viewable_id": "string",
+        "download_url": "string",
+        "metadata": {},
+        "viewable_type": "string"
+      },
+      "media": [
+        {
+          "id": {},
+          "product_id": {},
+          "variant_ids": {},
+          "position": {},
+          "alt": {},
+          "media_type": {},
+          "focal_point_x": {},
+          "focal_point_y": {},
+          "external_video_url": {},
+          "original_url": {},
+          "mini_url": {},
+          "small_url": {},
+          "medium_url": {},
+          "large_url": {},
+          "xlarge_url": {},
+          "og_image_url": {},
+          "created_at": {},
+          "updated_at": {},
+          "viewable_id": {},
+          "download_url": {},
+          "metadata": {},
+          "viewable_type": {}
+        }
+      ],
+      "option_values": [
+        {
+          "id": {},
+          "option_type_id": {},
+          "name": {},
+          "label": {},
+          "position": {},
+          "color_code": {},
+          "option_type_name": {},
+          "option_type_label": {},
+          "image_url": {},
+          "metadata": {},
+          "created_at": {},
+          "updated_at": {},
+          "option_type": {}
+        }
+      ],
+      "custom_fields": [
+        {
+          "id": {},
+          "label": {},
+          "type": {},
+          "field_type": {},
+          "key": {},
+          "value": {},
+          "created_at": {},
+          "updated_at": {},
+          "storefront_visible": {},
+          "custom_field_definition_id": {}
+        }
+      ],
+      "prior_price": {},
+      "metadata": {},
+      "position": 0.0,
+      "cost_price": "string",
+      "cost_currency": "string",
+      "barcode": "string",
+      "weight_unit": "string",
+      "dimensions_unit": "string",
+      "deleted_at": "string",
+      "created_at": "string",
+      "updated_at": "string",
+      "tax_category_id": "string",
+      "available_stock": 0.0,
+      "reserved_quantity": 0.0,
+      "total_on_hand": 0.0,
+      "product_name": "string",
+      "prices": [
+        {
+          "id": {},
+          "amount": {},
+          "amount_in_cents": {},
+          "compare_at_amount": {},
+          "compare_at_amount_in_cents": {},
+          "currency": {},
+          "display_amount": {},
+          "display_compare_at_amount": {},
+          "price_list_id": {},
+          "variant_id": {},
+          "created_at": {},
+          "updated_at": {},
+          "variant": {}
+        }
+      ],
+      "stock_items": [
+        {
+          "id": {},
+          "count_on_hand": {},
+          "backorderable": {},
+          "stock_location_id": {},
+          "variant_id": {},
+          "metadata": {},
+          "created_at": {},
+          "updated_at": {},
+          "allocated_count": {},
+          "available_count": {},
+          "stock_location": {},
+          "variant": {}
+        }
+      ]
+    },
+    "Promotion": {
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "code": "string",
+      "starts_at": "string",
+      "expires_at": "string",
+      "usage_limit": 0.0,
+      "match_policy": "string",
+      "path": "string",
+      "kind": "string",
+      "multi_codes": true,
+      "number_of_codes": 0.0,
+      "code_prefix": "string",
+      "promotion_category_id": "string",
+      "metadata": {},
+      "created_at": "string",
+      "updated_at": "string",
+      "action_ids": [
+        "string"
+      ],
+      "rule_ids": [
+        "string"
+      ]
+    },
+    "StockItem": {
+      "id": "string",
+      "count_on_hand": 0.0,
+      "backorderable": true,
+      "stock_location_id": "string",
+      "variant_id": "string",
+      "metadata": {},
+      "created_at": "string",
+      "updated_at": "string",
+      "allocated_count": 0.0,
+      "available_count": 0.0,
+      "stock_location": {
+        "id": "string",
+        "state_abbr": "string",
+        "name": "string",
+        "address1": "string",
+        "city": "string",
+        "zipcode": "string",
+        "country_iso": "string",
+        "country_name": "string",
+        "state_text": "string",
+        "admin_name": "string",
+        "address2": "string",
+        "state_name": "string",
+        "phone": "string",
+        "company": "string",
+        "active": true,
+        "default": true,
+        "backorderable_default": true,
+        "propagate_all_variants": true,
+        "kind": "string",
+        "pickup_enabled": true,
+        "pickup_stock_policy": "string",
+        "pickup_ready_in_minutes": 0.0,
+        "pickup_instructions": "string",
+        "created_at": "string",
+        "updated_at": "string"
+      },
+      "variant": {
+        "id": "string",
+        "product_id": "string",
+        "sku": "string",
+        "options_text": "string",
+        "track_inventory": true,
+        "media_count": 0.0,
+        "thumbnail_url": "string",
+        "purchasable": true,
+        "in_stock": true,
+        "backorderable": true,
+        "weight": 0.0,
+        "height": 0.0,
+        "width": 0.0,
+        "depth": 0.0,
+        "price": {},
+        "original_price": {},
+        "primary_media": {},
+        "media": [
+          {}
+        ],
+        "option_values": [
+          {}
+        ],
+        "custom_fields": [
+          {}
+        ],
+        "prior_price": {},
+        "metadata": {},
+        "position": 0.0,
+        "cost_price": "string",
+        "cost_currency": "string",
+        "barcode": "string",
+        "weight_unit": "string",
+        "dimensions_unit": "string",
+        "deleted_at": "string",
+        "created_at": "string",
+        "updated_at": "string",
+        "tax_category_id": "string",
+        "available_stock": 0.0,
+        "reserved_quantity": 0.0,
+        "total_on_hand": 0.0,
+        "product_name": "string",
+        "prices": [
+          {}
+        ],
+        "stock_items": [
+          {}
+        ]
+      }
+    },
+    "ApiKey": {
+      "id": "string",
+      "name": "string",
+      "key_type": "string",
+      "token_prefix": "string",
+      "scopes": [
+        "string"
+      ],
+      "created_at": "string",
+      "updated_at": "string",
+      "revoked_at": "string",
+      "last_used_at": "string",
+      "plaintext_token": "string",
+      "created_by_email": "string"
+    }
+  },
+  "response_examples": {
+    "post__api_v3_admin_auth_login_200": {
+      "operationId": "post__api_v3_admin_auth_login",
+      "method": "POST",
+      "path": "/api/v3/admin/auth/login",
+      "status": "200",
+      "example": {
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3R5cGUiOiJhZG1pbiIsImp0aSI6ImUyMzYxNTc5LWMxZDMtNDc0Yi1hM2E1LTcwNWMzYTZmMGUxYSIsImlzcyI6InNwcmVlIiwiYXVkIjoiYWRtaW5fYXBpIiwiZXhwIjoxNzgxMjg1MzI3fQ.5GaxxoaCeEEpGgum01ZV0z56ZpHDWaFSyX_KvEob3ws",
+        "user": {
+          "id": "admin_UkLWZg9DAJ",
+          "email": "admin@example.com",
+          "first_name": "Lisandra",
+          "last_name": "Dare",
+          "full_name": "Lisandra Dare",
+          "created_at": "2026-06-12T17:23:47.304Z",
+          "updated_at": "2026-06-12T17:23:47.304Z",
+          "roles": [
+            {
+              "id": "role_UkLWZg9DAJ",
+              "name": "admin"
+            }
+          ]
+        }
+      }
+    },
+    "post__api_v3_admin_auth_login_401": {
+      "operationId": "post__api_v3_admin_auth_login",
+      "method": "POST",
+      "path": "/api/v3/admin/auth/login",
+      "status": "401",
+      "example": {
+        "error": {
+          "code": "authentication_failed",
+          "message": "Invalid email or password"
+        }
+      }
+    },
+    "post__api_v3_admin_auth_refresh_200": {
+      "operationId": "post__api_v3_admin_auth_refresh",
+      "method": "POST",
+      "path": "/api/v3/admin/auth/refresh",
+      "status": "200",
+      "example": {
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3R5cGUiOiJhZG1pbiIsImp0aSI6IjYxNTkwZmYyLWEwMTctNDUyZi05ZjQ3LTBhM2JhYWZlYWQ0YiIsImlzcyI6InNwcmVlIiwiYXVkIjoiYWRtaW5fYXBpIiwiZXhwIjoxNzgxMjg1MzI4fQ.l53NCGqm7_mD8L54Wq7AB86HGHqolGJEplh7Dg_QqJw",
+        "user": {
+          "id": "admin_UkLWZg9DAJ",
+          "email": "admin@example.com",
+          "first_name": "Lavonda",
+          "last_name": "Bogan",
+          "full_name": "Lavonda Bogan",
+          "created_at": "2026-06-12T17:23:48.682Z",
+          "updated_at": "2026-06-12T17:23:48.682Z",
+          "roles": [
+            {
+              "id": "role_UkLWZg9DAJ",
+              "name": "admin"
+            }
+          ]
+        }
+      }
+    },
+    "post__api_v3_admin_auth_refresh_401": {
+      "operationId": "post__api_v3_admin_auth_refresh",
+      "method": "POST",
+      "path": "/api/v3/admin/auth/refresh",
+      "status": "401",
+      "example": {
+        "error": {
+          "code": "invalid_refresh_token",
+          "message": "Refresh token cookie missing"
+        }
+      }
+    },
+    "get__api_v3_admin_me_200": {
+      "operationId": "get__api_v3_admin_me",
+      "method": "GET",
+      "path": "/api/v3/admin/me",
+      "status": "200",
+      "example": {
+        "user": {
+          "id": "admin_UkLWZg9DAJ",
+          "email": "loralee@bodeolson.name",
+          "first_name": "Thelma",
+          "last_name": "Cronin",
+          "full_name": "Thelma Cronin",
+          "created_at": "2026-06-12T17:24:22.538Z",
+          "updated_at": "2026-06-12T17:24:22.538Z",
+          "roles": [
+            {
+              "id": "role_UkLWZg9DAJ",
+              "name": "admin"
+            }
+          ]
+        },
+        "permissions": [
+          {
+            "allow": true,
+            "actions": [
+              "manage"
+            ],
+            "subjects": [
+              "all"
+            ],
+            "has_conditions": false
+          },
+          {
+            "allow": false,
+            "actions": [
+              "cancel"
+            ],
+            "subjects": [
+              "Spree::Order"
+            ],
+            "has_conditions": false
+          },
+          {
+            "allow": true,
+            "actions": [
+              "cancel"
+            ],
+            "subjects": [
+              "Spree::Order"
+            ],
+            "has_conditions": true
+          },
+          {
+            "allow": false,
+            "actions": [
+              "destroy"
+            ],
+            "subjects": [
+              "Spree::Order"
+            ],
+            "has_conditions": false
+          },
+          {
+            "allow": true,
+            "actions": [
+              "destroy"
+            ],
+            "subjects": [
+              "Spree::Order"
+            ],
+            "has_conditions": true
+          },
+          {
+            "allow": false,
+            "actions": [
+              "edit",
+              "update"
+            ],
+            "subjects": [
+              "Spree::RefundReason"
+            ],
+            "has_conditions": true
+          },
+          {
+            "allow": false,
+            "actions": [
+              "edit",
+              "update"
+            ],
+            "subjects": [
+              "Spree::ReimbursementType"
+            ],
+            "has_conditions": true
+          },
+          {
+            "allow": false,
+            "actions": [
+              "update",
+              "destroy"
+            ],
+            "subjects": [
+              "Spree::Role"
+            ],
+            "has_conditions": true
+          }
+        ]
+      }
+    },
+    "get__api_v3_admin_me_401": {
+      "operationId": "get__api_v3_admin_me",
+      "method": "GET",
+      "path": "/api/v3/admin/me",
+      "status": "401",
+      "example": {
+        "error": {
+          "code": "authentication_required",
+          "message": "Authentication required"
+        }
+      }
+    },
+    "get__api_v3_admin_allowed_origins_200": {
+      "operationId": "get__api_v3_admin_allowed_origins",
+      "method": "GET",
+      "path": "/api/v3/admin/allowed_origins",
+      "status": "200",
+      "example": {
+        "data": [
+          {
+            "id": "ao_UkLWZg9DAJ",
+            "origin": "https://shop.example.com",
+            "created_at": "2026-06-12T17:23:42.410Z",
+            "updated_at": "2026-06-12T17:23:42.410Z"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "count": 1,
+          "pages": 1,
+          "from": 1,
+          "to": 1,
+          "in": 1,
+          "previous": null,
+          "next": null
+        }
+      }
+    },
+    "get__api_v3_admin_allowed_origins_401": {
+      "operationId": "get__api_v3_admin_allowed_origins",
+      "method": "GET",
+      "path": "/api/v3/admin/allowed_origins",
+      "status": "401",
+      "example": {
+        "error": {
+          "code": "authentication_required",
+          "message": "Authentication required"
+        }
+      }
+    },
+    "post__api_v3_admin_allowed_origins_201": {
+      "operationId": "post__api_v3_admin_allowed_origins",
+      "method": "POST",
+      "path": "/api/v3/admin/allowed_origins",
+      "status": "201",
+      "example": {
+        "id": "ao_gbHJdmfrXB",
+        "origin": "https://admin.example.com",
+        "created_at": "2026-06-12T17:23:43.075Z",
+        "updated_at": "2026-06-12T17:23:43.075Z"
+      }
+    },
+    "post__api_v3_admin_allowed_origins_422": {
+      "operationId": "post__api_v3_admin_allowed_origins",
+      "method": "POST",
+      "path": "/api/v3/admin/allowed_origins",
+      "status": "422",
+      "example": {
+        "error": {
+          "code": "validation_error",
+          "message": "Origin is invalid",
+          "details": {
+            "origin": [
+              "is invalid"
+            ]
+          }
+        }
+      }
+    },
+    "get__api_v3_admin_allowed_origins_{id}_200": {
+      "operationId": "get__api_v3_admin_allowed_origins_{id}",
+      "method": "GET",
+      "path": "/api/v3/admin/allowed_origins/{id}",
+      "status": "200",
+      "example": {
+        "id": "ao_UkLWZg9DAJ",
+        "origin": "https://shop.example.com",
+        "created_at": "2026-06-12T17:23:43.396Z",
+        "updated_at": "2026-06-12T17:23:43.396Z"
+      }
+    },
+    "get__api_v3_admin_allowed_origins_{id}_404": {
+      "operationId": "get__api_v3_admin_allowed_origins_{id}",
+      "method": "GET",
+      "path": "/api/v3/admin/allowed_origins/{id}",
+      "status": "404",
+      "example": {
+        "error": {
+          "code": "record_not_found",
+          "message": "Allowed origin not found"
+        }
+      }
+    },
+    "patch__api_v3_admin_allowed_origins_{id}_200": {
+      "operationId": "patch__api_v3_admin_allowed_origins_{id}",
+      "method": "PATCH",
+      "path": "/api/v3/admin/allowed_origins/{id}",
+      "status": "200",
+      "example": {
+        "id": "ao_UkLWZg9DAJ",
+        "origin": "https://www.example.com",
+        "created_at": "2026-06-12T17:23:44.064Z",
+        "updated_at": "2026-06-12T17:23:44.366Z"
+      }
+    },
+    "patch__api_v3_admin_allowed_origins_{id}_422": {
+      "operationId": "patch__api_v3_admin_allowed_origins_{id}",
+      "method": "PATCH",
+      "path": "/api/v3/admin/allowed_origins/{id}",
+      "status": "422",
+      "example": {
+        "error": {
+          "code": "validation_error",
+          "message": "Origin must be an origin (scheme and host) without path, query, or fragment",
+          "details": {
+            "origin": [
+              "must be an origin (scheme and host) without path, query, or fragment"
+            ]
+          }
+        }
+      }
+    },
+    "get__api_v3_admin_api_keys_200": {
+      "operationId": "get__api_v3_admin_api_keys",
+      "method": "GET",
+      "path": "/api/v3/admin/api_keys",
+      "status": "200",
+      "example": {
+        "data": [
+          {
+            "id": "key_UkLWZg9DAJ",
+            "name": "Storefront key",
+            "key_type": "publishable",
+            "token_prefix": null,
+            "scopes": [],
+            "created_at": "2026-06-12T17:23:45.015Z",
+            "updated_at": "2026-06-12T17:23:45.015Z",
+            "revoked_at": null,
+            "last_used_at": null,
+            "plaintext_token": "pk_5AskmHCv2omYyoBr3mehREcX",
+            "created_by_email": null
+          },
+          {
+            "id": "key_gbHJdmfrXB",
+            "name": "Backend integration",
+            "key_type": "secret",
+            "token_prefix": "sk_qBGxwGooh",
+            "scopes": [
+              "write_all"
+            ],
+            "created_at": "2026-06-12T17:23:45.016Z",
+            "updated_at": "2026-06-12T17:23:45.016Z",
+            "revoked_at": null,
+            "last_used_at": null,
+            "plaintext_token": null,
+            "created_by_email": null
+          },
+          {
+            "id": "key_EfhxLZ9ck8",
+            "name": "minima",
+            "key_type": "secret",
+            "token_prefix": "sk_2bVt6n2wq",
+            "scopes": [
+              "write_all"
+            ],
+            "created_at": "2026-06-12T17:23:45.017Z",
+            "updated_at": "2026-06-12T17:23:45.017Z",
+            "revoked_at": null,
+            "last_used_at": null,
+            "plaintext_token": null,
+            "created_by_email": null
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "count": 3,
+          "pages": 1,
+          "from": 1,
+          "to": 3,
+          "in": 3,
+          "previous": null,
+          "next": null
+        }
+      }
+    },
+    "post__api_v3_admin_api_keys_201": {
+      "operationId": "post__api_v3_admin_api_keys",
+      "method": "POST",
+      "path": "/api/v3/admin/api_keys",
+      "status": "201",
+      "example": {
+        "id": "key_VqXmZF31wY",
+        "name": "CI key",
+        "key_type": "secret",
+        "token_prefix": "sk_vGdftBeFe",
+        "scopes": [
+          "read_orders"
+        ],
+        "created_at": "2026-06-12T17:23:45.625Z",
+        "updated_at": "2026-06-12T17:23:45.625Z",
+        "revoked_at": null,
+        "last_used_at": null,
+        "plaintext_token": "sk_vGdftBeFecVvHg1towF93knP",
+        "created_by_email": "dirk_morar@ohara.info"
+      }
+    },
+    "post__api_v3_admin_api_keys_422": {
+      "operationId": "post__api_v3_admin_api_keys",
+      "method": "POST",
+      "path": "/api/v3/admin/api_keys",
+      "status": "422",
+      "example": {
+        "error": {
+          "code": "validation_error",
+          "message": "Name can't be blank and Scopes can't be blank",
+          "details": {
+            "name": [
+              "can't be blank"
+            ],
+            "scopes": [
+              "can't be blank"
+            ]
+          }
+        }
+      }
+    },
+    "get__api_v3_admin_api_keys_{id}_200": {
+      "operationId": "get__api_v3_admin_api_keys_{id}",
+      "method": "GET",
+      "path": "/api/v3/admin/api_keys/{id}",
+      "status": "200",
+      "example": {
+        "id": "key_UkLWZg9DAJ",
+        "name": "Storefront key",
+        "key_type": "publishable",
+        "token_prefix": null,
+        "scopes": [],
+        "created_at": "2026-06-12T17:23:45.944Z",
+        "updated_at": "2026-06-12T17:23:45.944Z",
+        "revoked_at": null,
+        "last_used_at": null,
+        "plaintext_token": "pk_bZ5pTDmsuFozzLiikk62bCgQ",
+        "created_by_email": null
+      }
+    },
+    "patch__api_v3_admin_api_keys_{id}_revoke_200": {
+      "operationId": "patch__api_v3_admin_api_keys_{id}_revoke",
+      "method": "PATCH",
+      "path": "/api/v3/admin/api_keys/{id}/revoke",
+      "status": "200",
+      "example": {
+        "id": "key_gbHJdmfrXB",
+        "name": "Backend integration",
+        "key_type": "secret",
+        "token_prefix": "sk_PVNjbM3kV",
+        "scopes": [
+          "write_all"
+        ],
+        "created_at": "2026-06-12T17:23:46.589Z",
+        "updated_at": "2026-06-12T17:23:47.008Z",
+        "revoked_at": "2026-06-12T17:23:47.006Z",
+        "last_used_at": null,
+        "plaintext_token": null,
+        "created_by_email": null
+      }
+    },
+    "get__api_v3_admin_channels_200": {
+      "operationId": "get__api_v3_admin_channels",
+      "method": "GET",
+      "path": "/api/v3/admin/channels",
+      "status": "200",
+      "example": {
+        "data": [
+          {
+            "id": "ch_UkLWZg9DAJ",
+            "name": "Online Store",
+            "code": "online",
+            "active": true,
+            "default": true,
+            "preferred_order_routing_strategy": null,
+            "created_at": "2026-06-12T17:23:41.100Z",
+            "updated_at": "2026-06-12T17:23:41.100Z"
+          },
+          {
+            "id": "ch_gbHJdmfrXB",
+            "name": "Wholesale",
+            "code": "wholesale",
+            "active": true,
+            "default": false,
+            "preferred_order_routing_strategy": null,
+            "created_at": "2026-06-12T17:23:49.367Z",
+            "updated_at": "2026-06-12T17:23:49.367Z"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "count": 2,
+          "pages": 1,
+          "from": 1,
+          "to": 2,
+          "in": 2,
+          "previous": null,
+          "next": null
+        }
+      }
+    },
+    "post__api_v3_admin_channels_201": {
+      "operationId": "post__api_v3_admin_channels",
+      "method": "POST",
+      "path": "/api/v3/admin/channels",
+      "status": "201",
+      "example": {
+        "id": "ch_EfhxLZ9ck8",
+        "name": "Marketplace",
+        "code": "marketplace",
+        "active": true,
+        "default": false,
+        "preferred_order_routing_strategy": null,
+        "created_at": "2026-06-12T17:23:50.024Z",
+        "updated_at": "2026-06-12T17:23:50.024Z"
+      }
+    }
+  }
+}

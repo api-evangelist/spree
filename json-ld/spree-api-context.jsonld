@@ -1,0 +1,3363 @@
+{
+  "@context": {
+    "@vocab": "https://spreecommerce.org/api/v3/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "spree": "https://spreecommerce.org/api/v3/",
+    "PaginationMeta_page": {
+      "@id": "spree:PaginationMeta/page",
+      "@type": "xsd:integer"
+    },
+    "PaginationMeta_limit": {
+      "@id": "spree:PaginationMeta/limit",
+      "@type": "xsd:integer"
+    },
+    "PaginationMeta_count": {
+      "@id": "spree:PaginationMeta/count",
+      "@type": "xsd:integer"
+    },
+    "PaginationMeta_pages": {
+      "@id": "spree:PaginationMeta/pages",
+      "@type": "xsd:integer"
+    },
+    "PaginationMeta_from": {
+      "@id": "spree:PaginationMeta/from",
+      "@type": "xsd:integer"
+    },
+    "PaginationMeta_to": {
+      "@id": "spree:PaginationMeta/to",
+      "@type": "xsd:integer"
+    },
+    "PaginationMeta_in": {
+      "@id": "spree:PaginationMeta/in",
+      "@type": "xsd:integer"
+    },
+    "PaginationMeta_previous": {
+      "@id": "spree:PaginationMeta/previous",
+      "@type": "xsd:integer"
+    },
+    "PaginationMeta_next": {
+      "@id": "spree:PaginationMeta/next",
+      "@type": "xsd:integer"
+    },
+    "PaginationMeta": {
+      "@id": "spree:PaginationMeta"
+    },
+    "ErrorResponse_error": {
+      "@id": "spree:ErrorResponse/error",
+      "@type": "@id"
+    },
+    "ErrorResponse": {
+      "@id": "spree:ErrorResponse"
+    },
+    "AuthResponse_token": {
+      "@id": "spree:AuthResponse/token",
+      "@type": "xsd:string"
+    },
+    "AuthResponse_refresh_token": {
+      "@id": "spree:AuthResponse/refresh_token",
+      "@type": "xsd:string"
+    },
+    "AuthResponse_user": {
+      "@id": "spree:AuthResponse/user",
+      "@type": "@id"
+    },
+    "AuthResponse": {
+      "@id": "spree:AuthResponse"
+    },
+    "PermissionRule_allow": {
+      "@id": "spree:PermissionRule/allow",
+      "@type": "@id"
+    },
+    "PermissionRule_actions": {
+      "@id": "spree:PermissionRule/actions",
+      "@type": "@id"
+    },
+    "PermissionRule_subjects": {
+      "@id": "spree:PermissionRule/subjects",
+      "@type": "@id"
+    },
+    "PermissionRule_has_conditions": {
+      "@id": "spree:PermissionRule/has_conditions",
+      "@type": "@id"
+    },
+    "PermissionRule": {
+      "@id": "spree:PermissionRule",
+      "@comment": "A single permission rule (CanCanCan rule). Rules are applied in order, last-matching-wins."
+    },
+    "MeResponse_user": {
+      "@id": "spree:MeResponse/user",
+      "@type": "@id"
+    },
+    "MeResponse_permissions": {
+      "@id": "spree:MeResponse/permissions",
+      "@type": "@id"
+    },
+    "MeResponse": {
+      "@id": "spree:MeResponse",
+      "@comment": "Current admin user profile and serialized permissions"
+    },
+    "CheckoutRequirement_step": {
+      "@id": "spree:CheckoutRequirement/step",
+      "@type": "xsd:string"
+    },
+    "CheckoutRequirement_field": {
+      "@id": "spree:CheckoutRequirement/field",
+      "@type": "xsd:string"
+    },
+    "CheckoutRequirement_message": {
+      "@id": "spree:CheckoutRequirement/message",
+      "@type": "xsd:string"
+    },
+    "CheckoutRequirement": {
+      "@id": "spree:CheckoutRequirement"
+    },
+    "CartWarning_code": {
+      "@id": "spree:CartWarning/code",
+      "@type": "xsd:string"
+    },
+    "CartWarning_message": {
+      "@id": "spree:CartWarning/message",
+      "@type": "xsd:string"
+    },
+    "CartWarning_line_item_id": {
+      "@id": "spree:CartWarning/line_item_id",
+      "@type": "xsd:string"
+    },
+    "CartWarning_variant_id": {
+      "@id": "spree:CartWarning/variant_id",
+      "@type": "xsd:string"
+    },
+    "CartWarning": {
+      "@id": "spree:CartWarning",
+      "@comment": "A warning about a cart issue (e.g., item removed due to stock change)"
+    },
+    "FulfillmentManifestItem_item_id": {
+      "@id": "spree:FulfillmentManifestItem/item_id",
+      "@type": "xsd:string"
+    },
+    "FulfillmentManifestItem_variant_id": {
+      "@id": "spree:FulfillmentManifestItem/variant_id",
+      "@type": "xsd:string"
+    },
+    "FulfillmentManifestItem_quantity": {
+      "@id": "spree:FulfillmentManifestItem/quantity",
+      "@type": "xsd:integer"
+    },
+    "FulfillmentManifestItem": {
+      "@id": "spree:FulfillmentManifestItem",
+      "@comment": "An item within a fulfillment \u2014 which line item and how many units are in this fulfillment"
+    },
+    "AdminUserRoleAssignment_id": {
+      "@id": "spree:AdminUserRoleAssignment/id",
+      "@type": "xsd:string"
+    },
+    "AdminUserRoleAssignment_name": {
+      "@id": "spree:AdminUserRoleAssignment/name",
+      "@type": "xsd:string"
+    },
+    "AdminUserRoleAssignment": {
+      "@id": "spree:AdminUserRoleAssignment",
+      "@comment": "A role assignment for the current store on a staff member"
+    },
+    "PreferenceField_key": {
+      "@id": "spree:PreferenceField/key",
+      "@type": "xsd:string"
+    },
+    "PreferenceField_type": {
+      "@id": "spree:PreferenceField/type",
+      "@type": "xsd:string"
+    },
+    "PreferenceField_default": {
+      "@id": "spree:PreferenceField/default",
+      "@type": "@id"
+    },
+    "PreferenceField": {
+      "@id": "spree:PreferenceField",
+      "@comment": "A single configurable preference on a payment method, promotion rule/action, or calculator. The frontend uses `type` + `default` to render a sensible input."
+    },
+    "PromotionActionCalculator_type": {
+      "@id": "spree:PromotionActionCalculator/type",
+      "@type": "xsd:string"
+    },
+    "PromotionActionCalculator_label": {
+      "@id": "spree:PromotionActionCalculator/label",
+      "@type": "xsd:string"
+    },
+    "PromotionActionCalculator_preferences": {
+      "@id": "spree:PromotionActionCalculator/preferences",
+      "@type": "@id"
+    },
+    "PromotionActionCalculator_preference_schema": {
+      "@id": "spree:PromotionActionCalculator/preference_schema",
+      "@type": "@id"
+    },
+    "PromotionActionCalculator": {
+      "@id": "spree:PromotionActionCalculator",
+      "@comment": "The action's nested calculator (when the action carries one \u2014 null for actions like `free_shipping`)"
+    },
+    "PromotionActionLineItem_variant_id": {
+      "@id": "spree:PromotionActionLineItem/variant_id",
+      "@type": "xsd:string"
+    },
+    "PromotionActionLineItem_quantity": {
+      "@id": "spree:PromotionActionLineItem/quantity",
+      "@type": "xsd:integer"
+    },
+    "PromotionActionLineItem": {
+      "@id": "spree:PromotionActionLineItem",
+      "@comment": "One row in a `create_line_items` action \u2014 the variant added to the order and how many"
+    },
+    "Address_id": {
+      "@id": "spree:Address/id",
+      "@type": "xsd:string"
+    },
+    "Address_first_name": {
+      "@id": "spree:Address/first_name",
+      "@type": "xsd:string"
+    },
+    "Address_last_name": {
+      "@id": "spree:Address/last_name",
+      "@type": "xsd:string"
+    },
+    "Address_full_name": {
+      "@id": "spree:Address/full_name",
+      "@type": "xsd:string"
+    },
+    "Address_address1": {
+      "@id": "spree:Address/address1",
+      "@type": "xsd:string"
+    },
+    "Address_address2": {
+      "@id": "spree:Address/address2",
+      "@type": "xsd:string"
+    },
+    "Address_postal_code": {
+      "@id": "spree:Address/postal_code",
+      "@type": "xsd:string"
+    },
+    "Address_city": {
+      "@id": "spree:Address/city",
+      "@type": "xsd:string"
+    },
+    "Address_phone": {
+      "@id": "spree:Address/phone",
+      "@type": "xsd:string"
+    },
+    "Address_company": {
+      "@id": "spree:Address/company",
+      "@type": "xsd:string"
+    },
+    "Address_country_name": {
+      "@id": "spree:Address/country_name",
+      "@type": "xsd:string"
+    },
+    "Address_country_iso": {
+      "@id": "spree:Address/country_iso",
+      "@type": "xsd:string"
+    },
+    "Address_state_text": {
+      "@id": "spree:Address/state_text",
+      "@type": "xsd:string"
+    },
+    "Address_state_abbr": {
+      "@id": "spree:Address/state_abbr",
+      "@type": "xsd:string"
+    },
+    "Address_quick_checkout": {
+      "@id": "spree:Address/quick_checkout",
+      "@type": "@id"
+    },
+    "Address_is_default_billing": {
+      "@id": "spree:Address/is_default_billing",
+      "@type": "@id"
+    },
+    "Address_is_default_shipping": {
+      "@id": "spree:Address/is_default_shipping",
+      "@type": "@id"
+    },
+    "Address_state_name": {
+      "@id": "spree:Address/state_name",
+      "@type": "xsd:string"
+    },
+    "Address": {
+      "@id": "schema:PostalAddress"
+    },
+    "Base_id": {
+      "@id": "spree:Base/id",
+      "@type": "xsd:string"
+    },
+    "Base": {
+      "@id": "spree:Base"
+    },
+    "Cart_id": {
+      "@id": "spree:Cart/id",
+      "@type": "xsd:string"
+    },
+    "Cart_market_id": {
+      "@id": "spree:Cart/market_id",
+      "@type": "xsd:string"
+    },
+    "Cart_number": {
+      "@id": "spree:Cart/number",
+      "@type": "xsd:string"
+    },
+    "Cart_token": {
+      "@id": "spree:Cart/token",
+      "@type": "xsd:string"
+    },
+    "Cart_email": {
+      "@id": "spree:Cart/email",
+      "@type": "xsd:string"
+    },
+    "Cart_customer_note": {
+      "@id": "spree:Cart/customer_note",
+      "@type": "xsd:string"
+    },
+    "Cart_currency": {
+      "@id": "spree:Cart/currency",
+      "@type": "xsd:string"
+    },
+    "Cart_locale": {
+      "@id": "spree:Cart/locale",
+      "@type": "xsd:string"
+    },
+    "Cart_total_quantity": {
+      "@id": "spree:Cart/total_quantity",
+      "@type": "@id"
+    },
+    "Cart_item_total": {
+      "@id": "spree:Cart/item_total",
+      "@type": "xsd:string"
+    },
+    "Cart_display_item_total": {
+      "@id": "spree:Cart/display_item_total",
+      "@type": "xsd:string"
+    },
+    "Cart_adjustment_total": {
+      "@id": "spree:Cart/adjustment_total",
+      "@type": "xsd:string"
+    },
+    "Cart_display_adjustment_total": {
+      "@id": "spree:Cart/display_adjustment_total",
+      "@type": "xsd:string"
+    },
+    "Cart_discount_total": {
+      "@id": "spree:Cart/discount_total",
+      "@type": "xsd:string"
+    },
+    "Cart_display_discount_total": {
+      "@id": "spree:Cart/display_discount_total",
+      "@type": "xsd:string"
+    },
+    "Cart_tax_total": {
+      "@id": "spree:Cart/tax_total",
+      "@type": "xsd:string"
+    },
+    "Cart_display_tax_total": {
+      "@id": "spree:Cart/display_tax_total",
+      "@type": "xsd:string"
+    },
+    "Cart_included_tax_total": {
+      "@id": "spree:Cart/included_tax_total",
+      "@type": "xsd:string"
+    },
+    "Cart_display_included_tax_total": {
+      "@id": "spree:Cart/display_included_tax_total",
+      "@type": "xsd:string"
+    },
+    "Cart_additional_tax_total": {
+      "@id": "spree:Cart/additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "Cart_display_additional_tax_total": {
+      "@id": "spree:Cart/display_additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "Cart_total": {
+      "@id": "spree:Cart/total",
+      "@type": "xsd:string"
+    },
+    "Cart_display_total": {
+      "@id": "spree:Cart/display_total",
+      "@type": "xsd:string"
+    },
+    "Cart_gift_card_total": {
+      "@id": "spree:Cart/gift_card_total",
+      "@type": "xsd:string"
+    },
+    "Cart_display_gift_card_total": {
+      "@id": "spree:Cart/display_gift_card_total",
+      "@type": "xsd:string"
+    },
+    "Cart_amount_due": {
+      "@id": "spree:Cart/amount_due",
+      "@type": "xsd:string"
+    },
+    "Cart_display_amount_due": {
+      "@id": "spree:Cart/display_amount_due",
+      "@type": "xsd:string"
+    },
+    "Cart_delivery_total": {
+      "@id": "spree:Cart/delivery_total",
+      "@type": "xsd:string"
+    },
+    "Cart_display_delivery_total": {
+      "@id": "spree:Cart/display_delivery_total",
+      "@type": "xsd:string"
+    },
+    "Cart_warnings": {
+      "@id": "spree:Cart/warnings",
+      "@type": "@id"
+    },
+    "Cart_store_credit_total": {
+      "@id": "spree:Cart/store_credit_total",
+      "@type": "xsd:string"
+    },
+    "Cart_display_store_credit_total": {
+      "@id": "spree:Cart/display_store_credit_total",
+      "@type": "xsd:string"
+    },
+    "Cart_covered_by_store_credit": {
+      "@id": "spree:Cart/covered_by_store_credit",
+      "@type": "@id"
+    },
+    "Cart_current_step": {
+      "@id": "spree:Cart/current_step",
+      "@type": "xsd:string"
+    },
+    "Cart_completed_steps": {
+      "@id": "spree:Cart/completed_steps",
+      "@type": "@id"
+    },
+    "Cart_requirements": {
+      "@id": "spree:Cart/requirements",
+      "@type": "@id"
+    },
+    "Cart_shipping_eq_billing_address": {
+      "@id": "spree:Cart/shipping_eq_billing_address",
+      "@type": "@id"
+    },
+    "Cart_discounts": {
+      "@id": "spree:Cart/discounts",
+      "@type": "@id"
+    },
+    "Cart_items": {
+      "@id": "spree:Cart/items",
+      "@type": "@id"
+    },
+    "Cart_fulfillments": {
+      "@id": "spree:Cart/fulfillments",
+      "@type": "@id"
+    },
+    "Cart_payments": {
+      "@id": "spree:Cart/payments",
+      "@type": "@id"
+    },
+    "Cart_billing_address": {
+      "@id": "spree:Cart/billing_address",
+      "@type": "@id"
+    },
+    "Cart_shipping_address": {
+      "@id": "spree:Cart/shipping_address",
+      "@type": "@id"
+    },
+    "Cart_payment_methods": {
+      "@id": "spree:Cart/payment_methods",
+      "@type": "@id"
+    },
+    "Cart_gift_card": {
+      "@id": "spree:Cart/gift_card",
+      "@type": "@id"
+    },
+    "Cart_market": {
+      "@id": "spree:Cart/market",
+      "@type": "@id"
+    },
+    "Cart": {
+      "@id": "spree:Cart"
+    },
+    "Category_id": {
+      "@id": "spree:Category/id",
+      "@type": "xsd:string"
+    },
+    "Category_name": {
+      "@id": "spree:Category/name",
+      "@type": "xsd:string"
+    },
+    "Category_permalink": {
+      "@id": "spree:Category/permalink",
+      "@type": "xsd:string"
+    },
+    "Category_position": {
+      "@id": "spree:Category/position",
+      "@type": "@id"
+    },
+    "Category_depth": {
+      "@id": "spree:Category/depth",
+      "@type": "@id"
+    },
+    "Category_meta_title": {
+      "@id": "spree:Category/meta_title",
+      "@type": "xsd:string"
+    },
+    "Category_meta_description": {
+      "@id": "spree:Category/meta_description",
+      "@type": "xsd:string"
+    },
+    "Category_meta_keywords": {
+      "@id": "spree:Category/meta_keywords",
+      "@type": "xsd:string"
+    },
+    "Category_children_count": {
+      "@id": "spree:Category/children_count",
+      "@type": "@id"
+    },
+    "Category_parent_id": {
+      "@id": "spree:Category/parent_id",
+      "@type": "xsd:string"
+    },
+    "Category_description": {
+      "@id": "spree:Category/description",
+      "@type": "xsd:string"
+    },
+    "Category_description_html": {
+      "@id": "spree:Category/description_html",
+      "@type": "xsd:string"
+    },
+    "Category_image_url": {
+      "@id": "spree:Category/image_url",
+      "@type": "xsd:string"
+    },
+    "Category_square_image_url": {
+      "@id": "spree:Category/square_image_url",
+      "@type": "xsd:string"
+    },
+    "Category_is_root": {
+      "@id": "spree:Category/is_root",
+      "@type": "@id"
+    },
+    "Category_is_child": {
+      "@id": "spree:Category/is_child",
+      "@type": "@id"
+    },
+    "Category_is_leaf": {
+      "@id": "spree:Category/is_leaf",
+      "@type": "@id"
+    },
+    "Category_parent": {
+      "@id": "spree:Category/parent",
+      "@type": "@id"
+    },
+    "Category_children": {
+      "@id": "spree:Category/children",
+      "@type": "@id"
+    },
+    "Category_ancestors": {
+      "@id": "spree:Category/ancestors",
+      "@type": "@id"
+    },
+    "Category_custom_fields": {
+      "@id": "spree:Category/custom_fields",
+      "@type": "@id"
+    },
+    "Category": {
+      "@id": "schema:Category"
+    },
+    "Channel_id": {
+      "@id": "spree:Channel/id",
+      "@type": "xsd:string"
+    },
+    "Channel_name": {
+      "@id": "spree:Channel/name",
+      "@type": "xsd:string"
+    },
+    "Channel_code": {
+      "@id": "spree:Channel/code",
+      "@type": "xsd:string"
+    },
+    "Channel_active": {
+      "@id": "spree:Channel/active",
+      "@type": "@id"
+    },
+    "Channel": {
+      "@id": "spree:Channel"
+    },
+    "Country_iso": {
+      "@id": "spree:Country/iso",
+      "@type": "xsd:string"
+    },
+    "Country_iso3": {
+      "@id": "spree:Country/iso3",
+      "@type": "xsd:string"
+    },
+    "Country_name": {
+      "@id": "spree:Country/name",
+      "@type": "xsd:string"
+    },
+    "Country_states_required": {
+      "@id": "spree:Country/states_required",
+      "@type": "@id"
+    },
+    "Country_zipcode_required": {
+      "@id": "spree:Country/zipcode_required",
+      "@type": "@id"
+    },
+    "Country_states": {
+      "@id": "spree:Country/states",
+      "@type": "@id"
+    },
+    "Country_market": {
+      "@id": "spree:Country/market",
+      "@type": "@id"
+    },
+    "Country": {
+      "@id": "schema:Country"
+    },
+    "CreditCard_id": {
+      "@id": "spree:CreditCard/id",
+      "@type": "xsd:string"
+    },
+    "CreditCard_brand": {
+      "@id": "spree:CreditCard/brand",
+      "@type": "xsd:string"
+    },
+    "CreditCard_last4": {
+      "@id": "spree:CreditCard/last4",
+      "@type": "xsd:string"
+    },
+    "CreditCard_month": {
+      "@id": "spree:CreditCard/month",
+      "@type": "@id"
+    },
+    "CreditCard_year": {
+      "@id": "spree:CreditCard/year",
+      "@type": "@id"
+    },
+    "CreditCard_name": {
+      "@id": "spree:CreditCard/name",
+      "@type": "xsd:string"
+    },
+    "CreditCard_default": {
+      "@id": "spree:CreditCard/default",
+      "@type": "@id"
+    },
+    "CreditCard_gateway_payment_profile_id": {
+      "@id": "spree:CreditCard/gateway_payment_profile_id",
+      "@type": "xsd:string"
+    },
+    "CreditCard": {
+      "@id": "schema:PaymentCard"
+    },
+    "Currency_iso_code": {
+      "@id": "spree:Currency/iso_code",
+      "@type": "xsd:string"
+    },
+    "Currency_name": {
+      "@id": "spree:Currency/name",
+      "@type": "xsd:string"
+    },
+    "Currency_symbol": {
+      "@id": "spree:Currency/symbol",
+      "@type": "xsd:string"
+    },
+    "Currency": {
+      "@id": "spree:Currency"
+    },
+    "CustomField_id": {
+      "@id": "spree:CustomField/id",
+      "@type": "xsd:string"
+    },
+    "CustomField_label": {
+      "@id": "spree:CustomField/label",
+      "@type": "xsd:string"
+    },
+    "CustomField_type": {
+      "@id": "spree:CustomField/type",
+      "@type": "xsd:string"
+    },
+    "CustomField_field_type": {
+      "@id": "spree:CustomField/field_type",
+      "@type": "xsd:string"
+    },
+    "CustomField_key": {
+      "@id": "spree:CustomField/key",
+      "@type": "xsd:string"
+    },
+    "CustomField_value": {
+      "@id": "spree:CustomField/value",
+      "@type": "@id"
+    },
+    "CustomField": {
+      "@id": "spree:CustomField"
+    },
+    "Customer_id": {
+      "@id": "spree:Customer/id",
+      "@type": "xsd:string"
+    },
+    "Customer_email": {
+      "@id": "spree:Customer/email",
+      "@type": "xsd:string"
+    },
+    "Customer_first_name": {
+      "@id": "spree:Customer/first_name",
+      "@type": "xsd:string"
+    },
+    "Customer_last_name": {
+      "@id": "spree:Customer/last_name",
+      "@type": "xsd:string"
+    },
+    "Customer_phone": {
+      "@id": "spree:Customer/phone",
+      "@type": "xsd:string"
+    },
+    "Customer_accepts_email_marketing": {
+      "@id": "spree:Customer/accepts_email_marketing",
+      "@type": "@id"
+    },
+    "Customer_full_name": {
+      "@id": "spree:Customer/full_name",
+      "@type": "xsd:string"
+    },
+    "Customer_available_store_credit_total": {
+      "@id": "spree:Customer/available_store_credit_total",
+      "@type": "xsd:string"
+    },
+    "Customer_display_available_store_credit_total": {
+      "@id": "spree:Customer/display_available_store_credit_total",
+      "@type": "xsd:string"
+    },
+    "Customer_addresses": {
+      "@id": "spree:Customer/addresses",
+      "@type": "@id"
+    },
+    "Customer_default_billing_address": {
+      "@id": "spree:Customer/default_billing_address",
+      "@type": "@id"
+    },
+    "Customer_default_shipping_address": {
+      "@id": "spree:Customer/default_shipping_address",
+      "@type": "@id"
+    },
+    "Customer": {
+      "@id": "spree:Customer"
+    },
+    "DeliveryMethod_id": {
+      "@id": "spree:DeliveryMethod/id",
+      "@type": "xsd:string"
+    },
+    "DeliveryMethod_name": {
+      "@id": "spree:DeliveryMethod/name",
+      "@type": "xsd:string"
+    },
+    "DeliveryMethod_code": {
+      "@id": "spree:DeliveryMethod/code",
+      "@type": "xsd:string"
+    },
+    "DeliveryMethod": {
+      "@id": "spree:DeliveryMethod"
+    },
+    "DeliveryRate_id": {
+      "@id": "spree:DeliveryRate/id",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_delivery_method_id": {
+      "@id": "spree:DeliveryRate/delivery_method_id",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_name": {
+      "@id": "spree:DeliveryRate/name",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_selected": {
+      "@id": "spree:DeliveryRate/selected",
+      "@type": "@id"
+    },
+    "DeliveryRate_cost": {
+      "@id": "spree:DeliveryRate/cost",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_total": {
+      "@id": "spree:DeliveryRate/total",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_additional_tax_total": {
+      "@id": "spree:DeliveryRate/additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_included_tax_total": {
+      "@id": "spree:DeliveryRate/included_tax_total",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_tax_total": {
+      "@id": "spree:DeliveryRate/tax_total",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_display_cost": {
+      "@id": "spree:DeliveryRate/display_cost",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_display_total": {
+      "@id": "spree:DeliveryRate/display_total",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_display_additional_tax_total": {
+      "@id": "spree:DeliveryRate/display_additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_display_included_tax_total": {
+      "@id": "spree:DeliveryRate/display_included_tax_total",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_display_tax_total": {
+      "@id": "spree:DeliveryRate/display_tax_total",
+      "@type": "xsd:string"
+    },
+    "DeliveryRate_delivery_method": {
+      "@id": "spree:DeliveryRate/delivery_method",
+      "@type": "@id"
+    },
+    "DeliveryRate": {
+      "@id": "spree:DeliveryRate"
+    },
+    "DigitalLink_id": {
+      "@id": "spree:DigitalLink/id",
+      "@type": "xsd:string"
+    },
+    "DigitalLink_access_counter": {
+      "@id": "spree:DigitalLink/access_counter",
+      "@type": "@id"
+    },
+    "DigitalLink_filename": {
+      "@id": "spree:DigitalLink/filename",
+      "@type": "xsd:string"
+    },
+    "DigitalLink_content_type": {
+      "@id": "spree:DigitalLink/content_type",
+      "@type": "xsd:string"
+    },
+    "DigitalLink_download_url": {
+      "@id": "spree:DigitalLink/download_url",
+      "@type": "xsd:string"
+    },
+    "DigitalLink_authorizable": {
+      "@id": "spree:DigitalLink/authorizable",
+      "@type": "@id"
+    },
+    "DigitalLink_expired": {
+      "@id": "spree:DigitalLink/expired",
+      "@type": "@id"
+    },
+    "DigitalLink_access_limit_exceeded": {
+      "@id": "spree:DigitalLink/access_limit_exceeded",
+      "@type": "@id"
+    },
+    "DigitalLink": {
+      "@id": "spree:DigitalLink"
+    },
+    "Digital_id": {
+      "@id": "spree:Digital/id",
+      "@type": "xsd:string"
+    },
+    "Digital_created_at": {
+      "@id": "spree:Digital/created_at",
+      "@type": "xsd:string"
+    },
+    "Digital_updated_at": {
+      "@id": "spree:Digital/updated_at",
+      "@type": "xsd:string"
+    },
+    "Digital_variant_id": {
+      "@id": "spree:Digital/variant_id",
+      "@type": "xsd:string"
+    },
+    "Digital": {
+      "@id": "spree:Digital"
+    },
+    "Discount_id": {
+      "@id": "spree:Discount/id",
+      "@type": "xsd:string"
+    },
+    "Discount_promotion_id": {
+      "@id": "spree:Discount/promotion_id",
+      "@type": "xsd:string"
+    },
+    "Discount_name": {
+      "@id": "spree:Discount/name",
+      "@type": "xsd:string"
+    },
+    "Discount_description": {
+      "@id": "spree:Discount/description",
+      "@type": "xsd:string"
+    },
+    "Discount_code": {
+      "@id": "spree:Discount/code",
+      "@type": "xsd:string"
+    },
+    "Discount_amount": {
+      "@id": "spree:Discount/amount",
+      "@type": "xsd:string"
+    },
+    "Discount_display_amount": {
+      "@id": "spree:Discount/display_amount",
+      "@type": "xsd:string"
+    },
+    "Discount": {
+      "@id": "spree:Discount"
+    },
+    "Fulfillment_id": {
+      "@id": "spree:Fulfillment/id",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_number": {
+      "@id": "spree:Fulfillment/number",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_tracking": {
+      "@id": "spree:Fulfillment/tracking",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_tracking_url": {
+      "@id": "spree:Fulfillment/tracking_url",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_cost": {
+      "@id": "spree:Fulfillment/cost",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_display_cost": {
+      "@id": "spree:Fulfillment/display_cost",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_total": {
+      "@id": "spree:Fulfillment/total",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_display_total": {
+      "@id": "spree:Fulfillment/display_total",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_discount_total": {
+      "@id": "spree:Fulfillment/discount_total",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_display_discount_total": {
+      "@id": "spree:Fulfillment/display_discount_total",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_additional_tax_total": {
+      "@id": "spree:Fulfillment/additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_display_additional_tax_total": {
+      "@id": "spree:Fulfillment/display_additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_included_tax_total": {
+      "@id": "spree:Fulfillment/included_tax_total",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_display_included_tax_total": {
+      "@id": "spree:Fulfillment/display_included_tax_total",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_tax_total": {
+      "@id": "spree:Fulfillment/tax_total",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_display_tax_total": {
+      "@id": "spree:Fulfillment/display_tax_total",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_status": {
+      "@id": "spree:Fulfillment/status",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_fulfillment_type": {
+      "@id": "spree:Fulfillment/fulfillment_type",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_fulfilled_at": {
+      "@id": "spree:Fulfillment/fulfilled_at",
+      "@type": "xsd:string"
+    },
+    "Fulfillment_items": {
+      "@id": "spree:Fulfillment/items",
+      "@type": "@id"
+    },
+    "Fulfillment_delivery_method": {
+      "@id": "spree:Fulfillment/delivery_method",
+      "@type": "@id"
+    },
+    "Fulfillment_stock_location": {
+      "@id": "spree:Fulfillment/stock_location",
+      "@type": "@id"
+    },
+    "Fulfillment_delivery_rates": {
+      "@id": "spree:Fulfillment/delivery_rates",
+      "@type": "@id"
+    },
+    "Fulfillment": {
+      "@id": "spree:Fulfillment"
+    },
+    "GiftCardBatch_id": {
+      "@id": "spree:GiftCardBatch/id",
+      "@type": "xsd:string"
+    },
+    "GiftCardBatch_codes_count": {
+      "@id": "spree:GiftCardBatch/codes_count",
+      "@type": "@id"
+    },
+    "GiftCardBatch_currency": {
+      "@id": "spree:GiftCardBatch/currency",
+      "@type": "xsd:string"
+    },
+    "GiftCardBatch_prefix": {
+      "@id": "spree:GiftCardBatch/prefix",
+      "@type": "xsd:string"
+    },
+    "GiftCardBatch_created_at": {
+      "@id": "spree:GiftCardBatch/created_at",
+      "@type": "xsd:string"
+    },
+    "GiftCardBatch_updated_at": {
+      "@id": "spree:GiftCardBatch/updated_at",
+      "@type": "xsd:string"
+    },
+    "GiftCardBatch_amount": {
+      "@id": "spree:GiftCardBatch/amount",
+      "@type": "xsd:string"
+    },
+    "GiftCardBatch_expires_at": {
+      "@id": "spree:GiftCardBatch/expires_at",
+      "@type": "xsd:string"
+    },
+    "GiftCardBatch_created_by_id": {
+      "@id": "spree:GiftCardBatch/created_by_id",
+      "@type": "xsd:string"
+    },
+    "GiftCardBatch": {
+      "@id": "spree:GiftCardBatch"
+    },
+    "GiftCard_id": {
+      "@id": "spree:GiftCard/id",
+      "@type": "xsd:string"
+    },
+    "GiftCard_code": {
+      "@id": "spree:GiftCard/code",
+      "@type": "xsd:string"
+    },
+    "GiftCard_status": {
+      "@id": "spree:GiftCard/status",
+      "@type": "xsd:string"
+    },
+    "GiftCard_currency": {
+      "@id": "spree:GiftCard/currency",
+      "@type": "xsd:string"
+    },
+    "GiftCard_amount": {
+      "@id": "spree:GiftCard/amount",
+      "@type": "xsd:string"
+    },
+    "GiftCard_amount_used": {
+      "@id": "spree:GiftCard/amount_used",
+      "@type": "xsd:string"
+    },
+    "GiftCard_amount_authorized": {
+      "@id": "spree:GiftCard/amount_authorized",
+      "@type": "xsd:string"
+    },
+    "GiftCard_amount_remaining": {
+      "@id": "spree:GiftCard/amount_remaining",
+      "@type": "xsd:string"
+    },
+    "GiftCard_display_amount": {
+      "@id": "spree:GiftCard/display_amount",
+      "@type": "xsd:string"
+    },
+    "GiftCard_display_amount_used": {
+      "@id": "spree:GiftCard/display_amount_used",
+      "@type": "xsd:string"
+    },
+    "GiftCard_display_amount_remaining": {
+      "@id": "spree:GiftCard/display_amount_remaining",
+      "@type": "xsd:string"
+    },
+    "GiftCard_expires_at": {
+      "@id": "spree:GiftCard/expires_at",
+      "@type": "xsd:string"
+    },
+    "GiftCard_redeemed_at": {
+      "@id": "spree:GiftCard/redeemed_at",
+      "@type": "xsd:string"
+    },
+    "GiftCard_expired": {
+      "@id": "spree:GiftCard/expired",
+      "@type": "@id"
+    },
+    "GiftCard_active": {
+      "@id": "spree:GiftCard/active",
+      "@type": "@id"
+    },
+    "GiftCard": {
+      "@id": "spree:GiftCard"
+    },
+    "Invitation_id": {
+      "@id": "spree:Invitation/id",
+      "@type": "xsd:string"
+    },
+    "Invitation_email": {
+      "@id": "spree:Invitation/email",
+      "@type": "xsd:string"
+    },
+    "Invitation_resource_type": {
+      "@id": "spree:Invitation/resource_type",
+      "@type": "xsd:string"
+    },
+    "Invitation_inviter_type": {
+      "@id": "spree:Invitation/inviter_type",
+      "@type": "xsd:string"
+    },
+    "Invitation_invitee_type": {
+      "@id": "spree:Invitation/invitee_type",
+      "@type": "xsd:string"
+    },
+    "Invitation_created_at": {
+      "@id": "spree:Invitation/created_at",
+      "@type": "xsd:string"
+    },
+    "Invitation_updated_at": {
+      "@id": "spree:Invitation/updated_at",
+      "@type": "xsd:string"
+    },
+    "Invitation_status": {
+      "@id": "spree:Invitation/status",
+      "@type": "xsd:string"
+    },
+    "Invitation_resource_id": {
+      "@id": "spree:Invitation/resource_id",
+      "@type": "xsd:string"
+    },
+    "Invitation_inviter_id": {
+      "@id": "spree:Invitation/inviter_id",
+      "@type": "xsd:string"
+    },
+    "Invitation_invitee_id": {
+      "@id": "spree:Invitation/invitee_id",
+      "@type": "xsd:string"
+    },
+    "Invitation_role_id": {
+      "@id": "spree:Invitation/role_id",
+      "@type": "xsd:string"
+    },
+    "Invitation_expires_at": {
+      "@id": "spree:Invitation/expires_at",
+      "@type": "xsd:string"
+    },
+    "Invitation_accepted_at": {
+      "@id": "spree:Invitation/accepted_at",
+      "@type": "xsd:string"
+    },
+    "Invitation": {
+      "@id": "spree:Invitation"
+    },
+    "LineItem_id": {
+      "@id": "spree:LineItem/id",
+      "@type": "xsd:string"
+    },
+    "LineItem_variant_id": {
+      "@id": "spree:LineItem/variant_id",
+      "@type": "xsd:string"
+    },
+    "LineItem_quantity": {
+      "@id": "spree:LineItem/quantity",
+      "@type": "@id"
+    },
+    "LineItem_currency": {
+      "@id": "spree:LineItem/currency",
+      "@type": "xsd:string"
+    },
+    "LineItem_name": {
+      "@id": "spree:LineItem/name",
+      "@type": "xsd:string"
+    },
+    "LineItem_slug": {
+      "@id": "spree:LineItem/slug",
+      "@type": "xsd:string"
+    },
+    "LineItem_options_text": {
+      "@id": "spree:LineItem/options_text",
+      "@type": "xsd:string"
+    },
+    "LineItem_price": {
+      "@id": "spree:LineItem/price",
+      "@type": "xsd:string"
+    },
+    "LineItem_display_price": {
+      "@id": "spree:LineItem/display_price",
+      "@type": "xsd:string"
+    },
+    "LineItem_total": {
+      "@id": "spree:LineItem/total",
+      "@type": "xsd:string"
+    },
+    "LineItem_display_total": {
+      "@id": "spree:LineItem/display_total",
+      "@type": "xsd:string"
+    },
+    "LineItem_adjustment_total": {
+      "@id": "spree:LineItem/adjustment_total",
+      "@type": "xsd:string"
+    },
+    "LineItem_display_adjustment_total": {
+      "@id": "spree:LineItem/display_adjustment_total",
+      "@type": "xsd:string"
+    },
+    "LineItem_additional_tax_total": {
+      "@id": "spree:LineItem/additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "LineItem_display_additional_tax_total": {
+      "@id": "spree:LineItem/display_additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "LineItem_included_tax_total": {
+      "@id": "spree:LineItem/included_tax_total",
+      "@type": "xsd:string"
+    },
+    "LineItem_display_included_tax_total": {
+      "@id": "spree:LineItem/display_included_tax_total",
+      "@type": "xsd:string"
+    },
+    "LineItem_discount_total": {
+      "@id": "spree:LineItem/discount_total",
+      "@type": "xsd:string"
+    },
+    "LineItem_display_discount_total": {
+      "@id": "spree:LineItem/display_discount_total",
+      "@type": "xsd:string"
+    },
+    "LineItem_pre_tax_amount": {
+      "@id": "spree:LineItem/pre_tax_amount",
+      "@type": "xsd:string"
+    },
+    "LineItem_display_pre_tax_amount": {
+      "@id": "spree:LineItem/display_pre_tax_amount",
+      "@type": "xsd:string"
+    },
+    "LineItem_discounted_amount": {
+      "@id": "spree:LineItem/discounted_amount",
+      "@type": "xsd:string"
+    },
+    "LineItem_display_discounted_amount": {
+      "@id": "spree:LineItem/display_discounted_amount",
+      "@type": "xsd:string"
+    },
+    "LineItem_display_compare_at_amount": {
+      "@id": "spree:LineItem/display_compare_at_amount",
+      "@type": "xsd:string"
+    },
+    "LineItem_compare_at_amount": {
+      "@id": "spree:LineItem/compare_at_amount",
+      "@type": "xsd:string"
+    },
+    "LineItem_thumbnail_url": {
+      "@id": "spree:LineItem/thumbnail_url",
+      "@type": "xsd:string"
+    },
+    "LineItem_option_values": {
+      "@id": "spree:LineItem/option_values",
+      "@type": "@id"
+    },
+    "LineItem_digital_links": {
+      "@id": "spree:LineItem/digital_links",
+      "@type": "@id"
+    },
+    "LineItem": {
+      "@id": "spree:LineItem"
+    },
+    "Locale_code": {
+      "@id": "spree:Locale/code",
+      "@type": "xsd:string"
+    },
+    "Locale_name": {
+      "@id": "spree:Locale/name",
+      "@type": "xsd:string"
+    },
+    "Locale": {
+      "@id": "spree:Locale"
+    },
+    "Market_id": {
+      "@id": "spree:Market/id",
+      "@type": "xsd:string"
+    },
+    "Market_name": {
+      "@id": "spree:Market/name",
+      "@type": "xsd:string"
+    },
+    "Market_currency": {
+      "@id": "spree:Market/currency",
+      "@type": "xsd:string"
+    },
+    "Market_default_locale": {
+      "@id": "spree:Market/default_locale",
+      "@type": "xsd:string"
+    },
+    "Market_tax_inclusive": {
+      "@id": "spree:Market/tax_inclusive",
+      "@type": "@id"
+    },
+    "Market_default": {
+      "@id": "spree:Market/default",
+      "@type": "@id"
+    },
+    "Market_country_isos": {
+      "@id": "spree:Market/country_isos",
+      "@type": "@id"
+    },
+    "Market_supported_locales": {
+      "@id": "spree:Market/supported_locales",
+      "@type": "@id"
+    },
+    "Market_countries": {
+      "@id": "spree:Market/countries",
+      "@type": "@id"
+    },
+    "Market": {
+      "@id": "spree:Market"
+    },
+    "Media_id": {
+      "@id": "spree:Media/id",
+      "@type": "xsd:string"
+    },
+    "Media_product_id": {
+      "@id": "spree:Media/product_id",
+      "@type": "xsd:string"
+    },
+    "Media_variant_ids": {
+      "@id": "spree:Media/variant_ids",
+      "@type": "@id"
+    },
+    "Media_position": {
+      "@id": "spree:Media/position",
+      "@type": "@id"
+    },
+    "Media_alt": {
+      "@id": "spree:Media/alt",
+      "@type": "xsd:string"
+    },
+    "Media_media_type": {
+      "@id": "spree:Media/media_type",
+      "@type": "xsd:string"
+    },
+    "Media_focal_point_x": {
+      "@id": "spree:Media/focal_point_x",
+      "@type": "@id"
+    },
+    "Media_focal_point_y": {
+      "@id": "spree:Media/focal_point_y",
+      "@type": "@id"
+    },
+    "Media_external_video_url": {
+      "@id": "spree:Media/external_video_url",
+      "@type": "xsd:string"
+    },
+    "Media_original_url": {
+      "@id": "spree:Media/original_url",
+      "@type": "xsd:string"
+    },
+    "Media_mini_url": {
+      "@id": "spree:Media/mini_url",
+      "@type": "xsd:string"
+    },
+    "Media_small_url": {
+      "@id": "spree:Media/small_url",
+      "@type": "xsd:string"
+    },
+    "Media_medium_url": {
+      "@id": "spree:Media/medium_url",
+      "@type": "xsd:string"
+    },
+    "Media_large_url": {
+      "@id": "spree:Media/large_url",
+      "@type": "xsd:string"
+    },
+    "Media_xlarge_url": {
+      "@id": "spree:Media/xlarge_url",
+      "@type": "xsd:string"
+    },
+    "Media_og_image_url": {
+      "@id": "spree:Media/og_image_url",
+      "@type": "xsd:string"
+    },
+    "Media": {
+      "@id": "spree:Media"
+    },
+    "NewsletterSubscriber_id": {
+      "@id": "spree:NewsletterSubscriber/id",
+      "@type": "xsd:string"
+    },
+    "NewsletterSubscriber_email": {
+      "@id": "spree:NewsletterSubscriber/email",
+      "@type": "xsd:string"
+    },
+    "NewsletterSubscriber_created_at": {
+      "@id": "spree:NewsletterSubscriber/created_at",
+      "@type": "xsd:string"
+    },
+    "NewsletterSubscriber_updated_at": {
+      "@id": "spree:NewsletterSubscriber/updated_at",
+      "@type": "xsd:string"
+    },
+    "NewsletterSubscriber_verified": {
+      "@id": "spree:NewsletterSubscriber/verified",
+      "@type": "@id"
+    },
+    "NewsletterSubscriber_verified_at": {
+      "@id": "spree:NewsletterSubscriber/verified_at",
+      "@type": "xsd:string"
+    },
+    "NewsletterSubscriber_customer_id": {
+      "@id": "spree:NewsletterSubscriber/customer_id",
+      "@type": "xsd:string"
+    },
+    "NewsletterSubscriber": {
+      "@id": "spree:NewsletterSubscriber"
+    },
+    "OptionType_id": {
+      "@id": "spree:OptionType/id",
+      "@type": "xsd:string"
+    },
+    "OptionType_name": {
+      "@id": "spree:OptionType/name",
+      "@type": "xsd:string"
+    },
+    "OptionType_label": {
+      "@id": "spree:OptionType/label",
+      "@type": "xsd:string"
+    },
+    "OptionType_position": {
+      "@id": "spree:OptionType/position",
+      "@type": "@id"
+    },
+    "OptionType_kind": {
+      "@id": "spree:OptionType/kind",
+      "@type": "xsd:string"
+    },
+    "OptionType": {
+      "@id": "spree:OptionType"
+    },
+    "OptionValue_id": {
+      "@id": "spree:OptionValue/id",
+      "@type": "xsd:string"
+    },
+    "OptionValue_option_type_id": {
+      "@id": "spree:OptionValue/option_type_id",
+      "@type": "xsd:string"
+    },
+    "OptionValue_name": {
+      "@id": "spree:OptionValue/name",
+      "@type": "xsd:string"
+    },
+    "OptionValue_label": {
+      "@id": "spree:OptionValue/label",
+      "@type": "xsd:string"
+    },
+    "OptionValue_position": {
+      "@id": "spree:OptionValue/position",
+      "@type": "@id"
+    },
+    "OptionValue_color_code": {
+      "@id": "spree:OptionValue/color_code",
+      "@type": "xsd:string"
+    },
+    "OptionValue_option_type_name": {
+      "@id": "spree:OptionValue/option_type_name",
+      "@type": "xsd:string"
+    },
+    "OptionValue_option_type_label": {
+      "@id": "spree:OptionValue/option_type_label",
+      "@type": "xsd:string"
+    },
+    "OptionValue_image_url": {
+      "@id": "spree:OptionValue/image_url",
+      "@type": "xsd:string"
+    },
+    "OptionValue": {
+      "@id": "spree:OptionValue"
+    },
+    "Order_id": {
+      "@id": "spree:Order/id",
+      "@type": "xsd:string"
+    },
+    "Order_market_id": {
+      "@id": "spree:Order/market_id",
+      "@type": "xsd:string"
+    },
+    "Order_channel_id": {
+      "@id": "spree:Order/channel_id",
+      "@type": "xsd:string"
+    },
+    "Order_number": {
+      "@id": "spree:Order/number",
+      "@type": "xsd:string"
+    },
+    "Order_email": {
+      "@id": "spree:Order/email",
+      "@type": "xsd:string"
+    },
+    "Order_customer_note": {
+      "@id": "spree:Order/customer_note",
+      "@type": "xsd:string"
+    },
+    "Order_currency": {
+      "@id": "spree:Order/currency",
+      "@type": "xsd:string"
+    },
+    "Order_locale": {
+      "@id": "spree:Order/locale",
+      "@type": "xsd:string"
+    },
+    "Order_total_quantity": {
+      "@id": "spree:Order/total_quantity",
+      "@type": "@id"
+    },
+    "Order_item_total": {
+      "@id": "spree:Order/item_total",
+      "@type": "xsd:string"
+    },
+    "Order_display_item_total": {
+      "@id": "spree:Order/display_item_total",
+      "@type": "xsd:string"
+    },
+    "Order_adjustment_total": {
+      "@id": "spree:Order/adjustment_total",
+      "@type": "xsd:string"
+    },
+    "Order_display_adjustment_total": {
+      "@id": "spree:Order/display_adjustment_total",
+      "@type": "xsd:string"
+    },
+    "Order_discount_total": {
+      "@id": "spree:Order/discount_total",
+      "@type": "xsd:string"
+    },
+    "Order_display_discount_total": {
+      "@id": "spree:Order/display_discount_total",
+      "@type": "xsd:string"
+    },
+    "Order_tax_total": {
+      "@id": "spree:Order/tax_total",
+      "@type": "xsd:string"
+    },
+    "Order_display_tax_total": {
+      "@id": "spree:Order/display_tax_total",
+      "@type": "xsd:string"
+    },
+    "Order_included_tax_total": {
+      "@id": "spree:Order/included_tax_total",
+      "@type": "xsd:string"
+    },
+    "Order_display_included_tax_total": {
+      "@id": "spree:Order/display_included_tax_total",
+      "@type": "xsd:string"
+    },
+    "Order_additional_tax_total": {
+      "@id": "spree:Order/additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "Order_display_additional_tax_total": {
+      "@id": "spree:Order/display_additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "Order_total": {
+      "@id": "spree:Order/total",
+      "@type": "xsd:string"
+    },
+    "Order_display_total": {
+      "@id": "spree:Order/display_total",
+      "@type": "xsd:string"
+    },
+    "Order_gift_card_total": {
+      "@id": "spree:Order/gift_card_total",
+      "@type": "xsd:string"
+    },
+    "Order_display_gift_card_total": {
+      "@id": "spree:Order/display_gift_card_total",
+      "@type": "xsd:string"
+    },
+    "Order_amount_due": {
+      "@id": "spree:Order/amount_due",
+      "@type": "xsd:string"
+    },
+    "Order_display_amount_due": {
+      "@id": "spree:Order/display_amount_due",
+      "@type": "xsd:string"
+    },
+    "Order_delivery_total": {
+      "@id": "spree:Order/delivery_total",
+      "@type": "xsd:string"
+    },
+    "Order_display_delivery_total": {
+      "@id": "spree:Order/display_delivery_total",
+      "@type": "xsd:string"
+    },
+    "Order_fulfillment_status": {
+      "@id": "spree:Order/fulfillment_status",
+      "@type": "xsd:string"
+    },
+    "Order_payment_status": {
+      "@id": "spree:Order/payment_status",
+      "@type": "xsd:string"
+    },
+    "Order_completed_at": {
+      "@id": "spree:Order/completed_at",
+      "@type": "xsd:string"
+    },
+    "Order_store_credit_total": {
+      "@id": "spree:Order/store_credit_total",
+      "@type": "xsd:string"
+    },
+    "Order_display_store_credit_total": {
+      "@id": "spree:Order/display_store_credit_total",
+      "@type": "xsd:string"
+    },
+    "Order_covered_by_store_credit": {
+      "@id": "spree:Order/covered_by_store_credit",
+      "@type": "@id"
+    },
+    "Order_discounts": {
+      "@id": "spree:Order/discounts",
+      "@type": "@id"
+    },
+    "Order_items": {
+      "@id": "spree:Order/items",
+      "@type": "@id"
+    },
+    "Order_fulfillments": {
+      "@id": "spree:Order/fulfillments",
+      "@type": "@id"
+    },
+    "Order_payments": {
+      "@id": "spree:Order/payments",
+      "@type": "@id"
+    },
+    "Order_billing_address": {
+      "@id": "spree:Order/billing_address",
+      "@type": "@id"
+    },
+    "Order_shipping_address": {
+      "@id": "spree:Order/shipping_address",
+      "@type": "@id"
+    },
+    "Order_gift_card": {
+      "@id": "spree:Order/gift_card",
+      "@type": "@id"
+    },
+    "Order_market": {
+      "@id": "spree:Order/market",
+      "@type": "@id"
+    },
+    "Order": {
+      "@id": "schema:Order"
+    },
+    "PaymentMethod_id": {
+      "@id": "spree:PaymentMethod/id",
+      "@type": "xsd:string"
+    },
+    "PaymentMethod_name": {
+      "@id": "spree:PaymentMethod/name",
+      "@type": "xsd:string"
+    },
+    "PaymentMethod_description": {
+      "@id": "spree:PaymentMethod/description",
+      "@type": "xsd:string"
+    },
+    "PaymentMethod_type": {
+      "@id": "spree:PaymentMethod/type",
+      "@type": "xsd:string"
+    },
+    "PaymentMethod_session_required": {
+      "@id": "spree:PaymentMethod/session_required",
+      "@type": "@id"
+    },
+    "PaymentMethod_source_required": {
+      "@id": "spree:PaymentMethod/source_required",
+      "@type": "@id"
+    },
+    "PaymentMethod": {
+      "@id": "spree:PaymentMethod"
+    },
+    "Payment_id": {
+      "@id": "spree:Payment/id",
+      "@type": "xsd:string"
+    },
+    "Payment_payment_method_id": {
+      "@id": "spree:Payment/payment_method_id",
+      "@type": "xsd:string"
+    },
+    "Payment_response_code": {
+      "@id": "spree:Payment/response_code",
+      "@type": "xsd:string"
+    },
+    "Payment_number": {
+      "@id": "spree:Payment/number",
+      "@type": "xsd:string"
+    },
+    "Payment_amount": {
+      "@id": "spree:Payment/amount",
+      "@type": "xsd:string"
+    },
+    "Payment_display_amount": {
+      "@id": "spree:Payment/display_amount",
+      "@type": "xsd:string"
+    },
+    "Payment_status": {
+      "@id": "spree:Payment/status",
+      "@type": "xsd:string"
+    },
+    "Payment_source_type": {
+      "@id": "spree:Payment/source_type",
+      "@type": "xsd:string"
+    },
+    "Payment_source_id": {
+      "@id": "spree:Payment/source_id",
+      "@type": "xsd:string"
+    },
+    "Payment_source": {
+      "@id": "spree:Payment/source",
+      "@type": "@id"
+    },
+    "Payment_payment_method": {
+      "@id": "spree:Payment/payment_method",
+      "@type": "@id"
+    },
+    "Payment": {
+      "@id": "spree:Payment"
+    },
+    "PaymentSession_id": {
+      "@id": "spree:PaymentSession/id",
+      "@type": "xsd:string"
+    },
+    "PaymentSession_status": {
+      "@id": "spree:PaymentSession/status",
+      "@type": "xsd:string"
+    },
+    "PaymentSession_currency": {
+      "@id": "spree:PaymentSession/currency",
+      "@type": "xsd:string"
+    },
+    "PaymentSession_external_id": {
+      "@id": "spree:PaymentSession/external_id",
+      "@type": "xsd:string"
+    },
+    "PaymentSession_external_data": {
+      "@id": "spree:PaymentSession/external_data",
+      "@type": "@id"
+    },
+    "PaymentSession_customer_external_id": {
+      "@id": "spree:PaymentSession/customer_external_id",
+      "@type": "xsd:string"
+    },
+    "PaymentSession_expires_at": {
+      "@id": "spree:PaymentSession/expires_at",
+      "@type": "xsd:string"
+    },
+    "PaymentSession_amount": {
+      "@id": "spree:PaymentSession/amount",
+      "@type": "xsd:string"
+    },
+    "PaymentSession_payment_method_id": {
+      "@id": "spree:PaymentSession/payment_method_id",
+      "@type": "xsd:string"
+    },
+    "PaymentSession_order_id": {
+      "@id": "spree:PaymentSession/order_id",
+      "@type": "xsd:string"
+    },
+    "PaymentSession_payment_method": {
+      "@id": "spree:PaymentSession/payment_method",
+      "@type": "@id"
+    },
+    "PaymentSession_payment": {
+      "@id": "spree:PaymentSession/payment",
+      "@type": "@id"
+    },
+    "PaymentSession": {
+      "@id": "spree:PaymentSession"
+    },
+    "PaymentSetupSession_id": {
+      "@id": "spree:PaymentSetupSession/id",
+      "@type": "xsd:string"
+    },
+    "PaymentSetupSession_status": {
+      "@id": "spree:PaymentSetupSession/status",
+      "@type": "xsd:string"
+    },
+    "PaymentSetupSession_external_id": {
+      "@id": "spree:PaymentSetupSession/external_id",
+      "@type": "xsd:string"
+    },
+    "PaymentSetupSession_external_client_secret": {
+      "@id": "spree:PaymentSetupSession/external_client_secret",
+      "@type": "xsd:string"
+    },
+    "PaymentSetupSession_external_data": {
+      "@id": "spree:PaymentSetupSession/external_data",
+      "@type": "@id"
+    },
+    "PaymentSetupSession_payment_method_id": {
+      "@id": "spree:PaymentSetupSession/payment_method_id",
+      "@type": "xsd:string"
+    },
+    "PaymentSetupSession_payment_source_id": {
+      "@id": "spree:PaymentSetupSession/payment_source_id",
+      "@type": "xsd:string"
+    },
+    "PaymentSetupSession_payment_source_type": {
+      "@id": "spree:PaymentSetupSession/payment_source_type",
+      "@type": "xsd:string"
+    },
+    "PaymentSetupSession_customer_id": {
+      "@id": "spree:PaymentSetupSession/customer_id",
+      "@type": "xsd:string"
+    },
+    "PaymentSetupSession_payment_method": {
+      "@id": "spree:PaymentSetupSession/payment_method",
+      "@type": "@id"
+    },
+    "PaymentSetupSession": {
+      "@id": "spree:PaymentSetupSession"
+    },
+    "PaymentSource_id": {
+      "@id": "spree:PaymentSource/id",
+      "@type": "xsd:string"
+    },
+    "PaymentSource_gateway_payment_profile_id": {
+      "@id": "spree:PaymentSource/gateway_payment_profile_id",
+      "@type": "xsd:string"
+    },
+    "PaymentSource": {
+      "@id": "spree:PaymentSource"
+    },
+    "Policy_id": {
+      "@id": "spree:Policy/id",
+      "@type": "xsd:string"
+    },
+    "Policy_name": {
+      "@id": "spree:Policy/name",
+      "@type": "xsd:string"
+    },
+    "Policy_slug": {
+      "@id": "spree:Policy/slug",
+      "@type": "xsd:string"
+    },
+    "Policy_body": {
+      "@id": "spree:Policy/body",
+      "@type": "xsd:string"
+    },
+    "Policy_body_html": {
+      "@id": "spree:Policy/body_html",
+      "@type": "xsd:string"
+    },
+    "Policy": {
+      "@id": "spree:Policy"
+    },
+    "PriceHistory_id": {
+      "@id": "spree:PriceHistory/id",
+      "@type": "xsd:string"
+    },
+    "PriceHistory_amount": {
+      "@id": "spree:PriceHistory/amount",
+      "@type": "xsd:string"
+    },
+    "PriceHistory_amount_in_cents": {
+      "@id": "spree:PriceHistory/amount_in_cents",
+      "@type": "@id"
+    },
+    "PriceHistory_currency": {
+      "@id": "spree:PriceHistory/currency",
+      "@type": "xsd:string"
+    },
+    "PriceHistory_display_amount": {
+      "@id": "spree:PriceHistory/display_amount",
+      "@type": "xsd:string"
+    },
+    "PriceHistory_recorded_at": {
+      "@id": "spree:PriceHistory/recorded_at",
+      "@type": "xsd:string"
+    },
+    "PriceHistory": {
+      "@id": "spree:PriceHistory"
+    },
+    "Price_id": {
+      "@id": "spree:Price/id",
+      "@type": "xsd:string"
+    },
+    "Price_amount": {
+      "@id": "spree:Price/amount",
+      "@type": "xsd:string"
+    },
+    "Price_amount_in_cents": {
+      "@id": "spree:Price/amount_in_cents",
+      "@type": "@id"
+    },
+    "Price_compare_at_amount": {
+      "@id": "spree:Price/compare_at_amount",
+      "@type": "xsd:string"
+    },
+    "Price_compare_at_amount_in_cents": {
+      "@id": "spree:Price/compare_at_amount_in_cents",
+      "@type": "@id"
+    },
+    "Price_currency": {
+      "@id": "spree:Price/currency",
+      "@type": "xsd:string"
+    },
+    "Price_display_amount": {
+      "@id": "spree:Price/display_amount",
+      "@type": "xsd:string"
+    },
+    "Price_display_compare_at_amount": {
+      "@id": "spree:Price/display_compare_at_amount",
+      "@type": "xsd:string"
+    },
+    "Price_price_list_id": {
+      "@id": "spree:Price/price_list_id",
+      "@type": "xsd:string"
+    },
+    "Price": {
+      "@id": "schema:PriceSpecification"
+    },
+    "Product_id": {
+      "@id": "spree:Product/id",
+      "@type": "xsd:string"
+    },
+    "Product_name": {
+      "@id": "spree:Product/name",
+      "@type": "xsd:string"
+    },
+    "Product_slug": {
+      "@id": "spree:Product/slug",
+      "@type": "xsd:string"
+    },
+    "Product_meta_title": {
+      "@id": "spree:Product/meta_title",
+      "@type": "xsd:string"
+    },
+    "Product_meta_description": {
+      "@id": "spree:Product/meta_description",
+      "@type": "xsd:string"
+    },
+    "Product_meta_keywords": {
+      "@id": "spree:Product/meta_keywords",
+      "@type": "xsd:string"
+    },
+    "Product_variant_count": {
+      "@id": "spree:Product/variant_count",
+      "@type": "@id"
+    },
+    "Product_available_on": {
+      "@id": "spree:Product/available_on",
+      "@type": "xsd:string"
+    },
+    "Product_purchasable": {
+      "@id": "spree:Product/purchasable",
+      "@type": "@id"
+    },
+    "Product_in_stock": {
+      "@id": "spree:Product/in_stock",
+      "@type": "@id"
+    },
+    "Product_backorderable": {
+      "@id": "spree:Product/backorderable",
+      "@type": "@id"
+    },
+    "Product_available": {
+      "@id": "spree:Product/available",
+      "@type": "@id"
+    },
+    "Product_description": {
+      "@id": "spree:Product/description",
+      "@type": "xsd:string"
+    },
+    "Product_description_html": {
+      "@id": "spree:Product/description_html",
+      "@type": "xsd:string"
+    },
+    "Product_default_variant_id": {
+      "@id": "spree:Product/default_variant_id",
+      "@type": "xsd:string"
+    },
+    "Product_thumbnail_url": {
+      "@id": "spree:Product/thumbnail_url",
+      "@type": "xsd:string"
+    },
+    "Product_tags": {
+      "@id": "spree:Product/tags",
+      "@type": "@id"
+    },
+    "Product_price": {
+      "@id": "spree:Product/price",
+      "@type": "@id"
+    },
+    "Product_original_price": {
+      "@id": "spree:Product/original_price",
+      "@type": "@id"
+    },
+    "Product_primary_media": {
+      "@id": "spree:Product/primary_media",
+      "@type": "@id"
+    },
+    "Product_media": {
+      "@id": "spree:Product/media",
+      "@type": "@id"
+    },
+    "Product_variants": {
+      "@id": "spree:Product/variants",
+      "@type": "@id"
+    },
+    "Product_default_variant": {
+      "@id": "spree:Product/default_variant",
+      "@type": "@id"
+    },
+    "Product_option_types": {
+      "@id": "spree:Product/option_types",
+      "@type": "@id"
+    },
+    "Product_categories": {
+      "@id": "spree:Product/categories",
+      "@type": "@id"
+    },
+    "Product_custom_fields": {
+      "@id": "spree:Product/custom_fields",
+      "@type": "@id"
+    },
+    "Product_prior_price": {
+      "@id": "spree:Product/prior_price",
+      "@type": "@id"
+    },
+    "Product": {
+      "@id": "schema:Product"
+    },
+    "Promotion_id": {
+      "@id": "spree:Promotion/id",
+      "@type": "xsd:string"
+    },
+    "Promotion_name": {
+      "@id": "spree:Promotion/name",
+      "@type": "xsd:string"
+    },
+    "Promotion_description": {
+      "@id": "spree:Promotion/description",
+      "@type": "xsd:string"
+    },
+    "Promotion_code": {
+      "@id": "spree:Promotion/code",
+      "@type": "xsd:string"
+    },
+    "Promotion": {
+      "@id": "schema:Offer"
+    },
+    "Refund_id": {
+      "@id": "spree:Refund/id",
+      "@type": "xsd:string"
+    },
+    "Refund_transaction_id": {
+      "@id": "spree:Refund/transaction_id",
+      "@type": "xsd:string"
+    },
+    "Refund_amount": {
+      "@id": "spree:Refund/amount",
+      "@type": "xsd:string"
+    },
+    "Refund_payment_id": {
+      "@id": "spree:Refund/payment_id",
+      "@type": "xsd:string"
+    },
+    "Refund_refund_reason_id": {
+      "@id": "spree:Refund/refund_reason_id",
+      "@type": "xsd:string"
+    },
+    "Refund_reimbursement_id": {
+      "@id": "spree:Refund/reimbursement_id",
+      "@type": "xsd:string"
+    },
+    "Refund": {
+      "@id": "spree:Refund"
+    },
+    "ReturnAuthorization_id": {
+      "@id": "spree:ReturnAuthorization/id",
+      "@type": "xsd:string"
+    },
+    "ReturnAuthorization_number": {
+      "@id": "spree:ReturnAuthorization/number",
+      "@type": "xsd:string"
+    },
+    "ReturnAuthorization_status": {
+      "@id": "spree:ReturnAuthorization/status",
+      "@type": "xsd:string"
+    },
+    "ReturnAuthorization_order_id": {
+      "@id": "spree:ReturnAuthorization/order_id",
+      "@type": "xsd:string"
+    },
+    "ReturnAuthorization_stock_location_id": {
+      "@id": "spree:ReturnAuthorization/stock_location_id",
+      "@type": "xsd:string"
+    },
+    "ReturnAuthorization_return_authorization_reason_id": {
+      "@id": "spree:ReturnAuthorization/return_authorization_reason_id",
+      "@type": "xsd:string"
+    },
+    "ReturnAuthorization": {
+      "@id": "spree:ReturnAuthorization"
+    },
+    "ReturnItem_id": {
+      "@id": "spree:ReturnItem/id",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_reception_status": {
+      "@id": "spree:ReturnItem/reception_status",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_acceptance_status": {
+      "@id": "spree:ReturnItem/acceptance_status",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_created_at": {
+      "@id": "spree:ReturnItem/created_at",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_updated_at": {
+      "@id": "spree:ReturnItem/updated_at",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_pre_tax_amount": {
+      "@id": "spree:ReturnItem/pre_tax_amount",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_included_tax_total": {
+      "@id": "spree:ReturnItem/included_tax_total",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_additional_tax_total": {
+      "@id": "spree:ReturnItem/additional_tax_total",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_inventory_unit_id": {
+      "@id": "spree:ReturnItem/inventory_unit_id",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_return_authorization_id": {
+      "@id": "spree:ReturnItem/return_authorization_id",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_customer_return_id": {
+      "@id": "spree:ReturnItem/customer_return_id",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_reimbursement_id": {
+      "@id": "spree:ReturnItem/reimbursement_id",
+      "@type": "xsd:string"
+    },
+    "ReturnItem_exchange_variant_id": {
+      "@id": "spree:ReturnItem/exchange_variant_id",
+      "@type": "xsd:string"
+    },
+    "ReturnItem": {
+      "@id": "spree:ReturnItem"
+    },
+    "State_abbr": {
+      "@id": "spree:State/abbr",
+      "@type": "xsd:string"
+    },
+    "State_name": {
+      "@id": "spree:State/name",
+      "@type": "xsd:string"
+    },
+    "State": {
+      "@id": "spree:State"
+    },
+    "StockLocation_id": {
+      "@id": "spree:StockLocation/id",
+      "@type": "xsd:string"
+    },
+    "StockLocation_state_abbr": {
+      "@id": "spree:StockLocation/state_abbr",
+      "@type": "xsd:string"
+    },
+    "StockLocation_name": {
+      "@id": "spree:StockLocation/name",
+      "@type": "xsd:string"
+    },
+    "StockLocation_address1": {
+      "@id": "spree:StockLocation/address1",
+      "@type": "xsd:string"
+    },
+    "StockLocation_city": {
+      "@id": "spree:StockLocation/city",
+      "@type": "xsd:string"
+    },
+    "StockLocation_zipcode": {
+      "@id": "spree:StockLocation/zipcode",
+      "@type": "xsd:string"
+    },
+    "StockLocation_country_iso": {
+      "@id": "spree:StockLocation/country_iso",
+      "@type": "xsd:string"
+    },
+    "StockLocation_country_name": {
+      "@id": "spree:StockLocation/country_name",
+      "@type": "xsd:string"
+    },
+    "StockLocation_state_text": {
+      "@id": "spree:StockLocation/state_text",
+      "@type": "xsd:string"
+    },
+    "StockLocation": {
+      "@id": "spree:StockLocation"
+    },
+    "StockReservation_id": {
+      "@id": "spree:StockReservation/id",
+      "@type": "xsd:string"
+    },
+    "StockReservation": {
+      "@id": "spree:StockReservation"
+    },
+    "StoreCredit_id": {
+      "@id": "spree:StoreCredit/id",
+      "@type": "xsd:string"
+    },
+    "StoreCredit_amount": {
+      "@id": "spree:StoreCredit/amount",
+      "@type": "xsd:string"
+    },
+    "StoreCredit_amount_used": {
+      "@id": "spree:StoreCredit/amount_used",
+      "@type": "xsd:string"
+    },
+    "StoreCredit_amount_remaining": {
+      "@id": "spree:StoreCredit/amount_remaining",
+      "@type": "xsd:string"
+    },
+    "StoreCredit_display_amount": {
+      "@id": "spree:StoreCredit/display_amount",
+      "@type": "xsd:string"
+    },
+    "StoreCredit_display_amount_used": {
+      "@id": "spree:StoreCredit/display_amount_used",
+      "@type": "xsd:string"
+    },
+    "StoreCredit_display_amount_remaining": {
+      "@id": "spree:StoreCredit/display_amount_remaining",
+      "@type": "xsd:string"
+    },
+    "StoreCredit_currency": {
+      "@id": "spree:StoreCredit/currency",
+      "@type": "xsd:string"
+    },
+    "StoreCredit": {
+      "@id": "spree:StoreCredit"
+    },
+    "Variant_id": {
+      "@id": "spree:Variant/id",
+      "@type": "xsd:string"
+    },
+    "Variant_product_id": {
+      "@id": "spree:Variant/product_id",
+      "@type": "xsd:string"
+    },
+    "Variant_sku": {
+      "@id": "spree:Variant/sku",
+      "@type": "xsd:string"
+    },
+    "Variant_options_text": {
+      "@id": "spree:Variant/options_text",
+      "@type": "xsd:string"
+    },
+    "Variant_track_inventory": {
+      "@id": "spree:Variant/track_inventory",
+      "@type": "@id"
+    },
+    "Variant_media_count": {
+      "@id": "spree:Variant/media_count",
+      "@type": "@id"
+    },
+    "Variant_thumbnail_url": {
+      "@id": "spree:Variant/thumbnail_url",
+      "@type": "xsd:string"
+    },
+    "Variant_purchasable": {
+      "@id": "spree:Variant/purchasable",
+      "@type": "@id"
+    },
+    "Variant_in_stock": {
+      "@id": "spree:Variant/in_stock",
+      "@type": "@id"
+    },
+    "Variant_backorderable": {
+      "@id": "spree:Variant/backorderable",
+      "@type": "@id"
+    },
+    "Variant_weight": {
+      "@id": "spree:Variant/weight",
+      "@type": "@id"
+    },
+    "Variant_height": {
+      "@id": "spree:Variant/height",
+      "@type": "@id"
+    },
+    "Variant_width": {
+      "@id": "spree:Variant/width",
+      "@type": "@id"
+    },
+    "Variant_depth": {
+      "@id": "spree:Variant/depth",
+      "@type": "@id"
+    },
+    "Variant_price": {
+      "@id": "spree:Variant/price",
+      "@type": "@id"
+    },
+    "Variant_original_price": {
+      "@id": "spree:Variant/original_price",
+      "@type": "@id"
+    },
+    "Variant_primary_media": {
+      "@id": "spree:Variant/primary_media",
+      "@type": "@id"
+    },
+    "Variant_media": {
+      "@id": "spree:Variant/media",
+      "@type": "@id"
+    },
+    "Variant_option_values": {
+      "@id": "spree:Variant/option_values",
+      "@type": "@id"
+    },
+    "Variant_custom_fields": {
+      "@id": "spree:Variant/custom_fields",
+      "@type": "@id"
+    },
+    "Variant_prior_price": {
+      "@id": "spree:Variant/prior_price",
+      "@type": "@id"
+    },
+    "Variant": {
+      "@id": "schema:ProductModel"
+    },
+    "WishlistItem_id": {
+      "@id": "spree:WishlistItem/id",
+      "@type": "xsd:string"
+    },
+    "WishlistItem_variant_id": {
+      "@id": "spree:WishlistItem/variant_id",
+      "@type": "xsd:string"
+    },
+    "WishlistItem_wishlist_id": {
+      "@id": "spree:WishlistItem/wishlist_id",
+      "@type": "xsd:string"
+    },
+    "WishlistItem_quantity": {
+      "@id": "spree:WishlistItem/quantity",
+      "@type": "@id"
+    },
+    "WishlistItem_variant": {
+      "@id": "spree:WishlistItem/variant",
+      "@type": "@id"
+    },
+    "WishlistItem": {
+      "@id": "spree:WishlistItem"
+    },
+    "Wishlist_id": {
+      "@id": "spree:Wishlist/id",
+      "@type": "xsd:string"
+    },
+    "Wishlist_name": {
+      "@id": "spree:Wishlist/name",
+      "@type": "xsd:string"
+    },
+    "Wishlist_token": {
+      "@id": "spree:Wishlist/token",
+      "@type": "xsd:string"
+    },
+    "Wishlist_is_default": {
+      "@id": "spree:Wishlist/is_default",
+      "@type": "@id"
+    },
+    "Wishlist_is_private": {
+      "@id": "spree:Wishlist/is_private",
+      "@type": "@id"
+    },
+    "Wishlist_items": {
+      "@id": "spree:Wishlist/items",
+      "@type": "@id"
+    },
+    "Wishlist": {
+      "@id": "spree:Wishlist"
+    },
+    "Adjustment_id": {
+      "@id": "spree:Adjustment/id",
+      "@type": "xsd:string"
+    },
+    "Adjustment_label": {
+      "@id": "spree:Adjustment/label",
+      "@type": "xsd:string"
+    },
+    "Adjustment_display_amount": {
+      "@id": "spree:Adjustment/display_amount",
+      "@type": "xsd:string"
+    },
+    "Adjustment_included": {
+      "@id": "spree:Adjustment/included",
+      "@type": "@id"
+    },
+    "Adjustment_created_at": {
+      "@id": "spree:Adjustment/created_at",
+      "@type": "xsd:string"
+    },
+    "Adjustment_updated_at": {
+      "@id": "spree:Adjustment/updated_at",
+      "@type": "xsd:string"
+    },
+    "Adjustment_amount": {
+      "@id": "spree:Adjustment/amount",
+      "@type": "xsd:string"
+    },
+    "Adjustment_order_id": {
+      "@id": "spree:Adjustment/order_id",
+      "@type": "xsd:string"
+    },
+    "Adjustment": {
+      "@id": "spree:Adjustment"
+    },
+    "AdminUser_id": {
+      "@id": "spree:AdminUser/id",
+      "@type": "xsd:string"
+    },
+    "AdminUser_email": {
+      "@id": "spree:AdminUser/email",
+      "@type": "xsd:string"
+    },
+    "AdminUser_first_name": {
+      "@id": "spree:AdminUser/first_name",
+      "@type": "xsd:string"
+    },
+    "AdminUser_last_name": {
+      "@id": "spree:AdminUser/last_name",
+      "@type": "xsd:string"
+    },
+    "AdminUser_full_name": {
+      "@id": "spree:AdminUser/full_name",
+      "@type": "xsd:string"
+    },
+    "AdminUser_created_at": {
+      "@id": "spree:AdminUser/created_at",
+      "@type": "xsd:string"
+    },
+    "AdminUser_updated_at": {
+      "@id": "spree:AdminUser/updated_at",
+      "@type": "xsd:string"
+    },
+    "AdminUser_roles": {
+      "@id": "spree:AdminUser/roles",
+      "@type": "@id"
+    },
+    "AdminUser": {
+      "@id": "spree:AdminUser"
+    },
+    "AllowedOrigin_id": {
+      "@id": "spree:AllowedOrigin/id",
+      "@type": "xsd:string"
+    },
+    "AllowedOrigin_origin": {
+      "@id": "spree:AllowedOrigin/origin",
+      "@type": "xsd:string"
+    },
+    "AllowedOrigin_created_at": {
+      "@id": "spree:AllowedOrigin/created_at",
+      "@type": "xsd:string"
+    },
+    "AllowedOrigin_updated_at": {
+      "@id": "spree:AllowedOrigin/updated_at",
+      "@type": "xsd:string"
+    },
+    "AllowedOrigin": {
+      "@id": "spree:AllowedOrigin"
+    },
+    "ApiKey_id": {
+      "@id": "spree:ApiKey/id",
+      "@type": "xsd:string"
+    },
+    "ApiKey_name": {
+      "@id": "spree:ApiKey/name",
+      "@type": "xsd:string"
+    },
+    "ApiKey_key_type": {
+      "@id": "spree:ApiKey/key_type",
+      "@type": "xsd:string"
+    },
+    "ApiKey_token_prefix": {
+      "@id": "spree:ApiKey/token_prefix",
+      "@type": "xsd:string"
+    },
+    "ApiKey_scopes": {
+      "@id": "spree:ApiKey/scopes",
+      "@type": "@id"
+    },
+    "ApiKey_created_at": {
+      "@id": "spree:ApiKey/created_at",
+      "@type": "xsd:string"
+    },
+    "ApiKey_updated_at": {
+      "@id": "spree:ApiKey/updated_at",
+      "@type": "xsd:string"
+    },
+    "ApiKey_revoked_at": {
+      "@id": "spree:ApiKey/revoked_at",
+      "@type": "xsd:string"
+    },
+    "ApiKey_last_used_at": {
+      "@id": "spree:ApiKey/last_used_at",
+      "@type": "xsd:string"
+    },
+    "ApiKey_plaintext_token": {
+      "@id": "spree:ApiKey/plaintext_token",
+      "@type": "xsd:string"
+    },
+    "ApiKey_created_by_email": {
+      "@id": "spree:ApiKey/created_by_email",
+      "@type": "xsd:string"
+    },
+    "ApiKey": {
+      "@id": "spree:ApiKey"
+    },
+    "CouponCode_id": {
+      "@id": "spree:CouponCode/id",
+      "@type": "xsd:string"
+    },
+    "CouponCode_code": {
+      "@id": "spree:CouponCode/code",
+      "@type": "xsd:string"
+    },
+    "CouponCode_state": {
+      "@id": "spree:CouponCode/state",
+      "@type": "xsd:string"
+    },
+    "CouponCode_created_at": {
+      "@id": "spree:CouponCode/created_at",
+      "@type": "xsd:string"
+    },
+    "CouponCode_updated_at": {
+      "@id": "spree:CouponCode/updated_at",
+      "@type": "xsd:string"
+    },
+    "CouponCode_promotion_id": {
+      "@id": "spree:CouponCode/promotion_id",
+      "@type": "xsd:string"
+    },
+    "CouponCode_order_id": {
+      "@id": "spree:CouponCode/order_id",
+      "@type": "xsd:string"
+    },
+    "CouponCode": {
+      "@id": "spree:CouponCode"
+    },
+    "CustomFieldDefinition_id": {
+      "@id": "spree:CustomFieldDefinition/id",
+      "@type": "xsd:string"
+    },
+    "CustomFieldDefinition_namespace": {
+      "@id": "spree:CustomFieldDefinition/namespace",
+      "@type": "xsd:string"
+    },
+    "CustomFieldDefinition_key": {
+      "@id": "spree:CustomFieldDefinition/key",
+      "@type": "xsd:string"
+    },
+    "CustomFieldDefinition_label": {
+      "@id": "spree:CustomFieldDefinition/label",
+      "@type": "xsd:string"
+    },
+    "CustomFieldDefinition_field_type": {
+      "@id": "spree:CustomFieldDefinition/field_type",
+      "@type": "xsd:string"
+    },
+    "CustomFieldDefinition_resource_type": {
+      "@id": "spree:CustomFieldDefinition/resource_type",
+      "@type": "xsd:string"
+    },
+    "CustomFieldDefinition_storefront_visible": {
+      "@id": "spree:CustomFieldDefinition/storefront_visible",
+      "@type": "@id"
+    },
+    "CustomFieldDefinition_created_at": {
+      "@id": "spree:CustomFieldDefinition/created_at",
+      "@type": "xsd:string"
+    },
+    "CustomFieldDefinition_updated_at": {
+      "@id": "spree:CustomFieldDefinition/updated_at",
+      "@type": "xsd:string"
+    },
+    "CustomFieldDefinition": {
+      "@id": "spree:CustomFieldDefinition"
+    },
+    "CustomerGroup_id": {
+      "@id": "spree:CustomerGroup/id",
+      "@type": "xsd:string"
+    },
+    "CustomerGroup_name": {
+      "@id": "spree:CustomerGroup/name",
+      "@type": "xsd:string"
+    },
+    "CustomerGroup_description": {
+      "@id": "spree:CustomerGroup/description",
+      "@type": "xsd:string"
+    },
+    "CustomerGroup_customers_count": {
+      "@id": "spree:CustomerGroup/customers_count",
+      "@type": "@id"
+    },
+    "CustomerGroup_created_at": {
+      "@id": "spree:CustomerGroup/created_at",
+      "@type": "xsd:string"
+    },
+    "CustomerGroup_updated_at": {
+      "@id": "spree:CustomerGroup/updated_at",
+      "@type": "xsd:string"
+    },
+    "CustomerGroup_customers": {
+      "@id": "spree:CustomerGroup/customers",
+      "@type": "@id"
+    },
+    "CustomerGroup": {
+      "@id": "spree:CustomerGroup"
+    },
+    "Export_id": {
+      "@id": "spree:Export/id",
+      "@type": "xsd:string"
+    },
+    "Export_number": {
+      "@id": "spree:Export/number",
+      "@type": "xsd:string"
+    },
+    "Export_type": {
+      "@id": "spree:Export/type",
+      "@type": "xsd:string"
+    },
+    "Export_format": {
+      "@id": "spree:Export/format",
+      "@type": "xsd:string"
+    },
+    "Export_created_at": {
+      "@id": "spree:Export/created_at",
+      "@type": "xsd:string"
+    },
+    "Export_updated_at": {
+      "@id": "spree:Export/updated_at",
+      "@type": "xsd:string"
+    },
+    "Export_user_id": {
+      "@id": "spree:Export/user_id",
+      "@type": "xsd:string"
+    },
+    "Export_done": {
+      "@id": "spree:Export/done",
+      "@type": "@id"
+    },
+    "Export_filename": {
+      "@id": "spree:Export/filename",
+      "@type": "xsd:string"
+    },
+    "Export_byte_size": {
+      "@id": "spree:Export/byte_size",
+      "@type": "@id"
+    },
+    "Export_download_url": {
+      "@id": "spree:Export/download_url",
+      "@type": "xsd:string"
+    },
+    "Export": {
+      "@id": "spree:Export"
+    },
+    "PriceList_id": {
+      "@id": "spree:PriceList/id",
+      "@type": "xsd:string"
+    },
+    "PriceList_name": {
+      "@id": "spree:PriceList/name",
+      "@type": "xsd:string"
+    },
+    "PriceList_description": {
+      "@id": "spree:PriceList/description",
+      "@type": "xsd:string"
+    },
+    "PriceList_status": {
+      "@id": "spree:PriceList/status",
+      "@type": "xsd:string"
+    },
+    "PriceList_position": {
+      "@id": "spree:PriceList/position",
+      "@type": "@id"
+    },
+    "PriceList_match_policy": {
+      "@id": "spree:PriceList/match_policy",
+      "@type": "xsd:string"
+    },
+    "PriceList_starts_at": {
+      "@id": "spree:PriceList/starts_at",
+      "@type": "xsd:string"
+    },
+    "PriceList_ends_at": {
+      "@id": "spree:PriceList/ends_at",
+      "@type": "xsd:string"
+    },
+    "PriceList_deleted_at": {
+      "@id": "spree:PriceList/deleted_at",
+      "@type": "xsd:string"
+    },
+    "PriceList_created_at": {
+      "@id": "spree:PriceList/created_at",
+      "@type": "xsd:string"
+    },
+    "PriceList_updated_at": {
+      "@id": "spree:PriceList/updated_at",
+      "@type": "xsd:string"
+    },
+    "PriceList_currently_active": {
+      "@id": "spree:PriceList/currently_active",
+      "@type": "@id"
+    },
+    "PriceList_products_count": {
+      "@id": "spree:PriceList/products_count",
+      "@type": "@id"
+    },
+    "PriceList_prices_count": {
+      "@id": "spree:PriceList/prices_count",
+      "@type": "@id"
+    },
+    "PriceList_product_ids": {
+      "@id": "spree:PriceList/product_ids",
+      "@type": "@id"
+    },
+    "PriceList_price_rules": {
+      "@id": "spree:PriceList/price_rules",
+      "@type": "@id"
+    },
+    "PriceList": {
+      "@id": "spree:PriceList"
+    },
+    "PriceRule_id": {
+      "@id": "spree:PriceRule/id",
+      "@type": "xsd:string"
+    },
+    "PriceRule_created_at": {
+      "@id": "spree:PriceRule/created_at",
+      "@type": "xsd:string"
+    },
+    "PriceRule_updated_at": {
+      "@id": "spree:PriceRule/updated_at",
+      "@type": "xsd:string"
+    },
+    "PriceRule_type": {
+      "@id": "spree:PriceRule/type",
+      "@type": "xsd:string"
+    },
+    "PriceRule_price_list_id": {
+      "@id": "spree:PriceRule/price_list_id",
+      "@type": "xsd:string"
+    },
+    "PriceRule_preferences": {
+      "@id": "spree:PriceRule/preferences",
+      "@type": "@id"
+    },
+    "PriceRule_preference_schema": {
+      "@id": "spree:PriceRule/preference_schema",
+      "@type": "@id"
+    },
+    "PriceRule_label": {
+      "@id": "spree:PriceRule/label",
+      "@type": "xsd:string"
+    },
+    "PriceRule_description": {
+      "@id": "spree:PriceRule/description",
+      "@type": "xsd:string"
+    },
+    "PriceRule_markets": {
+      "@id": "spree:PriceRule/markets",
+      "@type": "@id"
+    },
+    "PriceRule_customer_groups": {
+      "@id": "spree:PriceRule/customer_groups",
+      "@type": "@id"
+    },
+    "PriceRule_customers": {
+      "@id": "spree:PriceRule/customers",
+      "@type": "@id"
+    },
+    "PriceRule": {
+      "@id": "spree:PriceRule"
+    },
+    "ProductPublication_id": {
+      "@id": "spree:ProductPublication/id",
+      "@type": "xsd:string"
+    },
+    "ProductPublication_published_at": {
+      "@id": "spree:ProductPublication/published_at",
+      "@type": "xsd:string"
+    },
+    "ProductPublication_unpublished_at": {
+      "@id": "spree:ProductPublication/unpublished_at",
+      "@type": "xsd:string"
+    },
+    "ProductPublication_product_id": {
+      "@id": "spree:ProductPublication/product_id",
+      "@type": "xsd:string"
+    },
+    "ProductPublication_channel_id": {
+      "@id": "spree:ProductPublication/channel_id",
+      "@type": "xsd:string"
+    },
+    "ProductPublication_created_at": {
+      "@id": "spree:ProductPublication/created_at",
+      "@type": "xsd:string"
+    },
+    "ProductPublication_updated_at": {
+      "@id": "spree:ProductPublication/updated_at",
+      "@type": "xsd:string"
+    },
+    "ProductPublication": {
+      "@id": "spree:ProductPublication"
+    },
+    "PromotionAction_id": {
+      "@id": "spree:PromotionAction/id",
+      "@type": "xsd:string"
+    },
+    "PromotionAction_created_at": {
+      "@id": "spree:PromotionAction/created_at",
+      "@type": "xsd:string"
+    },
+    "PromotionAction_updated_at": {
+      "@id": "spree:PromotionAction/updated_at",
+      "@type": "xsd:string"
+    },
+    "PromotionAction_type": {
+      "@id": "spree:PromotionAction/type",
+      "@type": "xsd:string"
+    },
+    "PromotionAction_promotion_id": {
+      "@id": "spree:PromotionAction/promotion_id",
+      "@type": "xsd:string"
+    },
+    "PromotionAction_preferences": {
+      "@id": "spree:PromotionAction/preferences",
+      "@type": "@id"
+    },
+    "PromotionAction_preference_schema": {
+      "@id": "spree:PromotionAction/preference_schema",
+      "@type": "@id"
+    },
+    "PromotionAction_label": {
+      "@id": "spree:PromotionAction/label",
+      "@type": "xsd:string"
+    },
+    "PromotionAction_calculator": {
+      "@id": "spree:PromotionAction/calculator",
+      "@type": "@id"
+    },
+    "PromotionAction_line_items": {
+      "@id": "spree:PromotionAction/line_items",
+      "@type": "@id"
+    },
+    "PromotionAction": {
+      "@id": "spree:PromotionAction"
+    },
+    "PromotionRule_id": {
+      "@id": "spree:PromotionRule/id",
+      "@type": "xsd:string"
+    },
+    "PromotionRule_created_at": {
+      "@id": "spree:PromotionRule/created_at",
+      "@type": "xsd:string"
+    },
+    "PromotionRule_updated_at": {
+      "@id": "spree:PromotionRule/updated_at",
+      "@type": "xsd:string"
+    },
+    "PromotionRule_type": {
+      "@id": "spree:PromotionRule/type",
+      "@type": "xsd:string"
+    },
+    "PromotionRule_promotion_id": {
+      "@id": "spree:PromotionRule/promotion_id",
+      "@type": "xsd:string"
+    },
+    "PromotionRule_preferences": {
+      "@id": "spree:PromotionRule/preferences",
+      "@type": "@id"
+    },
+    "PromotionRule_preference_schema": {
+      "@id": "spree:PromotionRule/preference_schema",
+      "@type": "@id"
+    },
+    "PromotionRule_label": {
+      "@id": "spree:PromotionRule/label",
+      "@type": "xsd:string"
+    },
+    "PromotionRule_product_ids": {
+      "@id": "spree:PromotionRule/product_ids",
+      "@type": "@id"
+    },
+    "PromotionRule_category_ids": {
+      "@id": "spree:PromotionRule/category_ids",
+      "@type": "@id"
+    },
+    "PromotionRule_customer_ids": {
+      "@id": "spree:PromotionRule/customer_ids",
+      "@type": "@id"
+    },
+    "PromotionRule_products": {
+      "@id": "spree:PromotionRule/products",
+      "@type": "@id"
+    },
+    "PromotionRule_categories": {
+      "@id": "spree:PromotionRule/categories",
+      "@type": "@id"
+    },
+    "PromotionRule_customers": {
+      "@id": "spree:PromotionRule/customers",
+      "@type": "@id"
+    },
+    "PromotionRule_customer_groups": {
+      "@id": "spree:PromotionRule/customer_groups",
+      "@type": "@id"
+    },
+    "PromotionRule_countries": {
+      "@id": "spree:PromotionRule/countries",
+      "@type": "@id"
+    },
+    "PromotionRule": {
+      "@id": "spree:PromotionRule"
+    },
+    "Reimbursement_id": {
+      "@id": "spree:Reimbursement/id",
+      "@type": "xsd:string"
+    },
+    "Reimbursement_number": {
+      "@id": "spree:Reimbursement/number",
+      "@type": "xsd:string"
+    },
+    "Reimbursement_reimbursement_status": {
+      "@id": "spree:Reimbursement/reimbursement_status",
+      "@type": "xsd:string"
+    },
+    "Reimbursement_total": {
+      "@id": "spree:Reimbursement/total",
+      "@type": "xsd:string"
+    },
+    "Reimbursement_order_id": {
+      "@id": "spree:Reimbursement/order_id",
+      "@type": "xsd:string"
+    },
+    "Reimbursement_customer_return_id": {
+      "@id": "spree:Reimbursement/customer_return_id",
+      "@type": "xsd:string"
+    },
+    "Reimbursement_created_at": {
+      "@id": "spree:Reimbursement/created_at",
+      "@type": "xsd:string"
+    },
+    "Reimbursement_updated_at": {
+      "@id": "spree:Reimbursement/updated_at",
+      "@type": "xsd:string"
+    },
+    "Reimbursement_order": {
+      "@id": "spree:Reimbursement/order",
+      "@type": "@id"
+    },
+    "Reimbursement": {
+      "@id": "spree:Reimbursement"
+    },
+    "Role_id": {
+      "@id": "spree:Role/id",
+      "@type": "xsd:string"
+    },
+    "Role_name": {
+      "@id": "spree:Role/name",
+      "@type": "xsd:string"
+    },
+    "Role_created_at": {
+      "@id": "spree:Role/created_at",
+      "@type": "xsd:string"
+    },
+    "Role_updated_at": {
+      "@id": "spree:Role/updated_at",
+      "@type": "xsd:string"
+    },
+    "Role": {
+      "@id": "spree:Role"
+    },
+    "StockItem_id": {
+      "@id": "spree:StockItem/id",
+      "@type": "xsd:string"
+    },
+    "StockItem_count_on_hand": {
+      "@id": "spree:StockItem/count_on_hand",
+      "@type": "@id"
+    },
+    "StockItem_backorderable": {
+      "@id": "spree:StockItem/backorderable",
+      "@type": "@id"
+    },
+    "StockItem_stock_location_id": {
+      "@id": "spree:StockItem/stock_location_id",
+      "@type": "xsd:string"
+    },
+    "StockItem_variant_id": {
+      "@id": "spree:StockItem/variant_id",
+      "@type": "xsd:string"
+    },
+    "StockItem_metadata": {
+      "@id": "spree:StockItem/metadata",
+      "@type": "@id"
+    },
+    "StockItem_created_at": {
+      "@id": "spree:StockItem/created_at",
+      "@type": "xsd:string"
+    },
+    "StockItem_updated_at": {
+      "@id": "spree:StockItem/updated_at",
+      "@type": "xsd:string"
+    },
+    "StockItem_allocated_count": {
+      "@id": "spree:StockItem/allocated_count",
+      "@type": "@id"
+    },
+    "StockItem_available_count": {
+      "@id": "spree:StockItem/available_count",
+      "@type": "@id"
+    },
+    "StockItem_stock_location": {
+      "@id": "spree:StockItem/stock_location",
+      "@type": "@id"
+    },
+    "StockItem_variant": {
+      "@id": "spree:StockItem/variant",
+      "@type": "@id"
+    },
+    "StockItem": {
+      "@id": "spree:StockItem"
+    },
+    "StockTransfer_id": {
+      "@id": "spree:StockTransfer/id",
+      "@type": "xsd:string"
+    },
+    "StockTransfer_number": {
+      "@id": "spree:StockTransfer/number",
+      "@type": "xsd:string"
+    },
+    "StockTransfer_reference": {
+      "@id": "spree:StockTransfer/reference",
+      "@type": "xsd:string"
+    },
+    "StockTransfer_metadata": {
+      "@id": "spree:StockTransfer/metadata",
+      "@type": "@id"
+    },
+    "StockTransfer_created_at": {
+      "@id": "spree:StockTransfer/created_at",
+      "@type": "xsd:string"
+    },
+    "StockTransfer_updated_at": {
+      "@id": "spree:StockTransfer/updated_at",
+      "@type": "xsd:string"
+    },
+    "StockTransfer_source_location_id": {
+      "@id": "spree:StockTransfer/source_location_id",
+      "@type": "xsd:string"
+    },
+    "StockTransfer_destination_location_id": {
+      "@id": "spree:StockTransfer/destination_location_id",
+      "@type": "xsd:string"
+    },
+    "StockTransfer_source_location": {
+      "@id": "spree:StockTransfer/source_location",
+      "@type": "@id"
+    },
+    "StockTransfer_destination_location": {
+      "@id": "spree:StockTransfer/destination_location",
+      "@type": "@id"
+    },
+    "StockTransfer": {
+      "@id": "spree:StockTransfer"
+    },
+    "StoreCreditCategory_id": {
+      "@id": "spree:StoreCreditCategory/id",
+      "@type": "xsd:string"
+    },
+    "StoreCreditCategory_name": {
+      "@id": "spree:StoreCreditCategory/name",
+      "@type": "xsd:string"
+    },
+    "StoreCreditCategory_created_at": {
+      "@id": "spree:StoreCreditCategory/created_at",
+      "@type": "xsd:string"
+    },
+    "StoreCreditCategory_updated_at": {
+      "@id": "spree:StoreCreditCategory/updated_at",
+      "@type": "xsd:string"
+    },
+    "StoreCreditCategory_non_expiring": {
+      "@id": "spree:StoreCreditCategory/non_expiring",
+      "@type": "@id"
+    },
+    "StoreCreditCategory": {
+      "@id": "spree:StoreCreditCategory"
+    },
+    "Store_id": {
+      "@id": "spree:Store/id",
+      "@type": "xsd:string"
+    },
+    "Store_metadata": {
+      "@id": "spree:Store/metadata",
+      "@type": "@id"
+    },
+    "Store_name": {
+      "@id": "spree:Store/name",
+      "@type": "xsd:string"
+    },
+    "Store_default_currency": {
+      "@id": "spree:Store/default_currency",
+      "@type": "xsd:string"
+    },
+    "Store_default_locale": {
+      "@id": "spree:Store/default_locale",
+      "@type": "xsd:string"
+    },
+    "Store_mail_from_address": {
+      "@id": "spree:Store/mail_from_address",
+      "@type": "xsd:string"
+    },
+    "Store_customer_support_email": {
+      "@id": "spree:Store/customer_support_email",
+      "@type": "xsd:string"
+    },
+    "Store_new_order_notifications_email": {
+      "@id": "spree:Store/new_order_notifications_email",
+      "@type": "xsd:string"
+    },
+    "Store_preferred_send_consumer_transactional_emails": {
+      "@id": "spree:Store/preferred_send_consumer_transactional_emails",
+      "@type": "@id"
+    },
+    "Store_preferred_admin_locale": {
+      "@id": "spree:Store/preferred_admin_locale",
+      "@type": "xsd:string"
+    },
+    "Store_preferred_timezone": {
+      "@id": "spree:Store/preferred_timezone",
+      "@type": "xsd:string"
+    },
+    "Store_preferred_weight_unit": {
+      "@id": "spree:Store/preferred_weight_unit",
+      "@type": "xsd:string"
+    },
+    "Store_preferred_unit_system": {
+      "@id": "spree:Store/preferred_unit_system",
+      "@type": "xsd:string"
+    },
+    "Store_created_at": {
+      "@id": "spree:Store/created_at",
+      "@type": "xsd:string"
+    },
+    "Store_updated_at": {
+      "@id": "spree:Store/updated_at",
+      "@type": "xsd:string"
+    },
+    "Store_url": {
+      "@id": "spree:Store/url",
+      "@type": "xsd:string"
+    },
+    "Store_supported_currencies": {
+      "@id": "spree:Store/supported_currencies",
+      "@type": "@id"
+    },
+    "Store_supported_locales": {
+      "@id": "spree:Store/supported_locales",
+      "@type": "@id"
+    },
+    "Store_logo_url": {
+      "@id": "spree:Store/logo_url",
+      "@type": "xsd:string"
+    },
+    "Store_mailer_logo_url": {
+      "@id": "spree:Store/mailer_logo_url",
+      "@type": "xsd:string"
+    },
+    "Store": {
+      "@id": "spree:Store"
+    },
+    "TaxCategory_id": {
+      "@id": "spree:TaxCategory/id",
+      "@type": "xsd:string"
+    },
+    "TaxCategory_name": {
+      "@id": "spree:TaxCategory/name",
+      "@type": "xsd:string"
+    },
+    "TaxCategory_tax_code": {
+      "@id": "spree:TaxCategory/tax_code",
+      "@type": "xsd:string"
+    },
+    "TaxCategory_description": {
+      "@id": "spree:TaxCategory/description",
+      "@type": "xsd:string"
+    },
+    "TaxCategory_is_default": {
+      "@id": "spree:TaxCategory/is_default",
+      "@type": "@id"
+    },
+    "TaxCategory_created_at": {
+      "@id": "spree:TaxCategory/created_at",
+      "@type": "xsd:string"
+    },
+    "TaxCategory_updated_at": {
+      "@id": "spree:TaxCategory/updated_at",
+      "@type": "xsd:string"
+    },
+    "TaxCategory": {
+      "@id": "spree:TaxCategory"
+    },
+    "WebhookDelivery_id": {
+      "@id": "spree:WebhookDelivery/id",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery_event_name": {
+      "@id": "spree:WebhookDelivery/event_name",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery_event_id": {
+      "@id": "spree:WebhookDelivery/event_id",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery_response_code": {
+      "@id": "spree:WebhookDelivery/response_code",
+      "@type": "@id"
+    },
+    "WebhookDelivery_execution_time": {
+      "@id": "spree:WebhookDelivery/execution_time",
+      "@type": "@id"
+    },
+    "WebhookDelivery_error_type": {
+      "@id": "spree:WebhookDelivery/error_type",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery_request_errors": {
+      "@id": "spree:WebhookDelivery/request_errors",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery_response_body": {
+      "@id": "spree:WebhookDelivery/response_body",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery_success": {
+      "@id": "spree:WebhookDelivery/success",
+      "@type": "@id"
+    },
+    "WebhookDelivery_payload": {
+      "@id": "spree:WebhookDelivery/payload",
+      "@type": "@id"
+    },
+    "WebhookDelivery_created_at": {
+      "@id": "spree:WebhookDelivery/created_at",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery_updated_at": {
+      "@id": "spree:WebhookDelivery/updated_at",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery_delivered_at": {
+      "@id": "spree:WebhookDelivery/delivered_at",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery_webhook_endpoint_id": {
+      "@id": "spree:WebhookDelivery/webhook_endpoint_id",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery_webhook_endpoint_url": {
+      "@id": "spree:WebhookDelivery/webhook_endpoint_url",
+      "@type": "xsd:string"
+    },
+    "WebhookDelivery": {
+      "@id": "spree:WebhookDelivery"
+    },
+    "WebhookEndpoint_id": {
+      "@id": "spree:WebhookEndpoint/id",
+      "@type": "xsd:string"
+    },
+    "WebhookEndpoint_name": {
+      "@id": "spree:WebhookEndpoint/name",
+      "@type": "xsd:string"
+    },
+    "WebhookEndpoint_url": {
+      "@id": "spree:WebhookEndpoint/url",
+      "@type": "xsd:string"
+    },
+    "WebhookEndpoint_active": {
+      "@id": "spree:WebhookEndpoint/active",
+      "@type": "@id"
+    },
+    "WebhookEndpoint_subscriptions": {
+      "@id": "spree:WebhookEndpoint/subscriptions",
+      "@type": "@id"
+    },
+    "WebhookEndpoint_disabled_reason": {
+      "@id": "spree:WebhookEndpoint/disabled_reason",
+      "@type": "xsd:string"
+    },
+    "WebhookEndpoint_created_at": {
+      "@id": "spree:WebhookEndpoint/created_at",
+      "@type": "xsd:string"
+    },
+    "WebhookEndpoint_updated_at": {
+      "@id": "spree:WebhookEndpoint/updated_at",
+      "@type": "xsd:string"
+    },
+    "WebhookEndpoint_disabled_at": {
+      "@id": "spree:WebhookEndpoint/disabled_at",
+      "@type": "xsd:string"
+    },
+    "WebhookEndpoint_secret_key": {
+      "@id": "spree:WebhookEndpoint/secret_key",
+      "@type": "xsd:string"
+    },
+    "WebhookEndpoint_last_delivery_at": {
+      "@id": "spree:WebhookEndpoint/last_delivery_at",
+      "@type": "xsd:string"
+    },
+    "WebhookEndpoint_recent_delivery_count": {
+      "@id": "spree:WebhookEndpoint/recent_delivery_count",
+      "@type": "@id"
+    },
+    "WebhookEndpoint_recent_failure_count": {
+      "@id": "spree:WebhookEndpoint/recent_failure_count",
+      "@type": "@id"
+    },
+    "WebhookEndpoint_total_delivery_count": {
+      "@id": "spree:WebhookEndpoint/total_delivery_count",
+      "@type": "@id"
+    },
+    "WebhookEndpoint_successful_delivery_count": {
+      "@id": "spree:WebhookEndpoint/successful_delivery_count",
+      "@type": "@id"
+    },
+    "WebhookEndpoint_failed_delivery_count": {
+      "@id": "spree:WebhookEndpoint/failed_delivery_count",
+      "@type": "@id"
+    },
+    "WebhookEndpoint": {
+      "@id": "spree:WebhookEndpoint"
+    }
+  }
+}

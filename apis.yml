@@ -35,7 +35,7 @@ apis:
       - type: Documentation
         url: https://spreecommerce.org/docs/api-reference/introduction
       - type: OpenAPI
-        url: https://github.com/spree/spree/tree/main/api
+        url: openapi/spree-store-api.yaml
 
   - aid: spree:spree-admin-api
     name: Spree Admin API
@@ -55,7 +55,42 @@ apis:
       - type: Documentation
         url: https://spreecommerce.org/docs/api-reference/introduction
       - type: OpenAPI
-        url: https://github.com/spree/spree/tree/main/api
+        url: openapi/spree-admin-api.yaml
+
+  - aid: spree:spree-storefront-api
+    name: Spree Storefront API
+    description: Legacy storefront REST API for customer-facing operations including products, cart, checkout, and account management. OpenAPI 3.0 documented.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://spreecommerce.org/docs/api-reference/introduction
+    baseURL: https://demo.spreecommerce.org
+    tags:
+      - Products
+      - Cart
+      - Checkout
+      - Orders
+      - Storefront
+    properties:
+      - type: Documentation
+        url: https://spreecommerce.org/docs/api-reference/introduction
+      - type: OpenAPI
+        url: openapi/spree-storefront-api.yaml
+
+  - aid: spree:spree-platform-api
+    name: Spree Platform API
+    description: Platform-level REST API for multi-tenant and enterprise Spree deployments, covering advanced store configuration, multi-vendor, and platform management. OpenAPI 3.0 documented.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://spreecommerce.org/docs/api-reference/introduction
+    baseURL: https://yourdomain.com/api/v3
+    tags:
+      - Platform
+      - Multi-Vendor
+      - Administration
+      - Store Configuration
+    properties:
+      - type: Documentation
+        url: https://spreecommerce.org/docs/api-reference/introduction
+      - type: OpenAPI
+        url: openapi/spree-platform-api.yaml
 
 common:
   - type: Website

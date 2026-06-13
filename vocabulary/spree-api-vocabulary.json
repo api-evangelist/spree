@@ -1,0 +1,845 @@
+{
+  "title": "Spree Commerce API Vocabulary",
+  "description": "Domain vocabulary extracted from Spree Store and Admin API OpenAPI specifications",
+  "version": "3.0",
+  "source": "https://github.com/spree/spree/tree/main/docs/api-reference",
+  "terms": {
+    "PaginationMeta": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "PaginationMeta.count": {
+      "description": "Total number of records",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "integer"
+    },
+    "PaginationMeta.pages": {
+      "description": "Total number of pages",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "integer"
+    },
+    "PaginationMeta.from": {
+      "description": "Index of first record on this page",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "integer"
+    },
+    "PaginationMeta.to": {
+      "description": "Index of last record on this page",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "integer"
+    },
+    "PaginationMeta.in": {
+      "description": "Number of records on this page",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "integer"
+    },
+    "PaginationMeta.previous": {
+      "description": "Previous page number",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "integer"
+    },
+    "PaginationMeta.next": {
+      "description": "Next page number",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "integer"
+    },
+    "ErrorResponse": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "AuthResponse": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "AuthResponse.token": {
+      "description": "JWT access token",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "AuthResponse.refresh_token": {
+      "description": "Refresh token for obtaining new access tokens",
+      "sources": [
+        "store-api"
+      ],
+      "type": "string"
+    },
+    "PermissionRule": {
+      "description": "A single permission rule (CanCanCan rule). Rules are applied in order, last-matching-wins.",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "PermissionRule.allow": {
+      "description": "true for `can`, false for `cannot`",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "boolean"
+    },
+    "PermissionRule.actions": {
+      "description": "Action names, e.g. [\"read\", \"update\"] or [\"manage\"]",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "array"
+    },
+    "PermissionRule.subjects": {
+      "description": "Subject class names, e.g. [\"Spree::Product\"] or [\"all\"]",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "array"
+    },
+    "PermissionRule.has_conditions": {
+      "description": "True if the server-side rule has per-record conditions. The SPA shows the action optimistically and handles 403 from the API.",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "boolean"
+    },
+    "MeResponse": {
+      "description": "Current admin user profile and serialized permissions",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "CheckoutRequirement": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "CheckoutRequirement.step": {
+      "description": "Checkout step this requirement belongs to",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "CheckoutRequirement.field": {
+      "description": "Field that needs to be satisfied",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "CheckoutRequirement.message": {
+      "description": "Human-readable requirement message",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "CartWarning": {
+      "description": "A warning about a cart issue (e.g., item removed due to stock change)",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "CartWarning.code": {
+      "description": "Machine-readable warning code",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "CartWarning.message": {
+      "description": "Human-readable warning message",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "CartWarning.line_item_id": {
+      "description": "Prefixed line item ID (when applicable)",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "CartWarning.variant_id": {
+      "description": "Prefixed variant ID (when applicable)",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "FulfillmentManifestItem": {
+      "description": "An item within a fulfillment \u2014 which line item and how many units are in this fulfillment",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "FulfillmentManifestItem.item_id": {
+      "description": "Line item ID",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "FulfillmentManifestItem.variant_id": {
+      "description": "Variant ID",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "FulfillmentManifestItem.quantity": {
+      "description": "Quantity in this fulfillment",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "integer"
+    },
+    "AdminUserRoleAssignment": {
+      "description": "A role assignment for the current store on a staff member",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "AdminUserRoleAssignment.id": {
+      "description": "Prefixed role ID",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "AdminUserRoleAssignment.name": {
+      "description": "Role name",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "PreferenceField": {
+      "description": "A single configurable preference on a payment method, promotion rule/action, or calculator. The frontend uses `type` + `default` to render a sensible input.",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "PreferenceField.type": {
+      "description": "string | text | password | integer | decimal | boolean | array | hash",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "PreferenceField.default": {
+      "description": "Default value (any JSON type), null when there is no default",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "PromotionActionCalculator": {
+      "description": "The action's nested calculator (when the action carries one \u2014 null for actions like `free_shipping`)",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "PromotionActionCalculator.type": {
+      "description": "Wire shorthand for the calculator subclass",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "string"
+    },
+    "PromotionActionLineItem": {
+      "description": "One row in a `create_line_items` action \u2014 the variant added to the order and how many",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Address": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Base": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "Cart": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "Category": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Channel": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Country": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "CreditCard": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Currency": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "CustomField": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Customer": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "DeliveryMethod": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "DeliveryRate": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "DigitalLink": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Digital": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "Discount": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Fulfillment": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "GiftCardBatch": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "GiftCard": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Invitation": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "LineItem": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Locale": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "Market": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Media": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "NewsletterSubscriber": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "OptionType": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "OptionValue": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Order": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "PaymentMethod": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Payment": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "PaymentSession": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "PaymentSetupSession": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "PaymentSource": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Policy": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "PriceHistory": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Price": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Product": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Promotion": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Refund": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "ReturnAuthorization": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "ReturnItem": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "State": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "StockLocation": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "StockReservation": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "StoreCredit": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Variant": {
+      "description": "",
+      "sources": [
+        "store-api",
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "WishlistItem": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "Wishlist": {
+      "description": "",
+      "sources": [
+        "store-api"
+      ],
+      "type": "object"
+    },
+    "Adjustment": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "AdminUser": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "AllowedOrigin": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "ApiKey": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "CouponCode": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "CustomFieldDefinition": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "CustomerGroup": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Export": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "PriceList": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "PriceRule": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "ProductPublication": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "PromotionAction": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "PromotionRule": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Reimbursement": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Role": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "StockItem": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "StockTransfer": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "StoreCreditCategory": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "Store": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "TaxCategory": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "WebhookDelivery": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    },
+    "WebhookEndpoint": {
+      "description": "",
+      "sources": [
+        "admin-api"
+      ],
+      "type": "object"
+    }
+  }
+}
