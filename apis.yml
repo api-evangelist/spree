@@ -2,7 +2,7 @@ aid: spree
 name: Spree Commerce
 description: Open-source headless e-commerce framework with a REST API for managing products, variants, orders, customers, inventory, promotions, and payment processing. Spree provides two OpenAPI 3.0-documented APIs — a Store API for customer-facing operations and an Admin API for back-office management — along with a TypeScript SDK, CLI, and Next.js storefront starter.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/spree/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -21,7 +21,7 @@ apis:
   - aid: spree:spree-store-api
     name: Spree Store API
     description: Customer-facing REST API for browsing products, managing carts, placing orders, and handling checkout. Documented with OpenAPI 3.0.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://spreecommerce.org/docs/api-reference/introduction
     baseURL: https://yourdomain.com/api/v3/store
     tags:
@@ -40,7 +40,7 @@ apis:
   - aid: spree:spree-admin-api
     name: Spree Admin API
     description: Back-office REST API for managing products, variants, inventory, promotions, orders, users, and store configuration. Documented with OpenAPI 3.0.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://spreecommerce.org/docs/api-reference/introduction
     baseURL: https://yourdomain.com/api/v3/admin
     tags:
@@ -60,7 +60,7 @@ apis:
   - aid: spree:spree-storefront-api
     name: Spree Storefront API
     description: Legacy storefront REST API for customer-facing operations including products, cart, checkout, and account management. OpenAPI 3.0 documented.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://spreecommerce.org/docs/api-reference/introduction
     baseURL: https://demo.spreecommerce.org
     tags:
@@ -78,7 +78,7 @@ apis:
   - aid: spree:spree-platform-api
     name: Spree Platform API
     description: Platform-level REST API for multi-tenant and enterprise Spree deployments, covering advanced store configuration, multi-vendor, and platform management. OpenAPI 3.0 documented.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://spreecommerce.org/docs/api-reference/introduction
     baseURL: https://yourdomain.com/api/v3
     tags:
