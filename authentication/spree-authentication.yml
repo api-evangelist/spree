@@ -1,0 +1,39 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/spree-admin-api.yaml, openapi/spree-platform-api.yaml, openapi/spree-store-api.yaml,
+  openapi/spree-storefront-api.yaml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: api_key
+  type: apiKey
+  in: header
+  parameter: x-spree-api-key
+  description: Secret API key for admin access
+  sources:
+  - openapi/spree-admin-api.yaml
+  - openapi/spree-store-api.yaml
+- name: bearer_auth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: JWT token for admin user authentication
+  sources:
+  - openapi/spree-admin-api.yaml
+  - openapi/spree-platform-api.yaml
+  - openapi/spree-store-api.yaml
+  - openapi/spree-storefront-api.yaml
+- name: orderToken
+  type: apiKey
+  in: header
+  parameter: X-Spree-Order-Token
+  description: |-
+    Order token to authorize Cart and Checkout requests.
+
+    [How to obtain X-Spree-Order-Token](../authentication#for-guest-users)
+  sources:
+  - openapi/spree-storefront-api.yaml
