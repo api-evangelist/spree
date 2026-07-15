@@ -93,6 +93,8 @@ apis:
         url: openapi/spree-platform-api.yaml
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/spree-agentic-access.yml
   - type: DomainSecurity
     url: security/spree-domain-security.yml
   - type: Authentication
