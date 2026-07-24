@@ -1,0 +1,518 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Staff API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Staff
+  description: Admin users, roles, and invitations to the store
+paths:
+  /api/v3/admin/admin_users:
+    get:
+      summary: List staff
+      tags:
+      - Staff
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns admin users with at least one role assignment on the current store.
+
+
+        **Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: staff } = await client.adminUsers.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: staff found
+          content:
+            application/json:
+              example:
+                data:
+                - id: admin_UkLWZg9DAJ
+                  email: latricia.mertz@wiegand.name
+                  first_name: Jetta
+                  last_name: Rodriguez
+                  full_name: Jetta Rodriguez
+                  created_at: '2026-06-12T17:23:41.426Z'
+                  updated_at: '2026-06-12T17:23:41.426Z'
+                  roles:
+                  - id: role_UkLWZg9DAJ
+                    name: admin
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+  /api/v3/admin/admin_users/{id}:
+    get:
+      summary: Show a staff member
+      tags:
+      - Staff
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: '**Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst staff = await client.adminUsers.get('admin_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: staff member found
+          content:
+            application/json:
+              example:
+                id: admin_UkLWZg9DAJ
+                email: keiko@bechtelargrady.ca
+                first_name: Rosemary
+                last_name: Lang
+                full_name: Rosemary Lang
+                created_at: '2026-06-12T17:23:41.772Z'
+                updated_at: '2026-06-12T17:23:41.772Z'
+                roles:
+                - id: role_UkLWZg9DAJ
+                  name: admin
+    patch:
+      summary: Update a staff member
+      tags:
+      - Staff
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates name fields and reassigns roles for the current store. `role_ids` is a complete replacement — roles not in the array are removed for this store.
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst staff = await client.adminUsers.update('admin_xxx', {\n  first_name: 'Ada',\n  role_ids: ['role_xxx']\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: staff member updated
+          content:
+            application/json:
+              example:
+                id: admin_UkLWZg9DAJ
+                email: leona.kuhn@ullrichemard.info
+                first_name: Renamed
+                last_name: Jacobson
+                full_name: Renamed Jacobson
+                created_at: '2026-06-12T17:23:42.066Z'
+                updated_at: '2026-06-12T17:23:42.082Z'
+                roles:
+                - id: role_UkLWZg9DAJ
+                  name: admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  example: Ada
+                last_name:
+                  type: string
+                  example: Lovelace
+                role_ids:
+                  type: array
+                  items:
+                    type: string
+    delete:
+      summary: Remove a staff member from this store
+      tags:
+      - Staff
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Removes the user''s role assignments on the current store. The account is preserved — the user keeps access to any other stores.
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.adminUsers.delete('admin_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: staff removed from store
+  /api/v3/admin/invitations:
+    get:
+      summary: List invitations
+      tags:
+      - Staff
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns invitations for the current store, including pending and accepted.
+
+
+        **Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: invitations } = await client.invitations.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: invitations found
+          content:
+            application/json:
+              example:
+                data:
+                - id: inv_UkLWZg9DAJ
+                  email: tracee_maggio@schroeder.us
+                  status: pending
+                  created_at: '2026-06-12T17:24:18.489Z'
+                  updated_at: '2026-06-12T17:24:18.489Z'
+                  expires_at: '2026-06-26T17:24:18.486Z'
+                  role_id: role_UkLWZg9DAJ
+                  role_name: admin
+                  inviter_email: caitlin_terry@kshlerinboehm.ca
+                  acceptance_url: /accept-invitation/inv_UkLWZg9DAJ?token=kvK81PwqFhrhTCgxQsWkHEC5
+                  invitee_exists: false
+                  store:
+                    id: store_UkLWZg9DAJ
+                    name: Spree Test Store
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+    post:
+      summary: Create an invitation
+      tags:
+      - Staff
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Invites a teammate by email. The invitation is scoped to the current store and carries the chosen role; on accept, a `RoleUser` is created via the invitation''s `after_accept` callback.
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst invitation = await client.invitations.create({\n  email: 'ada@example.com',\n  role_id: 'role_xxx'\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: invitation created
+          content:
+            application/json:
+              example:
+                id: inv_gbHJdmfrXB
+                email: new-staff@example.com
+                status: pending
+                created_at: '2026-06-12T17:24:18.802Z'
+                updated_at: '2026-06-12T17:24:18.802Z'
+                expires_at: '2026-06-26T17:24:18.799Z'
+                role_id: role_UkLWZg9DAJ
+                role_name: admin
+                inviter_email: michel@upton.biz
+                acceptance_url: /accept-invitation/inv_gbHJdmfrXB?token=jkitRfxSPJyDt1bngSSRBWic
+                invitee_exists: false
+                store:
+                  id: store_UkLWZg9DAJ
+                  name: Spree Test Store
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - role_id
+              properties:
+                email:
+                  type: string
+                  example: ada@example.com
+                role_id:
+                  type: string
+                  example: role_xxx
+  /api/v3/admin/invitations/{id}:
+    delete:
+      summary: Revoke an invitation
+      tags:
+      - Staff
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: '**Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.invitations.delete('inv_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: invitation revoked
+  /api/v3/admin/invitations/{id}/resend:
+    patch:
+      summary: Resend an invitation
+      tags:
+      - Staff
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Issues a fresh token and dispatches the invitation email again.
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst invitation = await client.invitations.resend('inv_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: invitation resent
+          content:
+            application/json:
+              example:
+                id: inv_UkLWZg9DAJ
+                email: lacie@ratke.co.uk
+                status: pending
+                created_at: '2026-06-12T17:24:19.385Z'
+                updated_at: '2026-06-12T17:24:19.385Z'
+                expires_at: '2026-06-26T17:24:19.383Z'
+                role_id: role_UkLWZg9DAJ
+                role_name: admin
+                inviter_email: eldon.bailey@larkin.biz
+                acceptance_url: /accept-invitation/inv_UkLWZg9DAJ?token=XnbTqpmFxFnkvNBc81ve5JRL
+                invitee_exists: false
+                store:
+                  id: store_UkLWZg9DAJ
+                  name: Spree Test Store
+  /api/v3/admin/roles:
+    get:
+      summary: List roles
+      tags:
+      - Staff
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns the roles available for staff role pickers. Roles are global, not per-store.
+
+
+        **Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: roles } = await client.roles.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: roles found
+          content:
+            application/json:
+              example:
+                data:
+                - id: role_UkLWZg9DAJ
+                  name: admin
+                  created_at: '2026-06-12T17:25:14.947Z'
+                  updated_at: '2026-06-12T17:25:14.947Z'
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

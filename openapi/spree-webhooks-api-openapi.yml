@@ -1,0 +1,1050 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Webhooks API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Webhooks
+  description: Webhook endpoints and webhook delivery history
+paths:
+  /api/v3/admin/webhook_endpoints/{webhook_endpoint_id}/deliveries:
+    parameters:
+    - name: webhook_endpoint_id
+      in: path
+      required: true
+      description: Parent webhook endpoint ID
+      schema:
+        type: string
+    get:
+      summary: List webhook deliveries
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns delivery attempts for the given endpoint, most recent first.
+
+        Each row carries the original request payload, the response code
+
+        (when the receiver replied), the execution time, and any transport
+
+        error — everything needed to audit failures and decide whether to
+
+        redeliver.
+
+
+
+        **Required scope:** `read_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst deliveries = await client.webhookEndpoints.deliveries.list('whe_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Number of records per page
+        schema:
+          type: integer
+      - name: q[event_name_eq]
+        in: query
+        required: false
+        description: Filter by event name (exact)
+        schema:
+          type: string
+      - name: q[success_eq]
+        in: query
+        required: false
+        description: Filter by success flag
+        schema:
+          type: boolean
+      - name: sort
+        in: query
+        required: false
+        description: Sort by field. Prefix with `-` for descending (e.g., `-delivered_at`).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include. id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: deliveries found
+          content:
+            application/json:
+              example:
+                data:
+                - id: whd_gbHJdmfrXB
+                  event_name: order.created
+                  event_id: null
+                  response_code: 500
+                  execution_time: 200
+                  error_type: null
+                  request_errors: null
+                  response_body: null
+                  success: false
+                  payload:
+                    event: order.created
+                    data:
+                      id: 1
+                  created_at: '2026-06-12T17:25:23.426Z'
+                  updated_at: '2026-06-12T17:25:23.426Z'
+                  delivered_at: '2026-06-12T17:25:23.425Z'
+                  webhook_endpoint_id: whe_UkLWZg9DAJ
+                  webhook_endpoint_url: https://shop.example.com/webhooks
+                - id: whd_UkLWZg9DAJ
+                  event_name: order.created
+                  event_id: null
+                  response_code: 200
+                  execution_time: 150
+                  error_type: null
+                  request_errors: null
+                  response_body: null
+                  success: true
+                  payload:
+                    event: order.created
+                    data:
+                      id: 1
+                  created_at: '2026-06-12T17:25:23.425Z'
+                  updated_at: '2026-06-12T17:25:23.425Z'
+                  delivered_at: '2026-06-12T17:25:23.425Z'
+                  webhook_endpoint_id: whe_UkLWZg9DAJ
+                  webhook_endpoint_url: https://shop.example.com/webhooks
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 2
+                  pages: 1
+                  from: 1
+                  to: 2
+                  in: 2
+                  previous: null
+                  next: null
+        '404':
+          description: parent webhook endpoint not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Webhook endpoint not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/admin/webhook_endpoints/{webhook_endpoint_id}/deliveries/{id}:
+    parameters:
+    - name: webhook_endpoint_id
+      in: path
+      required: true
+      description: Parent webhook endpoint ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Webhook delivery ID
+      schema:
+        type: string
+    get:
+      summary: Get a webhook delivery
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a single delivery attempt with the full request payload and
+
+        the response body the receiver returned. Use this for ad-hoc debug
+
+        of failed deliveries.
+
+
+
+        **Required scope:** `read_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst delivery = await client.webhookEndpoints.deliveries.get('whe_xxx', 'whd_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include. id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: delivery found
+          content:
+            application/json:
+              example:
+                id: whd_gbHJdmfrXB
+                event_name: order.created
+                event_id: null
+                response_code: 500
+                execution_time: 200
+                error_type: null
+                request_errors: null
+                response_body: null
+                success: false
+                payload:
+                  event: order.created
+                  data:
+                    id: 1
+                created_at: '2026-06-12T17:25:24.048Z'
+                updated_at: '2026-06-12T17:25:24.048Z'
+                delivered_at: '2026-06-12T17:25:24.047Z'
+                webhook_endpoint_id: whe_UkLWZg9DAJ
+                webhook_endpoint_url: https://shop.example.com/webhooks
+        '404':
+          description: delivery not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Webhook delivery not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/admin/webhook_endpoints/{webhook_endpoint_id}/deliveries/{id}/redeliver:
+    parameters:
+    - name: webhook_endpoint_id
+      in: path
+      required: true
+      description: Parent webhook endpoint ID
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Webhook delivery ID to redeliver
+      schema:
+        type: string
+    post:
+      summary: Redeliver a webhook delivery
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Creates a new delivery row with the same payload + event_name and
+
+        queues it. The original row is preserved for audit history.
+
+
+
+        **Required scope:** `write_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\n// Creates a new delivery row with the same payload + event_name and queues\n// it. The original row is preserved for audit history.\nconst delivery = await client.webhookEndpoints.deliveries.redeliver('whe_xxx', 'whd_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '201':
+          description: redelivery queued
+          content:
+            application/json:
+              example:
+                id: whd_EfhxLZ9ck8
+                event_name: order.created
+                event_id: null
+                response_code: null
+                execution_time: null
+                error_type: null
+                request_errors: null
+                response_body: null
+                success: null
+                payload:
+                  event: order.created
+                  data:
+                    id: 1
+                created_at: '2026-06-12T17:25:24.972Z'
+                updated_at: '2026-06-12T17:25:24.972Z'
+                delivered_at: null
+                webhook_endpoint_id: whe_UkLWZg9DAJ
+                webhook_endpoint_url: https://shop.example.com/webhooks
+  /api/v3/admin/webhook_endpoints:
+    get:
+      summary: List webhook endpoints
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns outbound webhook subscriptions for the current store. Each
+
+        endpoint receives a signed POST when any subscribed event fires.
+
+        `secret_key` is `null` on list reads — the plaintext is delivered
+
+        exactly once on create.
+
+
+
+        **Required scope:** `read_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst endpoints = await client.webhookEndpoints.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Number of records per page
+        schema:
+          type: integer
+      - name: q[name_cont]
+        in: query
+        required: false
+        description: Filter by name (contains)
+        schema:
+          type: string
+      - name: q[url_cont]
+        in: query
+        required: false
+        description: Filter by URL (contains)
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        description: Sort by field. Prefix with `-` for descending (e.g., `-created_at`).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include. id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: webhook endpoints found
+          content:
+            application/json:
+              example:
+                data:
+                - id: whe_UkLWZg9DAJ
+                  name: Order pipeline
+                  url: https://shop.example.com/webhooks/orders
+                  active: true
+                  subscriptions:
+                  - order.created
+                  - order.completed
+                  - product.created
+                  disabled_reason: null
+                  created_at: '2026-06-12T17:25:24.999Z'
+                  updated_at: '2026-06-12T17:25:24.999Z'
+                  disabled_at: null
+                  secret_key: null
+                  last_delivery_at: null
+                  recent_delivery_count: 0
+                  recent_failure_count: 0
+                  total_delivery_count: 0
+                  successful_delivery_count: 0
+                  failed_delivery_count: 0
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a webhook endpoint
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Creates a new outbound webhook subscription. The plaintext
+
+        `secret_key` is returned **once** in this response — persist it
+
+        immediately to verify incoming webhook signatures. Subsequent reads
+
+        return `null` for the secret. Pass an empty `subscriptions` array or
+
+        omit it to receive every event.
+
+
+
+        **Required scope:** `write_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst endpoint = await client.webhookEndpoints.create({\n  name: 'Order pipeline',\n  url: 'https://example.com/webhooks/orders',\n  active: true,\n  subscriptions: ['order.completed', 'order.canceled'],\n})\n\n// The plaintext `secret_key` is returned exactly once on create — persist it\n// immediately so you can verify incoming webhook signatures. Subsequent reads\n// will return `null`.\nconst signingSecret = endpoint.secret_key"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '201':
+          description: webhook endpoint created — secret_key returned once
+          content:
+            application/json:
+              example:
+                id: whe_gbHJdmfrXB
+                name: CI integration
+                url: https://ci.example.com/webhooks
+                active: true
+                subscriptions:
+                - order.completed
+                disabled_reason: null
+                created_at: '2026-06-12T17:25:25.648Z'
+                updated_at: '2026-06-12T17:25:25.648Z'
+                disabled_at: null
+                secret_key: 8a8467ba33df1423b334f3f9bf5ebc62677e04ce10ba482b4b6f91ffea2a28e8
+                last_delivery_at: null
+                recent_delivery_count: 0
+                recent_failure_count: 0
+                total_delivery_count: 0
+                successful_delivery_count: 0
+                failed_delivery_count: 0
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: 'Url Translation missing. Options considered were:
+
+                    - en.activerecord.errors.models.spree/webhook_endpoint.attributes.url.invalid_url
+
+                    - en.activerecord.errors.models.spree/webhook_endpoint.invalid_url
+
+                    - en.activerecord.errors.messages.invalid_url
+
+                    - en.errors.attributes.url.invalid_url
+
+                    - en.errors.messages.invalid_url'
+                  details:
+                    url:
+                    - 'Translation missing. Options considered were:
+
+                      - en.activerecord.errors.models.spree/webhook_endpoint.attributes.url.invalid_url
+
+                      - en.activerecord.errors.models.spree/webhook_endpoint.invalid_url
+
+                      - en.activerecord.errors.messages.invalid_url
+
+                      - en.errors.attributes.url.invalid_url
+
+                      - en.errors.messages.invalid_url'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - url
+              properties:
+                name:
+                  type: string
+                  example: Order pipeline
+                url:
+                  type: string
+                  example: https://example.com/webhooks/orders
+                active:
+                  type: boolean
+                  example: true
+                subscriptions:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - order.completed
+                  - order.canceled
+  /api/v3/admin/webhook_endpoints/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Webhook endpoint ID
+      schema:
+        type: string
+    get:
+      summary: Get a webhook endpoint
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a single webhook endpoint by prefixed ID.
+
+
+        **Required scope:** `read_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst endpoint = await client.webhookEndpoints.get('whe_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include. id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: webhook endpoint found
+          content:
+            application/json:
+              example:
+                id: whe_UkLWZg9DAJ
+                name: Order pipeline
+                url: https://shop.example.com/webhooks/orders
+                active: true
+                subscriptions:
+                - order.created
+                - order.completed
+                - product.created
+                disabled_reason: null
+                created_at: '2026-06-12T17:25:26.005Z'
+                updated_at: '2026-06-12T17:25:26.005Z'
+                disabled_at: null
+                secret_key: null
+                last_delivery_at: null
+                recent_delivery_count: 0
+                recent_failure_count: 0
+                total_delivery_count: 0
+                successful_delivery_count: 0
+                failed_delivery_count: 0
+        '404':
+          description: webhook endpoint not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Webhook endpoint not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Update a webhook endpoint
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates name, URL, active flag, or the event subscription list.
+
+        Toggling `active` here is equivalent to calling `disable`/`enable`
+
+        without an audit reason.
+
+
+
+        **Required scope:** `write_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst endpoint = await client.webhookEndpoints.update('whe_xxx', {\n  name: 'Order pipeline (v2)',\n  subscriptions: ['order.completed', 'order.canceled', 'order.paid'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '200':
+          description: webhook endpoint updated
+          content:
+            application/json:
+              example:
+                id: whe_UkLWZg9DAJ
+                name: Order pipeline (renamed)
+                url: https://shop.example.com/webhooks/orders
+                active: true
+                subscriptions:
+                - order.created
+                - order.completed
+                - product.created
+                disabled_reason: null
+                created_at: '2026-06-12T17:25:26.680Z'
+                updated_at: '2026-06-12T17:25:26.975Z'
+                disabled_at: null
+                secret_key: null
+                last_delivery_at: null
+                recent_delivery_count: 0
+                recent_failure_count: 0
+                total_delivery_count: 0
+                successful_delivery_count: 0
+                failed_delivery_count: 0
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: 'Url Translation missing. Options considered were:
+
+                    - en.activerecord.errors.models.spree/webhook_endpoint.attributes.url.invalid_url
+
+                    - en.activerecord.errors.models.spree/webhook_endpoint.invalid_url
+
+                    - en.activerecord.errors.messages.invalid_url
+
+                    - en.errors.attributes.url.invalid_url
+
+                    - en.errors.messages.invalid_url'
+                  details:
+                    url:
+                    - 'Translation missing. Options considered were:
+
+                      - en.activerecord.errors.models.spree/webhook_endpoint.attributes.url.invalid_url
+
+                      - en.activerecord.errors.models.spree/webhook_endpoint.invalid_url
+
+                      - en.activerecord.errors.messages.invalid_url
+
+                      - en.errors.attributes.url.invalid_url
+
+                      - en.errors.messages.invalid_url'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                url:
+                  type: string
+                active:
+                  type: boolean
+                subscriptions:
+                  type: array
+                  items:
+                    type: string
+    delete:
+      summary: Delete a webhook endpoint
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Soft-deletes the endpoint and stops future deliveries.
+
+
+        **Required scope:** `write_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.webhookEndpoints.delete('whe_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '204':
+          description: webhook endpoint deleted
+  /api/v3/admin/webhook_endpoints/{id}/send_test:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Webhook endpoint ID
+      schema:
+        type: string
+    post:
+      summary: Send a test delivery
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Creates a `webhook.test` delivery record and queues it. Use this to
+
+        verify the endpoint is reachable and your signature verification
+
+        accepts Spree''s payloads.
+
+
+
+        **Required scope:** `write_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\n// Fires a synthetic `webhook.test` delivery so you can verify the endpoint is\n// reachable and your signature-verification code accepts Spree's payloads.\nconst delivery = await client.webhookEndpoints.sendTest('whe_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '201':
+          description: test delivery queued
+          content:
+            application/json:
+              example:
+                id: whd_UkLWZg9DAJ
+                event_name: webhook.test
+                event_id: null
+                response_code: null
+                execution_time: null
+                error_type: null
+                request_errors: null
+                response_body: null
+                success: null
+                payload:
+                  id: 8a7131d4-3cd4-45cd-aa0e-673f1905126c
+                  name: webhook.test
+                  created_at: '2026-06-12T17:25:27Z'
+                  data:
+                    message: This is a test webhook from Spree.
+                  metadata:
+                    spree_version: 5.5.0.rc1
+                created_at: '2026-06-12T17:25:27.972Z'
+                updated_at: '2026-06-12T17:25:27.972Z'
+                delivered_at: null
+                webhook_endpoint_id: whe_UkLWZg9DAJ
+                webhook_endpoint_url: https://shop.example.com/webhooks/orders
+  /api/v3/admin/webhook_endpoints/{id}/enable:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Webhook endpoint ID
+      schema:
+        type: string
+    patch:
+      summary: Re-enable a webhook endpoint
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Re-enables an endpoint that was manually or automatically disabled.
+
+
+        **Required scope:** `write_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\n// Re-enable an endpoint that was auto-disabled after repeated delivery failures.\nconst endpoint = await client.webhookEndpoints.enable('whe_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '200':
+          description: webhook endpoint enabled
+          content:
+            application/json:
+              example:
+                id: whe_UkLWZg9DAJ
+                name: Order pipeline
+                url: https://shop.example.com/webhooks/orders
+                active: true
+                subscriptions:
+                - order.created
+                - order.completed
+                - product.created
+                disabled_reason: null
+                created_at: '2026-06-12T17:25:28.003Z'
+                updated_at: '2026-06-12T17:25:28.309Z'
+                disabled_at: null
+                secret_key: null
+                last_delivery_at: null
+                recent_delivery_count: 0
+                recent_failure_count: 0
+                total_delivery_count: 0
+                successful_delivery_count: 0
+                failed_delivery_count: 0
+  /api/v3/admin/webhook_endpoints/{id}/disable:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Webhook endpoint ID
+      schema:
+        type: string
+    patch:
+      summary: Disable a webhook endpoint
+      tags:
+      - Webhooks
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Manually pauses an endpoint. Unlike auto-disable (triggered after
+
+        repeated delivery failures), no notification email is sent.
+
+
+
+        **Required scope:** `write_webhooks` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\n// Pause an endpoint without deleting it. The optional `reason` is shown next\n// to the disabled indicator in the admin.\nconst endpoint = await client.webhookEndpoints.disable('whe_xxx', {\n  reason: 'Investigating elevated 5xx rate',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '200':
+          description: webhook endpoint disabled
+          content:
+            application/json:
+              example:
+                id: whe_UkLWZg9DAJ
+                name: Order pipeline
+                url: https://shop.example.com/webhooks/orders
+                active: false
+                subscriptions:
+                - order.created
+                - order.completed
+                - product.created
+                disabled_reason: Investigating
+                created_at: '2026-06-12T17:25:28.340Z'
+                updated_at: '2026-06-12T17:25:28.632Z'
+                disabled_at: '2026-06-12T17:25:28.632Z'
+                secret_key: null
+                last_delivery_at: null
+                recent_delivery_count: 0
+                recent_failure_count: 0
+                total_delivery_count: 0
+                successful_delivery_count: 0
+                failed_delivery_count: 0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  example: Investigating elevated 5xx rate
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type: object
+              description: Field-specific validation errors
+              nullable: true
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

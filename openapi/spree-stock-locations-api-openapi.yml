@@ -1,0 +1,1381 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Stock Locations API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Stock Locations
+  description: Warehouses and physical fulfillment locations
+paths:
+  /api/v3/admin/stock_locations:
+    get:
+      summary: List stock locations
+      tags:
+      - Stock Locations
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns the configured stock locations. Stock locations are global
+
+        (shared across stores). Filter with Ransack predicates such as
+
+        `q[active_eq]`, `q[kind_eq]`, `q[pickup_enabled_eq]`, or
+
+        `q[name_cont]`.
+
+
+        Pickup-related attributes (`kind`, `pickup_enabled`,
+
+        `pickup_stock_policy`, `pickup_ready_in_minutes`,
+
+        `pickup_instructions`) drive merchant pickup support at checkout —
+
+        customers can collect orders from any active location with
+
+        `pickup_enabled: true`.
+
+
+
+        **Required scope:** `read_stock` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: stockLocations } = await client.stockLocations.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Number of records per page
+        schema:
+          type: integer
+      - name: q[name_cont]
+        in: query
+        required: false
+        description: Filter by name (contains)
+        schema:
+          type: string
+      - name: q[active_eq]
+        in: query
+        required: false
+        description: Filter by active status
+        schema:
+          type: boolean
+      - name: q[kind_eq]
+        in: query
+        required: false
+        description: 'Filter by kind (built-in: ''warehouse'', ''store'', ''fulfillment_center'')'
+        schema:
+          type: string
+      - name: q[pickup_enabled_eq]
+        in: query
+        required: false
+        description: Filter by pickup-enabled flag
+        schema:
+          type: boolean
+      - name: sort
+        in: query
+        required: false
+        description: Sort by field. Prefix with `-` for descending (e.g., `-created_at`).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include. id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: stock locations found
+          content:
+            application/json:
+              example:
+                data:
+                - id: sloc_UkLWZg9DAJ
+                  state_abbr: STATE_ABBR_47
+                  name: Brooklyn warehouse
+                  address1: 1600 Pennsylvania Ave NW
+                  city: Washington
+                  zipcode: '20500'
+                  country_iso: US
+                  country_name: United States of America
+                  state_text: STATE_ABBR_47
+                  admin_name: null
+                  address2: null
+                  state_name: null
+                  phone: (202) 456-1111
+                  company: null
+                  active: true
+                  default: false
+                  backorderable_default: true
+                  propagate_all_variants: false
+                  kind: warehouse
+                  pickup_enabled: false
+                  pickup_stock_policy: local
+                  pickup_ready_in_minutes: null
+                  pickup_instructions: null
+                  created_at: '2026-06-12T17:25:15.247Z'
+                  updated_at: '2026-06-12T17:25:15.247Z'
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StockLocation'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+                required:
+                - data
+                - meta
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a stock location
+      tags:
+      - Stock Locations
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Creates a new stock location.
+
+
+        Setting `default: true` automatically demotes the previous default
+
+        location.
+
+
+
+        **Required scope:** `write_stock` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst stockLocation = await client.stockLocations.create({\n  name: 'Brooklyn warehouse',\n  kind: 'warehouse',\n  country_iso: 'US',\n  state_abbr: 'NY',\n  city: 'Brooklyn',\n  zipcode: '11201',\n  pickup_enabled: true,\n  pickup_stock_policy: 'local',\n  pickup_ready_in_minutes: 60,\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '201':
+          description: stock location created
+          content:
+            application/json:
+              example:
+                id: sloc_gbHJdmfrXB
+                state_abbr: null
+                name: Manhattan store
+                address1: null
+                city: null
+                zipcode: null
+                country_iso: null
+                country_name: null
+                state_text: null
+                admin_name: null
+                address2: null
+                state_name: null
+                phone: null
+                company: null
+                active: true
+                default: false
+                backorderable_default: false
+                propagate_all_variants: false
+                kind: store
+                pickup_enabled: true
+                pickup_stock_policy: local
+                pickup_ready_in_minutes: 30
+                pickup_instructions: null
+                created_at: '2026-06-12T17:25:15.845Z'
+                updated_at: '2026-06-12T17:25:15.845Z'
+              schema:
+                $ref: '#/components/schemas/StockLocation'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Name can't be blank
+                  details:
+                    name:
+                    - can't be blank
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Brooklyn warehouse
+                admin_name:
+                  type: string
+                  nullable: true
+                  description: Internal name shown only in the admin
+                active:
+                  type: boolean
+                  example: true
+                default:
+                  type: boolean
+                  description: Setting to true demotes the previous default.
+                kind:
+                  type: string
+                  enum:
+                  - warehouse
+                  - store
+                  - fulfillment_center
+                  description: Categorizes the location.
+                  example: warehouse
+                propagate_all_variants:
+                  type: boolean
+                backorderable_default:
+                  type: boolean
+                address1:
+                  type: string
+                  nullable: true
+                address2:
+                  type: string
+                  nullable: true
+                city:
+                  type: string
+                  nullable: true
+                zipcode:
+                  type: string
+                  nullable: true
+                phone:
+                  type: string
+                  nullable: true
+                company:
+                  type: string
+                  nullable: true
+                country_iso:
+                  type: string
+                  nullable: true
+                  description: ISO-3166 alpha-2 country code (e.g. "US").
+                state_abbr:
+                  type: string
+                  nullable: true
+                  description: State / province abbreviation (e.g. "NY"). Resolved against the selected country.
+                state_name:
+                  type: string
+                  nullable: true
+                  description: Free-text state for countries without a states list.
+                pickup_enabled:
+                  type: boolean
+                pickup_stock_policy:
+                  type: string
+                  enum:
+                  - local
+                  - any
+                  description: '''local'' = items at this location only; ''any'' = transfer-eligible (ship-to-store).'
+                pickup_ready_in_minutes:
+                  type: number
+                  nullable: true
+                  minimum: 0
+                pickup_instructions:
+                  type: string
+                  nullable: true
+              required:
+              - name
+  /api/v3/admin/stock_locations/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Stock location ID
+      schema:
+        type: string
+    get:
+      summary: Get a stock location
+      tags:
+      - Stock Locations
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a single stock location by prefixed ID.
+
+
+        **Required scope:** `read_stock` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst stockLocation = await client.stockLocations.get('sloc_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include. id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: stock location found
+          content:
+            application/json:
+              example:
+                id: sloc_UkLWZg9DAJ
+                state_abbr: STATE_ABBR_51
+                name: Brooklyn warehouse
+                address1: 1600 Pennsylvania Ave NW
+                city: Washington
+                zipcode: '20500'
+                country_iso: US
+                country_name: United States of America
+                state_text: STATE_ABBR_51
+                admin_name: null
+                address2: null
+                state_name: null
+                phone: (202) 456-1111
+                company: null
+                active: true
+                default: false
+                backorderable_default: true
+                propagate_all_variants: false
+                kind: warehouse
+                pickup_enabled: false
+                pickup_stock_policy: local
+                pickup_ready_in_minutes: null
+                pickup_instructions: null
+                created_at: '2026-06-12T17:25:16.140Z'
+                updated_at: '2026-06-12T17:25:16.140Z'
+              schema:
+                $ref: '#/components/schemas/StockLocation'
+        '404':
+          description: stock location not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Stock location not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Update a stock location
+      tags:
+      - Stock Locations
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates an existing stock location. Same address-field conventions as
+
+        the create endpoint.
+
+
+        Setting `default: true` automatically demotes the previous default.
+
+
+
+        **Required scope:** `write_stock` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst stockLocation = await client.stockLocations.update('sloc_UkLWZg9DAJ', {\n  pickup_enabled: true,\n  pickup_ready_in_minutes: 45,\n  pickup_instructions: 'Enter through the back door, ring the bell.',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '200':
+          description: stock location updated
+          content:
+            application/json:
+              example:
+                id: sloc_UkLWZg9DAJ
+                state_abbr: STATE_ABBR_53
+                name: Renamed warehouse
+                address1: 1600 Pennsylvania Ave NW
+                city: Washington
+                zipcode: '20500'
+                country_iso: US
+                country_name: United States of America
+                state_text: STATE_ABBR_53
+                admin_name: null
+                address2: null
+                state_name: null
+                phone: (202) 456-1111
+                company: null
+                active: true
+                default: false
+                backorderable_default: true
+                propagate_all_variants: false
+                kind: warehouse
+                pickup_enabled: true
+                pickup_stock_policy: local
+                pickup_ready_in_minutes: 45
+                pickup_instructions: null
+                created_at: '2026-06-12T17:25:16.866Z'
+                updated_at: '2026-06-12T17:25:17.191Z'
+              schema:
+                $ref: '#/components/schemas/StockLocation'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Pickup stock policy is not included in the list
+                  details:
+                    pickup_stock_policy:
+                    - is not included in the list
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                admin_name:
+                  type: string
+                  nullable: true
+                active:
+                  type: boolean
+                default:
+                  type: boolean
+                kind:
+                  type: string
+                  enum:
+                  - warehouse
+                  - store
+                  - fulfillment_center
+                propagate_all_variants:
+                  type: boolean
+                backorderable_default:
+                  type: boolean
+                address1:
+                  type: string
+                  nullable: true
+                address2:
+                  type: string
+                  nullable: true
+                city:
+                  type: string
+                  nullable: true
+                zipcode:
+                  type: string
+                  nullable: true
+                phone:
+                  type: string
+                  nullable: true
+                company:
+                  type: string
+                  nullable: true
+                country_iso:
+                  type: string
+                  nullable: true
+                state_abbr:
+                  type: string
+                  nullable: true
+                state_name:
+                  type: string
+                  nullable: true
+                pickup_enabled:
+                  type: boolean
+                pickup_stock_policy:
+                  type: string
+                  enum:
+                  - local
+                  - any
+                pickup_ready_in_minutes:
+                  type: number
+                  nullable: true
+                  minimum: 0
+                pickup_instructions:
+                  type: string
+                  nullable: true
+    delete:
+      summary: Delete a stock location
+      tags:
+      - Stock Locations
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Soft-deletes the stock location (sets `deleted_at`). Existing
+
+        fulfillments that referenced it keep the historical record via
+
+        `Spree::StockLocation.with_deleted`.
+
+
+
+        **Required scope:** `write_stock` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.stockLocations.delete('sloc_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '204':
+          description: stock location deleted
+  /api/v2/platform/stock_locations:
+    get:
+      summary: Return a list of Stock Locations
+      tags:
+      - Stock Locations
+      security:
+      - bearer_auth: []
+      description: Returns a list of Stock Locations
+      operationId: stock-locations-list
+      parameters:
+      - name: page
+        in: query
+        example: 1
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        example: 50
+        schema:
+          type: integer
+      - name: include
+        in: query
+        description: 'Select which associated resources you would like to fetch, see: <a href="https://jsonapi.org/format/#fetching-includes">https://jsonapi.org/format/#fetching-includes</a>'
+        example: country
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Records returned
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    data:
+                    - id: '175'
+                      type: stock_location
+                      attributes:
+                        name: Jonnie Pollich
+                        created_at: '2022-11-08T19:35:30.989Z'
+                        updated_at: '2022-11-08T19:35:30.989Z'
+                        default: false
+                        address1: 1600 Pennsylvania Ave NW
+                        address2: null
+                        city: Washington
+                        state_name: null
+                        zipcode: '20500'
+                        phone: (202) 456-1111
+                        active: true
+                        backorderable_default: true
+                        propagate_all_variants: false
+                        admin_name: null
+                      relationships:
+                        country:
+                          data:
+                            id: '413'
+                            type: country
+                    - id: '176'
+                      type: stock_location
+                      attributes:
+                        name: Lidia Hamill
+                        created_at: '2022-11-08T19:35:30.991Z'
+                        updated_at: '2022-11-08T19:35:30.991Z'
+                        default: false
+                        address1: 1600 Pennsylvania Ave NW
+                        address2: null
+                        city: Washington
+                        state_name: null
+                        zipcode: '20500'
+                        phone: (202) 456-1111
+                        active: true
+                        backorderable_default: true
+                        propagate_all_variants: false
+                        admin_name: null
+                      relationships:
+                        country:
+                          data:
+                            id: '413'
+                            type: country
+                    meta:
+                      count: 2
+                      total_count: 2
+                      total_pages: 1
+                    links:
+                      self: http://www.example.com/api/v2/platform/stock_locations?page=1&per_page=&include=
+                      next: http://www.example.com/api/v2/platform/stock_locations?include=&page=1&per_page=
+                      prev: http://www.example.com/api/v2/platform/stock_locations?include=&page=1&per_page=
+                      last: http://www.example.com/api/v2/platform/stock_locations?include=&page=1&per_page=
+                      first: http://www.example.com/api/v2/platform/stock_locations?include=&page=1&per_page=
+              schema:
+                $ref: '#/components/schemas/resources_list'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+    post:
+      summary: Create a Stock Location
+      tags:
+      - Stock Locations
+      security:
+      - bearer_auth: []
+      description: Creates a Stock Location
+      operationId: create-stock-location
+      parameters:
+      - name: include
+        in: query
+        description: 'Select which associated resources you would like to fetch, see: <a href="https://jsonapi.org/format/#fetching-includes">https://jsonapi.org/format/#fetching-includes</a>'
+        example: country
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Record created
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    data:
+                      id: '179'
+                      type: stock_location
+                      attributes:
+                        name: Lon McClure
+                        created_at: '2022-11-08T19:35:31.517Z'
+                        updated_at: '2022-11-08T19:35:31.517Z'
+                        default: false
+                        address1: 1600 Pennsylvania Ave NW
+                        address2: null
+                        city: Washington
+                        state_name: null
+                        zipcode: '20500'
+                        phone: (202) 456-1111
+                        active: true
+                        backorderable_default: true
+                        propagate_all_variants: false
+                        admin_name: null
+                      relationships:
+                        country:
+                          data:
+                            id: '415'
+                            type: country
+              schema:
+                $ref: '#/components/schemas/resource'
+        '422':
+          description: Invalid request
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: Name can't be blank
+                    errors:
+                      name:
+                      - can't be blank
+              schema:
+                $ref: '#/components/schemas/validation_errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_stock_location_params'
+  /api/v2/platform/stock_locations/{id}:
+    get:
+      summary: Return a Stock Location
+      tags:
+      - Stock Locations
+      security:
+      - bearer_auth: []
+      description: Returns a Stock Location
+      operationId: show-stock-location
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include
+        in: query
+        description: 'Select which associated resources you would like to fetch, see: <a href="https://jsonapi.org/format/#fetching-includes">https://jsonapi.org/format/#fetching-includes</a>'
+        example: country
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Record found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    data:
+                      id: '180'
+                      type: stock_location
+                      attributes:
+                        name: Dian Hills
+                        created_at: '2022-11-08T19:35:31.785Z'
+                        updated_at: '2022-11-08T19:35:31.785Z'
+                        default: false
+                        address1: 1600 Pennsylvania Ave NW
+                        address2: null
+                        city: Washington
+                        state_name: null
+                        zipcode: '20500'
+                        phone: (202) 456-1111
+                        active: true
+                        backorderable_default: true
+                        propagate_all_variants: false
+                        admin_name: null
+                      relationships:
+                        country:
+                          data:
+                            id: '417'
+                            type: country
+              schema:
+                $ref: '#/components/schemas/resource'
+        '404':
+          description: Record not found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The resource you were looking for could not be found.
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+    patch:
+      summary: Update a Stock Location
+      tags:
+      - Stock Locations
+      security:
+      - bearer_auth: []
+      description: Updates a Stock Location
+      operationId: update-stock-location
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include
+        in: query
+        description: 'Select which associated resources you would like to fetch, see: <a href="https://jsonapi.org/format/#fetching-includes">https://jsonapi.org/format/#fetching-includes</a>'
+        example: country
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Record updated
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    data:
+                      id: '182'
+                      type: stock_location
+                      attributes:
+                        name: Warehouse 3
+                        created_at: '2022-11-08T19:35:32.309Z'
+                        updated_at: '2022-11-08T19:35:32.538Z'
+                        default: true
+                        address1: South Street 8/2
+                        address2: null
+                        city: Los Angeles
+                        state_name: null
+                        zipcode: '11223'
+                        phone: (202) 456-1111
+                        active: true
+                        backorderable_default: true
+                        propagate_all_variants: false
+                        admin_name: null
+                      relationships:
+                        country:
+                          data:
+                            id: '420'
+                            type: country
+              schema:
+                $ref: '#/components/schemas/resource'
+        '422':
+          description: Invalid request
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: Name can't be blank
+                    errors:
+                      name:
+                      - can't be blank
+              schema:
+                $ref: '#/components/schemas/validation_errors'
+        '404':
+          description: Record not found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The resource you were looking for could not be found.
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/update_stock_location_params'
+    delete:
+      summary: Delete a Stock Location
+      tags:
+      - Stock Locations
+      security:
+      - bearer_auth: []
+      description: Deletes a Stock Location
+      operationId: delete-stock-location
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Record deleted
+        '404':
+          description: Record not found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The resource you were looking for could not be found.
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+components:
+  schemas:
+    StockLocation:
+      type: object
+      properties:
+        id:
+          type: string
+        state_abbr:
+          type: string
+          nullable: true
+        name:
+          type: string
+        address1:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        zipcode:
+          type: string
+          nullable: true
+        country_iso:
+          type: string
+          nullable: true
+        country_name:
+          type: string
+          nullable: true
+        state_text:
+          type: string
+          nullable: true
+        admin_name:
+          type: string
+          nullable: true
+        address2:
+          type: string
+          nullable: true
+        state_name:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        company:
+          type: string
+          nullable: true
+        active:
+          type: boolean
+        default:
+          type: boolean
+        backorderable_default:
+          type: boolean
+        propagate_all_variants:
+          type: boolean
+        kind:
+          type: string
+        pickup_enabled:
+          type: boolean
+        pickup_stock_policy:
+          type: string
+        pickup_ready_in_minutes:
+          type: number
+          nullable: true
+        pickup_instructions:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - id
+      - state_abbr
+      - name
+      - address1
+      - city
+      - zipcode
+      - country_iso
+      - country_name
+      - state_text
+      - admin_name
+      - address2
+      - state_name
+      - phone
+      - company
+      - active
+      - default
+      - backorderable_default
+      - propagate_all_variants
+      - kind
+      - pickup_enabled
+      - pickup_stock_policy
+      - pickup_ready_in_minutes
+      - pickup_instructions
+      - created_at
+      - updated_at
+      x-typelizer: true
+    resource_properties:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        attributes:
+          type: object
+        relationships:
+          type: object
+      required:
+      - id
+      - type
+      - attributes
+      x-internal: false
+    update_stock_location_params:
+      type: object
+      properties:
+        stock_location:
+          type: object
+          required:
+          - name
+          properties:
+            name:
+              type: string
+              example: Warehouse 3
+            default:
+              type: boolean
+            address1:
+              type: string
+              example: South St. 8
+            address2:
+              type: string
+              example: South St. 109
+            country_id:
+              type: string
+              example: '2'
+            state_id:
+              type: string
+              example: '4'
+            city:
+              type: string
+              example: Los Angeles
+            state_name:
+              type: string
+              example: California
+            zipcode:
+              type: string
+              example: '90005'
+            phone:
+              type: string
+              example: '23333456'
+            active:
+              type: boolean
+            backorderable_default:
+              type: boolean
+            propagate_all_variants:
+              type: boolean
+            admin_name:
+              type: string
+      required:
+      - stock_location
+      x-internal: false
+    create_stock_location_params:
+      type: object
+      properties:
+        stock_location:
+          type: object
+          required:
+          - name
+          properties:
+            name:
+              type: string
+              example: Warehouse 3
+            default:
+              type: boolean
+            address1:
+              type: string
+              example: South St. 8
+            address2:
+              type: string
+              example: South St. 109
+            country_id:
+              type: string
+              example: '2'
+            state_id:
+              type: string
+              example: '4'
+            city:
+              type: string
+              example: Los Angeles
+            state_name:
+              type: string
+              example: California
+            zipcode:
+              type: string
+              example: '90005'
+            phone:
+              type: string
+              example: '23333456'
+            active:
+              type: boolean
+            backorderable_default:
+              type: boolean
+            propagate_all_variants:
+              type: boolean
+            admin_name:
+              type: string
+      required:
+      - stock_location
+      x-internal: false
+    resources_list:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/resource_properties'
+        meta:
+          type: object
+          properties:
+            count:
+              type: integer
+            total_count:
+              type: integer
+            total_pages:
+              type: integer
+          required:
+          - count
+          - total_count
+          - total_pages
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+            next:
+              type: string
+            prev:
+              type: string
+            last:
+              type: string
+            first:
+              type: string
+          required:
+          - self
+          - next
+          - prev
+          - last
+          - first
+      required:
+      - data
+      - meta
+      - links
+      x-internal: false
+    error:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      x-internal: false
+    resource:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/resource_properties'
+      required:
+      - data
+      x-internal: false
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 25
+        count:
+          type: integer
+          example: 100
+          description: Total number of records
+        pages:
+          type: integer
+          example: 4
+          description: Total number of pages
+        from:
+          type: integer
+          example: 1
+          description: Index of first record on this page
+        to:
+          type: integer
+          example: 25
+          description: Index of last record on this page
+        in:
+          type: integer
+          example: 25
+          description: Number of records on this page
+        previous:
+          type: integer
+          nullable: true
+          example: null
+          description: Previous page number
+        next:
+          type: integer
+          nullable: true
+          example: 2
+          description: Next page number
+      required:
+      - page
+      - limit
+      - count
+      - pages
+      - from
+      - to
+      - in
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type: object
+              description: Field-specific validation errors
+              nullable: true
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
+    validation_errors:
+      type: object
+      properties:
+        error:
+          type: string
+        errors:
+          type: object
+      required:
+      - error
+      - errors
+      x-internal: false
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

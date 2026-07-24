@@ -1,0 +1,637 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Settings API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Settings
+  description: Store-level settings — store profile, tags, store credit categories
+paths:
+  /api/v3/admin/store_credit_categories:
+    get:
+      summary: List store credit categories
+      tags:
+      - Settings
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns the configured store credit categories. Categories classify
+
+        store credits (e.g., "Goodwill", "Gift Card", "Refund") and surface
+
+        in the admin UI as a dropdown when issuing or editing a store
+
+        credit. Category names matching `Spree::Config[:non_expiring_credit_types]`
+
+        are flagged via `non_expiring: true`.
+
+
+
+        **Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: categories } = await client.storeCreditCategories.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Number of records per page
+        schema:
+          type: integer
+      - name: q[name_cont]
+        in: query
+        required: false
+        description: Filter by name (contains)
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        description: Sort by field. Prefix with `-` for descending (e.g., `-created_at`).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include. id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: store credit categories found
+          content:
+            application/json:
+              example:
+                data:
+                - id: sccat_UkLWZg9DAJ
+                  name: Goodwill
+                  created_at: '2026-06-12T17:25:17.833Z'
+                  updated_at: '2026-06-12T17:25:17.833Z'
+                  non_expiring: false
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StoreCreditCategory'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+                required:
+                - data
+                - meta
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/admin/store_credit_categories/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Store credit category ID
+      schema:
+        type: string
+    get:
+      summary: Get a store credit category
+      tags:
+      - Settings
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a single store credit category by prefixed ID.
+
+
+        **Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst category = await client.storeCreditCategories.get('sccat_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include. id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: store credit category found
+          content:
+            application/json:
+              example:
+                id: sccat_UkLWZg9DAJ
+                name: Goodwill
+                created_at: '2026-06-12T17:25:18.145Z'
+                updated_at: '2026-06-12T17:25:18.145Z'
+                non_expiring: false
+              schema:
+                $ref: '#/components/schemas/StoreCreditCategory'
+        '404':
+          description: store credit category not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Store credit category not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/admin/store:
+    get:
+      summary: Get the current store
+      tags:
+      - Settings
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns the current store configuration. The store is resolved from the request context (host or admin selection); there is no `id` parameter.
+
+
+        **Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst store = await client.store.get()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '200':
+          description: current store
+          content:
+            application/json:
+              example:
+                id: store_UkLWZg9DAJ
+                metadata: {}
+                name: Spree Test Store
+                default_currency: USD
+                default_locale: en
+                mail_from_address: no-reply@example.com
+                customer_support_email: support@example.com
+                new_order_notifications_email: store-owner@example.com
+                preferred_send_consumer_transactional_emails: true
+                preferred_admin_locale: null
+                preferred_timezone: UTC
+                preferred_weight_unit: lb
+                preferred_unit_system: imperial
+                created_at: '2026-06-12T17:23:41.091Z'
+                updated_at: '2026-06-12T17:25:18.763Z'
+                url: http://www.example.com:3000
+                supported_currencies:
+                - USD
+                supported_locales:
+                - en
+                logo_url: null
+                mailer_logo_url: null
+              schema:
+                $ref: '#/components/schemas/Store'
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Update the current store
+      tags:
+      - Settings
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates the current store configuration.
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst store = await client.store.update({\n  name: 'My Store'\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '200':
+          description: store updated
+          content:
+            application/json:
+              example:
+                id: store_UkLWZg9DAJ
+                metadata: {}
+                name: Renamed Store
+                default_currency: USD
+                default_locale: en
+                mail_from_address: no-reply@example.com
+                customer_support_email: support@example.com
+                new_order_notifications_email: store-owner@example.com
+                preferred_send_consumer_transactional_emails: true
+                preferred_admin_locale: null
+                preferred_timezone: UTC
+                preferred_weight_unit: lb
+                preferred_unit_system: imperial
+                created_at: '2026-06-12T17:23:41.091Z'
+                updated_at: '2026-06-12T17:25:19.408Z'
+                url: http://www.example.com:3000
+                supported_currencies:
+                - USD
+                supported_locales:
+                - en
+                logo_url: null
+                mailer_logo_url: null
+              schema:
+                $ref: '#/components/schemas/Store'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Site Name can't be blank
+                  details:
+                    name:
+                    - can't be blank
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: My Store
+                preferred_admin_locale:
+                  type: string
+                  example: en
+                preferred_timezone:
+                  type: string
+                  example: UTC
+                preferred_weight_unit:
+                  type: string
+                  example: kg
+                preferred_unit_system:
+                  type: string
+                  example: metric
+  /api/v3/admin/tags:
+    get:
+      summary: List tags
+      tags:
+      - Settings
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns tag names for a given taggable type. Used for autocomplete in tag inputs on products, orders, and customers.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: tags } = await client.tags.list({\n  taggable_type: 'Spree::User',\n  q: 'vip',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: taggable_type
+        in: query
+        required: true
+        description: Taggable type (`Spree::Product`, `Spree::Order`, or `Spree::User`)
+        schema:
+          type: string
+      - name: q
+        in: query
+        required: false
+        description: Optional case-insensitive substring filter
+        schema:
+          type: string
+      responses:
+        '200':
+          description: tags found
+          content:
+            application/json:
+              example:
+                data:
+                - name: vip
+                - name: wholesale
+        '422':
+          description: invalid taggable type
+          content:
+            application/json:
+              example:
+                error:
+                  code: invalid_taggable_type
+                  message: taggable_type must be one of Spree::Product, Spree::Order, Spree::LegacyUser
+components:
+  schemas:
+    Store:
+      type: object
+      properties:
+        id:
+          type: string
+        metadata:
+          type: object
+        name:
+          type: string
+        default_currency:
+          type: string
+        default_locale:
+          type: string
+        mail_from_address:
+          type: string
+          nullable: true
+        customer_support_email:
+          type: string
+          nullable: true
+        new_order_notifications_email:
+          type: string
+          nullable: true
+        preferred_send_consumer_transactional_emails:
+          type: boolean
+        preferred_admin_locale:
+          type: string
+          nullable: true
+        preferred_timezone:
+          type: string
+        preferred_weight_unit:
+          type: string
+        preferred_unit_system:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        url:
+          type: string
+        supported_currencies:
+          type: array
+          items:
+            type: string
+        supported_locales:
+          type: array
+          items:
+            type: string
+        logo_url:
+          type: string
+          nullable: true
+        mailer_logo_url:
+          type: string
+          nullable: true
+      required:
+      - id
+      - metadata
+      - name
+      - default_currency
+      - default_locale
+      - mail_from_address
+      - customer_support_email
+      - new_order_notifications_email
+      - preferred_send_consumer_transactional_emails
+      - preferred_admin_locale
+      - preferred_timezone
+      - preferred_weight_unit
+      - preferred_unit_system
+      - created_at
+      - updated_at
+      - url
+      - supported_currencies
+      - supported_locales
+      - logo_url
+      - mailer_logo_url
+      x-typelizer: true
+    StoreCreditCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        non_expiring:
+          type: boolean
+      required:
+      - id
+      - name
+      - created_at
+      - updated_at
+      - non_expiring
+      x-typelizer: true
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 25
+        count:
+          type: integer
+          example: 100
+          description: Total number of records
+        pages:
+          type: integer
+          example: 4
+          description: Total number of pages
+        from:
+          type: integer
+          example: 1
+          description: Index of first record on this page
+        to:
+          type: integer
+          example: 25
+          description: Index of last record on this page
+        in:
+          type: integer
+          example: 25
+          description: Number of records on this page
+        previous:
+          type: integer
+          nullable: true
+          example: null
+          description: Previous page number
+        next:
+          type: integer
+          nullable: true
+          example: 2
+          description: Next page number
+      required:
+      - page
+      - limit
+      - count
+      - pages
+      - from
+      - to
+      - in
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type: object
+              description: Field-specific validation errors
+              nullable: true
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

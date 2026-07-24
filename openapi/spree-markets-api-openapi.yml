@@ -1,0 +1,1349 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Markets API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Markets
+  description: Markets — geographic groupings of countries used for pricing, tax, and fulfillment rules
+paths:
+  /api/v3/admin/markets:
+    get:
+      summary: List markets
+      tags:
+      - Markets
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns the markets configured for the current store. Markets are
+
+        store-scoped and ordered by `position` (an `acts_as_list` column —
+
+        update the order via `PATCH /markets/{id}` with `position`).
+
+
+
+        **Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: markets } = await client.markets.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: q[name_cont]
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: 'Comma-separated associations to embed. Supported: `countries`.'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: markets found
+          content:
+            application/json:
+              example:
+                data:
+                - id: mkt_UkLWZg9DAJ
+                  name: EU
+                  currency: USD
+                  default_locale: en
+                  tax_inclusive: false
+                  default: false
+                  country_isos:
+                  - DE
+                  supported_locales:
+                  - en
+                  created_at: '2026-06-12T17:24:19.453Z'
+                  updated_at: '2026-06-12T17:24:19.453Z'
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Market'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+                required:
+                - data
+                - meta
+    post:
+      summary: Create a market
+      tags:
+      - Markets
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: "Creates a new market for the current store.\n\n- `country_isos` accepts 2-letter ISO country codes (e.g. `[\"DE\", \"FR\"]`);\n  the market must contain at least one country. Unknown codes are\n  silently dropped.\n- `supported_locales` accepts an array of locale codes; the\n  `default_locale` is always implicitly included.\n- Setting `default: true` automatically demotes the previous default\n  market in the store.\n\n\n**Required scope:** `write_settings` (for API-key authentication)."
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst market = await client.markets.create({\n  name: 'Europe',\n  currency: 'EUR',\n  default_locale: 'de',\n  supported_locales: ['de', 'en', 'fr'],\n  tax_inclusive: true,\n  country_isos: ['DE', 'FR', 'IT'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: market created
+          content:
+            application/json:
+              example:
+                id: mkt_gbHJdmfrXB
+                name: France only
+                currency: EUR
+                default_locale: fr
+                tax_inclusive: true
+                default: false
+                country_isos:
+                - FR
+                supported_locales:
+                - en
+                - fr
+                created_at: '2026-06-12T17:24:20.056Z'
+                updated_at: '2026-06-12T17:24:20.056Z'
+              schema:
+                $ref: '#/components/schemas/Market'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Name can't be blank, Currency can't be blank, Default locale can't be blank, and Countries can't be blank
+                  details:
+                    name:
+                    - can't be blank
+                    currency:
+                    - can't be blank
+                    default_locale:
+                    - can't be blank
+                    countries:
+                    - can't be blank
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Europe
+                currency:
+                  type: string
+                  example: EUR
+                  description: ISO 4217 currency code.
+                default_locale:
+                  type: string
+                  example: de
+                  description: IETF locale tag used as the market default.
+                supported_locales:
+                  type: array
+                  items:
+                    type: string
+                  description: Locale codes available in this market. The default is always implicitly included.
+                  example:
+                  - de
+                  - en
+                tax_inclusive:
+                  type: boolean
+                  default: false
+                  description: Display prices with tax included.
+                default:
+                  type: boolean
+                  default: false
+                  description: Setting to true demotes the previous default.
+                position:
+                  type: integer
+                  description: Sort order within the store; lower = first.
+                country_isos:
+                  type: array
+                  items:
+                    type: string
+                  description: 2-letter ISO country codes assigned to this market. At least one is required.
+                  example:
+                  - DE
+                  - FR
+              required:
+              - name
+              - currency
+              - default_locale
+              - country_isos
+  /api/v3/admin/markets/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Get a market
+      tags:
+      - Markets
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: '**Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst market = await client.markets.get('market_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: market found
+          content:
+            application/json:
+              example:
+                id: mkt_UkLWZg9DAJ
+                name: EU
+                currency: USD
+                default_locale: en
+                tax_inclusive: false
+                default: false
+                country_isos:
+                - DE
+                supported_locales:
+                - en
+                created_at: '2026-06-12T17:24:20.399Z'
+                updated_at: '2026-06-12T17:24:20.399Z'
+              schema:
+                $ref: '#/components/schemas/Market'
+        '404':
+          description: market not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Market not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Update a market
+      tags:
+      - Markets
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates an existing market. Pass `country_isos` to replace the
+
+        market''s country list (full-set update), `supported_locales` to
+
+        replace the supported locales, or `position` to reorder the market
+
+        within the store.
+
+
+        Setting `default: true` automatically demotes the previous default.
+
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\n// `country_isos` is a full-set update — the market is reconciled to match\n// the array (adds new countries, removes ones not present). Setting\n// `default: true` demotes the previous default market in the store.\nconst market = await client.markets.update('market_UkLWZg9DAJ', {\n  name: 'European Union',\n  tax_inclusive: true,\n  country_isos: ['DE', 'FR'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: market updated
+          content:
+            application/json:
+              example:
+                id: mkt_UkLWZg9DAJ
+                name: European Union
+                currency: USD
+                default_locale: en
+                tax_inclusive: true
+                default: false
+                country_isos:
+                - DE
+                supported_locales:
+                - en
+                created_at: '2026-06-12T17:24:21.018Z'
+                updated_at: '2026-06-12T17:24:21.314Z'
+              schema:
+                $ref: '#/components/schemas/Market'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Name can't be blank
+                  details:
+                    name:
+                    - can't be blank
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                currency:
+                  type: string
+                default_locale:
+                  type: string
+                supported_locales:
+                  type: array
+                  items:
+                    type: string
+                tax_inclusive:
+                  type: boolean
+                default:
+                  type: boolean
+                position:
+                  type: integer
+                country_isos:
+                  type: array
+                  items:
+                    type: string
+    delete:
+      summary: Delete a market
+      tags:
+      - Markets
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Soft-deletes the market (sets `deleted_at`). The default market and
+
+        the last remaining market in a store cannot be deleted — both return
+
+        422 with a `validation_error`.
+
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\n// Soft-deletes the market (sets `deleted_at`). The default market and the\n// last remaining market in a store cannot be deleted — both return 422.\nawait client.markets.delete('market_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: market deleted
+        '422':
+          description: cannot delete default or last market
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Market cannot be deleted
+  /api/v3/store/countries:
+    get:
+      summary: List countries
+      tags:
+      - Markets
+      security:
+      - api_key: []
+      description: Returns countries available in the store. Use ?expand=market to include market details (currency, locale, tax_inclusive).
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst countries = await client.countries.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: countries found
+          content:
+            application/json:
+              example:
+                data:
+                - iso: DE
+                  iso3: IS39
+                  name: Germany
+                  states_required: false
+                  zipcode_required: true
+                - iso: US
+                  iso3: USA
+                  name: United States of America
+                  states_required: true
+                  zipcode_required: true
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Country_2'
+                required:
+                - data
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: invalid_token
+                  message: Valid API key required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/countries/{iso}:
+    get:
+      summary: Get a country
+      tags:
+      - Markets
+      security:
+      - api_key: []
+      description: Returns a single country by ISO code. Supports ?expand=states for address forms and ?expand=market for market details.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst country = await client.countries.get('US')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: iso
+        in: path
+        required: true
+        description: Country ISO 3166-1 alpha-2 code (e.g., "US", "DE")
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: country found
+          content:
+            application/json:
+              example:
+                iso: US
+                iso3: USA
+                name: United States of America
+                states_required: true
+                zipcode_required: true
+              schema:
+                type: object
+                properties:
+                  iso:
+                    type: string
+                  iso3:
+                    type: string
+                  name:
+                    type: string
+                  states_required:
+                    type: boolean
+                  zipcode_required:
+                    type: boolean
+                required:
+                - iso
+                - iso3
+                - name
+                - states_required
+                - zipcode_required
+        '404':
+          description: country not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Country not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/currencies:
+    get:
+      summary: List supported currencies
+      tags:
+      - Markets
+      security:
+      - api_key: []
+      description: Returns currencies supported by the store (derived from markets)
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst currencies = await client.currencies.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: currencies found
+          content:
+            application/json:
+              example:
+                data:
+                - iso_code: USD
+                  name: United States Dollar
+                  symbol: $
+                - iso_code: EUR
+                  name: Euro
+                  symbol: €
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Currency'
+                required:
+                - data
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: invalid_token
+                  message: Valid API key required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/locales:
+    get:
+      summary: List supported locales
+      tags:
+      - Markets
+      security:
+      - api_key: []
+      description: Returns locales supported by the store (derived from markets)
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst locales = await client.locales.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: locales found
+          content:
+            application/json:
+              example:
+                data:
+                - code: de
+                  name: de
+                - code: en
+                  name: English (US)
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Locale'
+                required:
+                - data
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: invalid_token
+                  message: Valid API key required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/markets:
+    get:
+      summary: List markets
+      tags:
+      - Markets
+      security:
+      - api_key: []
+      description: Returns all markets for the current store with their countries, currency, locales, and tax configuration.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst markets = await client.markets.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: markets found
+          content:
+            application/json:
+              example:
+                data:
+                - id: mkt_UkLWZg9DAJ
+                  name: North America
+                  currency: USD
+                  default_locale: en
+                  tax_inclusive: false
+                  default: true
+                  country_isos:
+                  - US
+                  supported_locales:
+                  - en
+                  - es
+                  countries:
+                  - iso: US
+                    iso3: USA
+                    name: United States of America
+                    states_required: true
+                    zipcode_required: true
+                - id: mkt_gbHJdmfrXB
+                  name: Europe
+                  currency: EUR
+                  default_locale: de
+                  tax_inclusive: true
+                  default: false
+                  country_isos:
+                  - DE
+                  - FR
+                  supported_locales:
+                  - de
+                  - en
+                  - fr
+                  countries:
+                  - iso: DE
+                    iso3: IS66
+                    name: Germany
+                    states_required: false
+                    zipcode_required: true
+                  - iso: FR
+                    iso3: IS67
+                    name: France
+                    states_required: false
+                    zipcode_required: true
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                required:
+                - data
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: invalid_token
+                  message: Valid API key required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/markets/{id}:
+    get:
+      summary: Get a market
+      tags:
+      - Markets
+      security:
+      - api_key: []
+      description: Returns a single market by prefixed ID with its countries, currency, locales, and tax configuration.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst market = await client.markets.get('mkt_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Market prefixed ID (e.g., "mkt_k5nR8xLq")
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: market found
+          content:
+            application/json:
+              example:
+                id: mkt_gbHJdmfrXB
+                name: Europe
+                currency: EUR
+                default_locale: de
+                tax_inclusive: true
+                default: false
+                country_isos:
+                - DE
+                - FR
+                supported_locales:
+                - de
+                - en
+                - fr
+                countries:
+                - iso: DE
+                  iso3: IS70
+                  name: Germany
+                  states_required: false
+                  zipcode_required: true
+                - iso: FR
+                  iso3: IS71
+                  name: France
+                  states_required: false
+                  zipcode_required: true
+              schema:
+                type: object
+        '404':
+          description: market not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Market not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/markets/resolve:
+    get:
+      summary: Resolve market by country
+      tags:
+      - Markets
+      security:
+      - api_key: []
+      description: Determine which market applies for a given country ISO code. Useful for auto-selecting the correct currency and locale when a customer's location is known.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst market = await client.markets.resolve('DE')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: country
+        in: query
+        required: true
+        description: Country ISO 3166-1 alpha-2 code (e.g., "DE", "US")
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: market resolved
+          content:
+            application/json:
+              example:
+                id: mkt_gbHJdmfrXB
+                name: Europe
+                currency: EUR
+                default_locale: de
+                tax_inclusive: true
+                default: false
+                country_isos:
+                - DE
+                - FR
+                supported_locales:
+                - de
+                - en
+                - fr
+                countries:
+                - iso: DE
+                  iso3: IS74
+                  name: Germany
+                  states_required: false
+                  zipcode_required: true
+                - iso: FR
+                  iso3: IS75
+                  name: France
+                  states_required: false
+                  zipcode_required: true
+              schema:
+                type: object
+        '404':
+          description: no market for country
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Country not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/markets/{market_id}/countries:
+    get:
+      summary: List countries in a market
+      tags:
+      - Markets
+      security:
+      - api_key: []
+      description: Returns countries belonging to a specific market. Use this for address form country dropdowns during checkout.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst countries = await client.markets.countries.list('mkt_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: market_id
+        in: path
+        required: true
+        description: Market prefixed ID
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: countries found
+          content:
+            application/json:
+              example:
+                data:
+                - iso: FR
+                  iso3: IS79
+                  name: France
+                  states_required: false
+                  zipcode_required: true
+                - iso: DE
+                  iso3: IS78
+                  name: Germany
+                  states_required: false
+                  zipcode_required: true
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                required:
+                - data
+  /api/v3/store/markets/{market_id}/countries/{id}:
+    get:
+      summary: Get a country in a market
+      tags:
+      - Markets
+      security:
+      - api_key: []
+      description: Returns a single country by ISO code within a market. Supports ?expand=states for address forms.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst country = await client.markets.countries.get('mkt_xxx', 'DE')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: market_id
+        in: path
+        required: true
+        description: Market prefixed ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Country ISO 3166-1 alpha-2 code (e.g., "DE")
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: country found
+          content:
+            application/json:
+              example:
+                iso: US
+                iso3: USA
+                name: United States of America
+                states_required: true
+                zipcode_required: true
+              schema:
+                type: object
+        '404':
+          description: country not in market
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Country not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Market_2:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        currency:
+          type: string
+        default_locale:
+          type: string
+        tax_inclusive:
+          type: boolean
+        default:
+          type: boolean
+        country_isos:
+          type: array
+          items:
+            type: string
+        supported_locales:
+          type: array
+          items:
+            type: string
+        countries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Country_2'
+      required:
+      - id
+      - name
+      - currency
+      - default_locale
+      - tax_inclusive
+      - default
+      - country_isos
+      - supported_locales
+      x-typelizer: true
+    Currency:
+      type: object
+      properties:
+        iso_code:
+          type: string
+        name:
+          type: string
+        symbol:
+          type: string
+      required:
+      - iso_code
+      - name
+      - symbol
+      x-typelizer: true
+    Country_2:
+      type: object
+      properties:
+        iso:
+          type: string
+        iso3:
+          type: string
+        name:
+          type: string
+        states_required:
+          type: boolean
+        zipcode_required:
+          type: boolean
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/State_2'
+        market:
+          allOf:
+          - $ref: '#/components/schemas/Market_2'
+          nullable: true
+      required:
+      - iso
+      - iso3
+      - name
+      - states_required
+      - zipcode_required
+      x-typelizer: true
+    State:
+      type: object
+      properties:
+        abbr:
+          type: string
+        name:
+          type: string
+        created_at:
+          type: object
+        updated_at:
+          type: object
+      required:
+      - abbr
+      - name
+      - created_at
+      - updated_at
+      x-typelizer: true
+    Locale:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+      required:
+      - code
+      - name
+      x-typelizer: true
+    Market:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        currency:
+          type: string
+        default_locale:
+          type: string
+        tax_inclusive:
+          type: boolean
+        default:
+          type: boolean
+        country_isos:
+          type: array
+          items:
+            type: string
+        supported_locales:
+          type: array
+          items:
+            type: string
+        countries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Country'
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - id
+      - name
+      - currency
+      - default_locale
+      - tax_inclusive
+      - default
+      - country_isos
+      - supported_locales
+      - created_at
+      - updated_at
+      x-typelizer: true
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 25
+        count:
+          type: integer
+          example: 100
+          description: Total number of records
+        pages:
+          type: integer
+          example: 4
+          description: Total number of pages
+        from:
+          type: integer
+          example: 1
+          description: Index of first record on this page
+        to:
+          type: integer
+          example: 25
+          description: Index of last record on this page
+        in:
+          type: integer
+          example: 25
+          description: Number of records on this page
+        previous:
+          type: integer
+          nullable: true
+          example: null
+          description: Previous page number
+        next:
+          type: integer
+          nullable: true
+          example: 2
+          description: Next page number
+      required:
+      - page
+      - limit
+      - count
+      - pages
+      - from
+      - to
+      - in
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type: object
+              description: Field-specific validation errors
+              nullable: true
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
+    State_2:
+      type: object
+      properties:
+        abbr:
+          type: string
+        name:
+          type: string
+      required:
+      - abbr
+      - name
+      x-typelizer: true
+    Country:
+      type: object
+      properties:
+        iso:
+          type: string
+        iso3:
+          type: string
+        name:
+          type: string
+        states_required:
+          type: boolean
+        zipcode_required:
+          type: boolean
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/State'
+        market:
+          allOf:
+          - $ref: '#/components/schemas/Market'
+          nullable: true
+        created_at:
+          type: object
+        updated_at:
+          type: object
+      required:
+      - iso
+      - iso3
+      - name
+      - states_required
+      - zipcode_required
+      - created_at
+      - updated_at
+      x-typelizer: true
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

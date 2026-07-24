@@ -1,0 +1,200 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Refunds API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Refunds
+  description: Order refunds
+paths:
+  /api/v3/admin/orders/{order_id}/refunds:
+    get:
+      summary: List refunds
+      tags:
+      - Refunds
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns all refunds for an order.
+
+
+        **Required scope:** `read_refunds` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: refunds } = await client.orders.refunds.list('or_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: order_id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., payment, refund_reason). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., amount,reason,transaction_id). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: refunds found
+          content:
+            application/json:
+              example:
+                data: []
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 0
+                  pages: 1
+                  from: 0
+                  to: 0
+                  in: 0
+                  previous: null
+                  next: null
+    post:
+      summary: Create a refund
+      tags:
+      - Refunds
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Creates a refund for a payment on the order. The refund is automatically processed via the payment gateway.
+
+
+        **Required scope:** `write_refunds` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst refund = await client.orders.refunds.create('or_UkLWZg9DAJ', {\n  payment_id: 'pay_UkLWZg9DAJ',\n  amount: 5.00,\n  refund_reason_id: 'refrsn_UkLWZg9DAJ',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: order_id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: refund created
+          content:
+            application/json:
+              example:
+                id: re_UkLWZg9DAJ
+                transaction_id: BGS-68aa088bc90d
+                amount: '5.0'
+                payment_id: py_UkLWZg9DAJ
+                refund_reason_id: rr_UkLWZg9DAJ
+                reimbursement_id: null
+                metadata: {}
+                created_at: '2026-06-12T17:24:40.748Z'
+                updated_at: '2026-06-12T17:24:40.748Z'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - payment_id
+              - amount
+              properties:
+                payment_id:
+                  type: string
+                  description: Payment ID
+                amount:
+                  type: number
+                  example: 10.0
+                refund_reason_id:
+                  type: string
+                  description: Refund reason ID
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

@@ -1,0 +1,4610 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Customers API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Customers
+  description: Customer profiles, addresses, credit cards, and store credits
+paths:
+  /api/v3/admin/customers/{customer_id}/addresses:
+    get:
+      summary: List customer addresses
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns the customer''s saved addresses.
+
+
+        **Required scope:** `read_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: addresses } = await client.customers.addresses.list('cus_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., country, state). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., first_name,last_name,address1,city). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: addresses found
+          content:
+            application/json:
+              example:
+                data:
+                - id: addr_UkLWZg9DAJ
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 1 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: false
+                  is_default_shipping: false
+                  state_name: New York
+                  label: null
+                  metadata: {}
+                  created_at: '2026-06-12T17:23:58.540Z'
+                  updated_at: '2026-06-12T17:23:58.540Z'
+                  customer_id: cus_UkLWZg9DAJ
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+    post:
+      summary: Create a customer address
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Adds a new address to the customer''s address book. Pass `is_default_billing: true` or `is_default_shipping: true` to set as the default — the previous default loses its flag in the same transaction.
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst address = await client.customers.addresses.create('cus_UkLWZg9DAJ', {\n  first_name: 'Jane',\n  last_name: 'Doe',\n  address1: '350 Fifth Avenue',\n  city: 'New York',\n  postal_code: '10118',\n  country_iso: 'US',\n  state_abbr: 'NY',\n  phone: '+1 212 555 1234',\n  label: 'Office',\n  is_default_shipping: true,\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: address created
+          content:
+            application/json:
+              example:
+                id: addr_gbHJdmfrXB
+                first_name: Jane
+                last_name: Doe
+                full_name: Jane Doe
+                address1: 350 Fifth Avenue
+                address2: null
+                postal_code: '10118'
+                city: New York
+                phone: '+12125551234'
+                company: null
+                country_name: United States of America
+                country_iso: US
+                state_text: NY
+                state_abbr: NY
+                quick_checkout: false
+                is_default_billing: false
+                is_default_shipping: false
+                state_name: New York
+                label: Office
+                metadata: {}
+                created_at: '2026-06-12T17:23:59.952Z'
+                updated_at: '2026-06-12T17:23:59.952Z'
+                customer_id: cus_UkLWZg9DAJ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                address1:
+                  type: string
+                address2:
+                  type: string
+                city:
+                  type: string
+                postal_code:
+                  type: string
+                country_iso:
+                  type: string
+                  description: ISO-2 country code (e.g. US)
+                state_abbr:
+                  type: string
+                  description: State/province abbreviation (e.g. NY)
+                phone:
+                  type: string
+                company:
+                  type: string
+                label:
+                  type: string
+                is_default_billing:
+                  type: boolean
+                is_default_shipping:
+                  type: boolean
+  /api/v3/admin/customers/{customer_id}/addresses/{id}:
+    patch:
+      summary: Update a customer address
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates a customer address.
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst address = await client.customers.addresses.update(\n  'cus_UkLWZg9DAJ',\n  'addr_UkLWZg9DAJ',\n  { city: 'Manhattan' },\n)"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: address updated
+          content:
+            application/json:
+              example:
+                id: addr_UkLWZg9DAJ
+                first_name: John
+                last_name: Doe
+                full_name: John Doe
+                address1: 3 Lovely Street
+                address2: Northwest
+                postal_code: '10118'
+                city: Manhattan
+                phone: 555-555-0199
+                company: Company
+                country_name: United States of America
+                country_iso: US
+                state_text: NY
+                state_abbr: NY
+                quick_checkout: false
+                is_default_billing: false
+                is_default_shipping: false
+                state_name: New York
+                label: null
+                metadata: {}
+                created_at: '2026-06-12T17:24:00.227Z'
+                updated_at: '2026-06-12T17:24:00.777Z'
+                customer_id: cus_UkLWZg9DAJ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city:
+                  type: string
+                is_default_billing:
+                  type: boolean
+                is_default_shipping:
+                  type: boolean
+    delete:
+      summary: Delete a customer address
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Deletes the address. If it was a default, the customer loses that default (no auto-promotion).
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.customers.addresses.delete('cus_UkLWZg9DAJ', 'addr_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: address deleted
+  /api/v3/admin/customers/{customer_id}/credit_cards:
+    get:
+      summary: List customer credit cards
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns the customer''s saved credit cards. Useful for off-session admin charges via `POST /admin/orders/:id/payments { source_id }`.
+
+
+        **Required scope:** `read_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: cards } = await client.customers.creditCards.list('cus_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., payment_method). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., brand,last4,month,year). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: credit cards found
+          content:
+            application/json:
+              example:
+                data:
+                - id: card_UkLWZg9DAJ
+                  brand: visa
+                  last4: '1111'
+                  month: 12
+                  year: 2027
+                  name: Spree Commerce
+                  default: false
+                  gateway_payment_profile_id: null
+                  customer_id: cus_UkLWZg9DAJ
+                  payment_method_id: pm_UkLWZg9DAJ
+                  metadata: {}
+                  created_at: '2026-06-12T17:24:01.924Z'
+                  updated_at: '2026-06-12T17:24:01.924Z'
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+  /api/v3/admin/customers/{customer_id}/credit_cards/{id}:
+    get:
+      summary: Show a customer credit card
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a saved credit card by ID.
+
+
+        **Required scope:** `read_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst card = await client.customers.creditCards.get('cus_UkLWZg9DAJ', 'cc_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., payment_method). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., brand,last4,month,year). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: credit card found
+          content:
+            application/json:
+              example:
+                id: card_UkLWZg9DAJ
+                brand: visa
+                last4: '1111'
+                month: 12
+                year: 2027
+                name: Spree Commerce
+                default: false
+                gateway_payment_profile_id: null
+                customer_id: cus_UkLWZg9DAJ
+                payment_method_id: pm_UkLWZg9DAJ
+                metadata: {}
+                created_at: '2026-06-12T17:24:02.498Z'
+                updated_at: '2026-06-12T17:24:02.498Z'
+    delete:
+      summary: Delete a customer credit card
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Deletes a saved credit card.
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.customers.creditCards.delete('cus_UkLWZg9DAJ', 'cc_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: credit card deleted
+  /api/v3/admin/customers/{customer_id}/store_credits:
+    get:
+      summary: List customer store credits
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns store credits issued to the customer.
+
+
+        **Required scope:** `read_store_credits` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: storeCredits } = await client.customers.storeCredits.list('cus_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., category, store, created_by). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., amount,amount_used,memo,currency). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: store credits found
+          content:
+            application/json:
+              example:
+                data:
+                - id: credit_UkLWZg9DAJ
+                  amount: '50.0'
+                  amount_used: '0.0'
+                  amount_remaining: '50.0'
+                  display_amount: $50.00
+                  display_amount_used: $0.00
+                  display_amount_remaining: $50.00
+                  currency: USD
+                  memo: null
+                  metadata: {}
+                  created_at: '2026-06-12T17:24:03.896Z'
+                  updated_at: '2026-06-12T17:24:03.896Z'
+                  customer_id: cus_UkLWZg9DAJ
+                  created_by_id: admin_UkLWZg9DAJ
+                  category_id: sccat_UkLWZg9DAJ
+                  category_name: Exchange
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+    post:
+      summary: Issue a store credit to a customer
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: '`created_by` is set automatically from the authenticated admin.
+
+
+        **Required scope:** `write_store_credits` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst credit = await client.customers.storeCredits.create('cus_UkLWZg9DAJ', {\n  amount: 25.00,\n  currency: 'USD',\n  category_id: 'cat_UkLWZg9DAJ',\n  memo: 'Goodwill credit',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: store credit created
+          content:
+            application/json:
+              example:
+                id: credit_gbHJdmfrXB
+                amount: '25.0'
+                amount_used: '0.0'
+                amount_remaining: '25.0'
+                display_amount: $25.00
+                display_amount_used: $0.00
+                display_amount_remaining: $25.00
+                currency: USD
+                memo: Goodwill
+                metadata: {}
+                created_at: '2026-06-12T17:24:05.013Z'
+                updated_at: '2026-06-12T17:24:05.013Z'
+                customer_id: cus_UkLWZg9DAJ
+                created_by_id: admin_gbHJdmfrXB
+                category_id: sccat_UkLWZg9DAJ
+                category_name: Exchange
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - amount
+              - currency
+              - category_id
+              properties:
+                amount:
+                  type: number
+                  example: 50.0
+                currency:
+                  type: string
+                  example: USD
+                category_id:
+                  type: string
+                  description: StoreCreditCategory ID
+                memo:
+                  type: string
+  /api/v3/admin/customers/{customer_id}/store_credits/{id}:
+    patch:
+      summary: Update a store credit
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Update memo / category / amount. The amount can only be changed if `amount_used == 0`.
+
+
+        **Required scope:** `write_store_credits` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst credit = await client.customers.storeCredits.update(\n  'cus_UkLWZg9DAJ',\n  'sc_UkLWZg9DAJ',\n  { memo: 'Reissued for damaged shipment' },\n)"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: store credit updated
+          content:
+            application/json:
+              example:
+                id: credit_UkLWZg9DAJ
+                amount: '50.0'
+                amount_used: '0.0'
+                amount_remaining: '50.0'
+                display_amount: $50.00
+                display_amount_used: $0.00
+                display_amount_remaining: $50.00
+                currency: USD
+                memo: Updated
+                metadata: {}
+                created_at: '2026-06-12T17:24:05.556Z'
+                updated_at: '2026-06-12T17:24:05.841Z'
+                customer_id: cus_UkLWZg9DAJ
+                created_by_id: admin_UkLWZg9DAJ
+                category_id: sccat_UkLWZg9DAJ
+                category_name: Exchange
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                category_id:
+                  type: string
+                memo:
+                  type: string
+    delete:
+      summary: Delete a store credit
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Deletes an unused store credit (amount_used == 0). Returns 422 otherwise.
+
+
+        **Required scope:** `write_store_credits` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.customers.storeCredits.delete('cus_UkLWZg9DAJ', 'sc_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: store credit deleted
+  /api/v3/admin/customers:
+    get:
+      summary: List customers
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a paginated list of customers. Supports Ransack search/filters.
+
+
+        **Required scope:** `read_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: customers } = await client.customers.list({\n  search: 'jane',\n  sort: '-created_at',\n  limit: 25,\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: q[search]
+        in: query
+        required: false
+        description: Email + name full-text-ish search
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., addresses, store_credits). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., email,first_name,last_name). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: customers found
+          content:
+            application/json:
+              example:
+                data:
+                - id: cus_UkLWZg9DAJ
+                  email: jane@example.com
+                  first_name: Jane
+                  last_name: Doe
+                  phone: null
+                  accepts_email_marketing: false
+                  full_name: Jane Doe
+                  available_store_credit_total: '0'
+                  display_available_store_credit_total: $0.00
+                  login: jane@example.com
+                  metadata: {}
+                  last_sign_in_at: null
+                  current_sign_in_at: null
+                  created_at: '2026-06-12T17:24:06.985Z'
+                  updated_at: '2026-06-12T17:24:06.985Z'
+                  sign_in_count: 0
+                  failed_attempts: 0
+                  last_sign_in_ip: null
+                  current_sign_in_ip: null
+                  tags: []
+                  internal_note_html: null
+                  default_billing_address_id: null
+                  default_shipping_address_id: null
+                  orders_count: 0
+                  total_spent: '0'
+                  display_total_spent: $0.00
+                  last_order_completed_at: null
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+    post:
+      summary: Create a customer
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Creates a customer. No welcome email is sent automatically.
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst customer = await client.customers.create({\n  email: 'jane@example.com',\n  first_name: 'Jane',\n  last_name: 'Doe',\n  phone: '+1 212 555 1234',\n  tags: ['wholesale'],\n  accepts_email_marketing: true,\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: customer created
+          content:
+            application/json:
+              example:
+                id: cus_gbHJdmfrXB
+                email: newcustomer@example.com
+                first_name: New
+                last_name: Customer
+                phone: null
+                accepts_email_marketing: false
+                full_name: New Customer
+                available_store_credit_total: '0'
+                display_available_store_credit_total: $0.00
+                login: null
+                metadata: {}
+                last_sign_in_at: null
+                current_sign_in_at: null
+                created_at: '2026-06-12T17:24:07.836Z'
+                updated_at: '2026-06-12T17:24:07.836Z'
+                sign_in_count: 0
+                failed_attempts: 0
+                last_sign_in_ip: null
+                current_sign_in_ip: null
+                tags: []
+                internal_note_html: null
+                default_billing_address_id: null
+                default_shipping_address_id: null
+                orders_count: 0
+                total_spent: '0.0'
+                display_total_spent: $0.00
+                last_order_completed_at: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              properties:
+                email:
+                  type: string
+                  example: new@example.com
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                phone:
+                  type: string
+                accepts_email_marketing:
+                  type: boolean
+                internal_note:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+                metadata:
+                  type: object
+  /api/v3/admin/customers/{id}:
+    get:
+      summary: Show a customer
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns full customer details including computed order stats (orders_count, total_spent, last_order_completed_at).
+
+
+        **Required scope:** `read_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst customer = await client.customers.get('cus_UkLWZg9DAJ', {\n  expand: ['addresses', 'store_credits'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Customer ID
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: 'Comma-separated associations: addresses, orders, store_credits, default_billing_address, default_shipping_address'
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., email,first_name,last_name). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: customer found
+          content:
+            application/json:
+              example:
+                id: cus_UkLWZg9DAJ
+                email: jane@example.com
+                first_name: Jane
+                last_name: Doe
+                phone: null
+                accepts_email_marketing: false
+                full_name: Jane Doe
+                available_store_credit_total: '0'
+                display_available_store_credit_total: $0.00
+                login: jane@example.com
+                metadata: {}
+                last_sign_in_at: null
+                current_sign_in_at: null
+                created_at: '2026-06-12T17:24:08.112Z'
+                updated_at: '2026-06-12T17:24:08.112Z'
+                sign_in_count: 0
+                failed_attempts: 0
+                last_sign_in_ip: null
+                current_sign_in_ip: null
+                tags: []
+                internal_note_html: null
+                default_billing_address_id: null
+                default_shipping_address_id: null
+                orders_count: 0
+                total_spent: '0'
+                display_total_spent: $0.00
+                last_order_completed_at: null
+    patch:
+      summary: Update a customer
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates customer attributes. `tags` replaces the full set.
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst customer = await client.customers.update('cus_UkLWZg9DAJ', {\n  first_name: 'Updated',\n  tags: ['wholesale', 'vip'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: customer updated
+          content:
+            application/json:
+              example:
+                id: cus_UkLWZg9DAJ
+                email: jane@example.com
+                first_name: Updated
+                last_name: Doe
+                phone: null
+                accepts_email_marketing: false
+                full_name: Updated Doe
+                available_store_credit_total: '0'
+                display_available_store_credit_total: $0.00
+                login: jane@example.com
+                metadata: {}
+                last_sign_in_at: null
+                current_sign_in_at: null
+                created_at: '2026-06-12T17:24:08.673Z'
+                updated_at: '2026-06-12T17:24:08.959Z'
+                sign_in_count: 0
+                failed_attempts: 0
+                last_sign_in_ip: null
+                current_sign_in_ip: null
+                tags: []
+                internal_note_html: null
+                default_billing_address_id: null
+                default_shipping_address_id: null
+                orders_count: 0
+                total_spent: '0.0'
+                display_total_spent: $0.00
+                last_order_completed_at: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                phone:
+                  type: string
+                accepts_email_marketing:
+                  type: boolean
+                internal_note:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+                metadata:
+                  type: object
+    delete:
+      summary: Delete a customer
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Deletes a customer. Returns 422 if the customer has any orders.
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.customers.delete('cus_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: customer deleted
+  /api/v3/admin/customers/bulk_add_to_groups:
+    post:
+      summary: Bulk-add customers to groups
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Attaches each customer in `ids` to every group in `customer_group_ids`.
+
+        Idempotent — customers already in a group are skipped server-side.
+
+        Groups from sibling stores are silently ignored. Returns counts of
+
+        customers and groups that were processed (post store-scoping).
+
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst result = await client.customers.bulkAddToGroups({\n  ids: ['cus_UkLWZg9DAJ', 'cus_QrLWXg9CAJ'],\n  customer_group_ids: ['cg_UkLWZg9DAJ'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: customers added to groups
+          content:
+            application/json:
+              example:
+                customer_count: 1
+                customer_group_count: 1
+              schema:
+                type: object
+                properties:
+                  customer_count:
+                    type: integer
+                  customer_group_count:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - ids
+              - customer_group_ids
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - cus_UkLWZg9DAJ
+                  - cus_QrLWXg9CAJ
+                customer_group_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - cg_UkLWZg9DAJ
+  /api/v3/admin/customers/bulk_remove_from_groups:
+    post:
+      summary: Bulk-remove customers from groups
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Detaches each customer in `ids` from every group in `customer_group_ids`.
+
+        No-op for non-members. Groups from sibling stores are silently ignored.
+
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst result = await client.customers.bulkRemoveFromGroups({\n  ids: ['cus_UkLWZg9DAJ'],\n  customer_group_ids: ['cg_UkLWZg9DAJ'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: customers removed from groups
+          content:
+            application/json:
+              example:
+                customer_count: 1
+                customer_group_count: 1
+              schema:
+                type: object
+                properties:
+                  customer_count:
+                    type: integer
+                  customer_group_count:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - ids
+              - customer_group_ids
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - cus_UkLWZg9DAJ
+                customer_group_ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - cg_UkLWZg9DAJ
+  /api/v3/admin/customers/bulk_add_tags:
+    post:
+      summary: Bulk-add tags to customers
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Adds each tag name in `tags` to every customer in `ids`. Tags are
+
+        upserted by name; re-adding an existing tag is a no-op.
+
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst result = await client.customers.bulkAddTags({\n  ids: ['cus_UkLWZg9DAJ', 'cus_QrLWXg9CAJ'],\n  tags: ['vip', 'newsletter'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: tags added
+          content:
+            application/json:
+              example:
+                customer_count: 1
+                tag_count: 2
+              schema:
+                type: object
+                properties:
+                  customer_count:
+                    type: integer
+                  tag_count:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - ids
+              - tags
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - cus_UkLWZg9DAJ
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - vip
+                  - newsletter
+  /api/v3/admin/customers/bulk_remove_tags:
+    post:
+      summary: Bulk-remove tags from customers
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Removes each tag name in `tags` from every customer in `ids`. No-op
+
+        for customers that don''t carry the tag.
+
+
+
+        **Required scope:** `write_customers` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst result = await client.customers.bulkRemoveTags({\n  ids: ['cus_UkLWZg9DAJ'],\n  tags: ['vip'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: tags removed
+          content:
+            application/json:
+              example:
+                customer_count: 1
+                tag_count: 1
+              schema:
+                type: object
+                properties:
+                  customer_count:
+                    type: integer
+                  tag_count:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - ids
+              - tags
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - cus_UkLWZg9DAJ
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - vip
+  /api/v3/store/customers/me/addresses:
+    get:
+      summary: List customer addresses
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns all addresses in the customer address book
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst addresses = await client.customer.addresses.list({}, {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: addresses found
+          content:
+            application/json:
+              example:
+                data:
+                - id: addr_EfhxLZ9ck8
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 72 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: false
+                  is_default_shipping: false
+                  state_name: New York
+                - id: addr_gbHJdmfrXB
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 71 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: true
+                  is_default_shipping: false
+                  state_name: New York
+                - id: addr_UkLWZg9DAJ
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 70 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: false
+                  is_default_shipping: true
+                  state_name: New York
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 3
+                  pages: 1
+                  from: 1
+                  to: 3
+                  in: 3
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Address'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create an address
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Adds a new address to the customer address book
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst address = await client.customer.addresses.create({\n  first_name: 'John',\n  last_name: 'Doe',\n  address1: '123 Main St',\n  city: 'New York',\n  postal_code: '10001',\n  country_iso: 'US',\n  state_abbr: 'NY',\n  phone: '+1 555 123 4567',\n}, {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: address created
+          content:
+            application/json:
+              example:
+                id: addr_VqXmZF31wY
+                first_name: John
+                last_name: Doe
+                full_name: John Doe
+                address1: 123 Main St
+                address2: null
+                postal_code: '10001'
+                city: New York
+                phone: +1 555 123 4567
+                company: null
+                country_name: United States of America
+                country_iso: US
+                state_text: NY
+                state_abbr: NY
+                quick_checkout: false
+                is_default_billing: false
+                is_default_shipping: false
+                state_name: New York
+              schema:
+                $ref: '#/components/schemas/Address'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: First Name can't be blank, Last Name can't be blank, Address can't be blank, City can't be blank, Country can't be blank, and Zip Code can't be blank
+                  details:
+                    firstname:
+                    - can't be blank
+                    lastname:
+                    - can't be blank
+                    address1:
+                    - can't be blank
+                    city:
+                    - can't be blank
+                    country:
+                    - can't be blank
+                    zipcode:
+                    - can't be blank
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  example: John
+                last_name:
+                  type: string
+                  example: Doe
+                address1:
+                  type: string
+                  example: 123 Main St
+                address2:
+                  type: string
+                  example: Apt 4B
+                city:
+                  type: string
+                  example: New York
+                postal_code:
+                  type: string
+                  example: '10001'
+                phone:
+                  type: string
+                  example: +1 555 123 4567
+                company:
+                  type: string
+                  example: Acme Inc
+                country_iso:
+                  type: string
+                  example: US
+                  description: ISO 3166-1 alpha-2 country code (e.g., "US", "DE")
+                state_abbr:
+                  type: string
+                  example: NY
+                  description: ISO 3166-2 subdivision code without country prefix (e.g., "CA", "NY")
+                state_name:
+                  type: string
+                  example: New York
+                  description: State name - for countries without predefined states
+                is_default_billing:
+                  type: boolean
+                  example: true
+                  description: Set as default billing address
+                is_default_shipping:
+                  type: boolean
+                  example: true
+                  description: Set as default shipping address
+              required:
+              - first_name
+              - last_name
+              - address1
+              - city
+              - postal_code
+              - country_iso
+  /api/v3/store/customers/me/addresses/{id}:
+    get:
+      summary: Get an address
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst address = await client.customer.addresses.get('addr_abc123', {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: address found
+          content:
+            application/json:
+              example:
+                id: addr_EfhxLZ9ck8
+                first_name: John
+                last_name: Doe
+                full_name: John Doe
+                address1: 84 Lovely Street
+                address2: Northwest
+                postal_code: '10118'
+                city: New York
+                phone: 555-555-0199
+                company: Company
+                country_name: United States of America
+                country_iso: US
+                state_text: NY
+                state_abbr: NY
+                quick_checkout: false
+                is_default_billing: false
+                is_default_shipping: false
+                state_name: New York
+              schema:
+                $ref: '#/components/schemas/Address'
+        '404':
+          description: address not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Address not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Update an address
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst address = await client.customer.addresses.update('addr_abc123', {\n  city: 'Los Angeles',\n}, {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: address updated
+          content:
+            application/json:
+              example:
+                id: addr_EfhxLZ9ck8
+                first_name: John
+                last_name: Doe
+                full_name: John Doe
+                address1: 90 Lovely Street
+                address2: Northwest
+                postal_code: '10118'
+                city: Los Angeles
+                phone: 555-555-0199
+                company: Company
+                country_name: United States of America
+                country_iso: US
+                state_text: NY
+                state_abbr: NY
+                quick_checkout: false
+                is_default_billing: false
+                is_default_shipping: false
+                state_name: New York
+              schema:
+                $ref: '#/components/schemas/Address'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  example: John
+                last_name:
+                  type: string
+                  example: Doe
+                address1:
+                  type: string
+                  example: 456 Oak Ave
+                city:
+                  type: string
+                  example: Los Angeles
+                is_default_billing:
+                  type: boolean
+                  example: true
+                  description: Set as default billing address
+                is_default_shipping:
+                  type: boolean
+                  example: true
+                  description: Set as default shipping address
+    delete:
+      summary: Delete an address
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nawait client.customer.addresses.delete('addr_abc123', {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: address deleted
+        '404':
+          description: address not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Address not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/customers/me/credit_cards:
+    get:
+      summary: List saved credit cards
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns all saved credit cards for the authenticated customer
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst cards = await client.customer.creditCards.list({}, {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: credit cards found
+          content:
+            application/json:
+              example:
+                data:
+                - id: card_UkLWZg9DAJ
+                  brand: visa
+                  last4: '1111'
+                  month: 12
+                  year: 2027
+                  name: Spree Commerce
+                  default: false
+                  gateway_payment_profile_id: null
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CreditCard'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/customers/me/credit_cards/{id}:
+    get:
+      summary: Get a credit card
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns a saved credit card by its ID
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst card = await client.customer.creditCards.get('card_abc123', {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: credit card found
+          content:
+            application/json:
+              example:
+                id: card_UkLWZg9DAJ
+                brand: visa
+                last4: '1111'
+                month: 12
+                year: 2027
+                name: Spree Commerce
+                default: false
+                gateway_payment_profile_id: null
+              schema:
+                $ref: '#/components/schemas/CreditCard'
+        '404':
+          description: credit card not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Credit card not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete a credit card
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Removes a saved credit card from the customer account
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nawait client.customer.creditCards.delete('card_abc123', {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: credit card deleted
+        '404':
+          description: credit card not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Credit card not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/customers/me/orders:
+    get:
+      summary: List orders
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns a paginated list of completed orders for the authenticated customer.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst orders = await client.customer.orders.list(\n  {\n    completed_at_gt: '2026-01-01',\n    sort: '-completed_at',\n  },\n  { token: '<token>' },\n)"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: 'Page number (default: 1)'
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: 'Number of results per page (default: 25, max: 100)'
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        required: false
+        description: 'Sort order. Prefix with - for descending. Values: completed_at, -completed_at, total, -total, number, -number'
+        schema:
+          type: string
+      - name: q[completed_at_gt]
+        in: query
+        required: false
+        description: Filter by completed after date (ISO 8601)
+        schema:
+          type: string
+      - name: q[completed_at_lt]
+        in: query
+        required: false
+        description: Filter by completed before date (ISO 8601)
+        schema:
+          type: string
+      - name: q[number_eq]
+        in: query
+        required: false
+        description: Filter by exact order number (e.g., R123456)
+        schema:
+          type: string
+      - name: q[state_eq]
+        in: query
+        required: false
+        description: Filter by order state (complete, returned, canceled)
+        schema:
+          type: string
+      - name: q[payment_state_eq]
+        in: query
+        required: false
+        description: Filter by payment state (paid, balance_due, credit_owed, void, failed)
+        schema:
+          type: string
+      - name: q[total_gteq]
+        in: query
+        required: false
+        description: Filter by minimum total
+        schema:
+          type: number
+      - name: q[total_lteq]
+        in: query
+        required: false
+        description: Filter by maximum total
+        schema:
+          type: number
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (items, fulfillments, payments, discounts, billing_address, shipping_address, gift_card). Use "none" to skip associations.
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., total,amount_due,item_count). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: orders listed
+          content:
+            application/json:
+              example:
+                data:
+                - id: or_UkLWZg9DAJ
+                  market_id: null
+                  channel_id: ch_UkLWZg9DAJ
+                  number: R096824993
+                  email: gena@ohara.biz
+                  customer_note: null
+                  currency: USD
+                  locale: en
+                  total_quantity: 1
+                  item_total: '10.0'
+                  display_item_total: $10.00
+                  adjustment_total: '0.0'
+                  display_adjustment_total: $0.00
+                  discount_total: '0.0'
+                  display_discount_total: $0.00
+                  tax_total: '0.0'
+                  display_tax_total: $0.00
+                  included_tax_total: '0.0'
+                  display_included_tax_total: $0.00
+                  additional_tax_total: '0.0'
+                  display_additional_tax_total: $0.00
+                  total: '110.0'
+                  display_total: $110.00
+                  gift_card_total: '0.0'
+                  display_gift_card_total: $0.00
+                  amount_due: '110.0'
+                  display_amount_due: $110.00
+                  delivery_total: '100.0'
+                  display_delivery_total: $100.00
+                  fulfillment_status: null
+                  payment_status: null
+                  completed_at: '2026-05-26T16:13:49.079Z'
+                  store_credit_total: '0.0'
+                  display_store_credit_total: $0.00
+                  covered_by_store_credit: false
+                  discounts: []
+                  items:
+                  - id: li_UkLWZg9DAJ
+                    variant_id: variant_UkLWZg9DAJ
+                    quantity: 1
+                    currency: USD
+                    name: Product 1016128
+                    slug: product-1016128
+                    options_text: ''
+                    price: '10.0'
+                    display_price: $10.00
+                    total: '10.0'
+                    display_total: $10.00
+                    adjustment_total: '0.0'
+                    display_adjustment_total: $0.00
+                    additional_tax_total: '0.0'
+                    display_additional_tax_total: $0.00
+                    included_tax_total: '0.0'
+                    display_included_tax_total: $0.00
+                    discount_total: '0.0'
+                    display_discount_total: $0.00
+                    pre_tax_amount: '10.0'
+                    display_pre_tax_amount: $10.00
+                    discounted_amount: '10.0'
+                    display_discounted_amount: $10.00
+                    display_compare_at_amount: $0.00
+                    compare_at_amount: null
+                    thumbnail_url: null
+                    option_values: []
+                    digital_links: []
+                  fulfillments:
+                  - id: ful_UkLWZg9DAJ
+                    number: H70742962050
+                    tracking: U10000
+                    tracking_url: null
+                    cost: '100.0'
+                    display_cost: $100.00
+                    total: '100.0'
+                    display_total: $100.00
+                    discount_total: '0.0'
+                    display_discount_total: $0.00
+                    additional_tax_total: '0.0'
+                    display_additional_tax_total: $0.00
+                    included_tax_total: '0.0'
+                    display_included_tax_total: $0.00
+                    tax_total: '0.0'
+                    display_tax_total: $0.00
+                    status: pending
+                    fulfillment_type: shipping
+                    fulfilled_at: null
+                    items:
+                    - item_id: li_UkLWZg9DAJ
+                      variant_id: variant_UkLWZg9DAJ
+                      quantity: 1
+                    delivery_method:
+                      id: dm_UkLWZg9DAJ
+                      name: UPS Ground
+                      code: UPS_GROUND
+                    stock_location:
+                      id: sloc_UkLWZg9DAJ
+                      state_abbr: NY
+                      name: Britany Halvorson
+                      address1: 1600 Pennsylvania Ave NW
+                      city: Washington
+                      zipcode: '20500'
+                      country_iso: US
+                      country_name: United States of America
+                      state_text: NY
+                    delivery_rates:
+                    - id: dr_gbHJdmfrXB
+                      delivery_method_id: dm_UkLWZg9DAJ
+                      name: UPS Ground
+                      selected: true
+                      cost: '10.0'
+                      total: '10.0'
+                      additional_tax_total: '0.0'
+                      included_tax_total: '0.0'
+                      tax_total: '0.0'
+                      display_cost: $10.00
+                      display_total: $10.00
+                      display_additional_tax_total: $0.00
+                      display_included_tax_total: $0.00
+                      display_tax_total: $0.00
+                      delivery_method:
+                        id: dm_UkLWZg9DAJ
+                        name: UPS Ground
+                        code: UPS_GROUND
+                  payments: []
+                  billing_address:
+                    id: addr_EfhxLZ9ck8
+                    first_name: John
+                    last_name: Doe
+                    full_name: John Doe
+                    address1: 147 Lovely Street
+                    address2: Northwest
+                    postal_code: '10118'
+                    city: New York
+                    phone: 555-555-0199
+                    company: Company
+                    country_name: United States of America
+                    country_iso: US
+                    state_text: NY
+                    state_abbr: NY
+                    quick_checkout: false
+                    is_default_billing: false
+                    is_default_shipping: false
+                    state_name: New York
+                  shipping_address:
+                    id: addr_VqXmZF31wY
+                    first_name: John
+                    last_name: Doe
+                    full_name: John Doe
+                    address1: 148 Lovely Street
+                    address2: Northwest
+                    postal_code: '10118'
+                    city: New York
+                    phone: 555-555-0199
+                    company: Company
+                    country_name: United States of America
+                    country_iso: US
+                    state_text: NY
+                    state_abbr: NY
+                    quick_checkout: false
+                    is_default_billing: false
+                    is_default_shipping: false
+                    state_name: New York
+                  gift_card: null
+                  market: null
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+                required:
+                - data
+                - meta
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/customers/me/orders/{id}:
+    get:
+      summary: Get an order
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns a single completed order for the authenticated customer.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst order = await client.customer.orders.get('or_abc123', {}, {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Order prefixed ID
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (items, fulfillments, payments, discounts, billing_address, shipping_address, gift_card). Use "none" to skip associations.
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., total,amount_due,item_count). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: order found
+          content:
+            application/json:
+              example:
+                id: or_UkLWZg9DAJ
+                market_id: null
+                channel_id: ch_UkLWZg9DAJ
+                number: R695830260
+                email: jerica.wehner@wintheiser.biz
+                customer_note: null
+                currency: USD
+                locale: en
+                total_quantity: 1
+                item_total: '10.0'
+                display_item_total: $10.00
+                adjustment_total: '0.0'
+                display_adjustment_total: $0.00
+                discount_total: '0.0'
+                display_discount_total: $0.00
+                tax_total: '0.0'
+                display_tax_total: $0.00
+                included_tax_total: '0.0'
+                display_included_tax_total: $0.00
+                additional_tax_total: '0.0'
+                display_additional_tax_total: $0.00
+                total: '110.0'
+                display_total: $110.00
+                gift_card_total: '0.0'
+                display_gift_card_total: $0.00
+                amount_due: '110.0'
+                display_amount_due: $110.00
+                delivery_total: '100.0'
+                display_delivery_total: $100.00
+                fulfillment_status: null
+                payment_status: null
+                completed_at: '2026-05-26T16:13:49.771Z'
+                store_credit_total: '0.0'
+                display_store_credit_total: $0.00
+                covered_by_store_credit: false
+                discounts: []
+                items:
+                - id: li_UkLWZg9DAJ
+                  variant_id: variant_UkLWZg9DAJ
+                  quantity: 1
+                  currency: USD
+                  name: Product 1033099
+                  slug: product-1033099
+                  options_text: ''
+                  price: '10.0'
+                  display_price: $10.00
+                  total: '10.0'
+                  display_total: $10.00
+                  adjustment_total: '0.0'
+                  display_adjustment_total: $0.00
+                  additional_tax_total: '0.0'
+                  display_additional_tax_total: $0.00
+                  included_tax_total: '0.0'
+                  display_included_tax_total: $0.00
+                  discount_total: '0.0'
+                  display_discount_total: $0.00
+                  pre_tax_amount: '10.0'
+                  display_pre_tax_amount: $10.00
+                  discounted_amount: '10.0'
+                  display_discounted_amount: $10.00
+                  display_compare_at_amount: $0.00
+                  compare_at_amount: null
+                  thumbnail_url: null
+                  option_values: []
+                  digital_links: []
+                fulfillments:
+                - id: ful_UkLWZg9DAJ
+                  number: H08221240082
+                  tracking: U10000
+                  tracking_url: null
+                  cost: '100.0'
+                  display_cost: $100.00
+                  total: '100.0'
+                  display_total: $100.00
+                  discount_total: '0.0'
+                  display_discount_total: $0.00
+                  additional_tax_total: '0.0'
+                  display_additional_tax_total: $0.00
+                  included_tax_total: '0.0'
+                  display_included_tax_total: $0.00
+                  tax_total: '0.0'
+                  display_tax_total: $0.00
+                  status: pending
+                  fulfillment_type: shipping
+                  fulfilled_at: null
+                  items:
+                  - item_id: li_UkLWZg9DAJ
+                    variant_id: variant_UkLWZg9DAJ
+                    quantity: 1
+                  delivery_method:
+                    id: dm_UkLWZg9DAJ
+                    name: UPS Ground
+                    code: UPS_GROUND
+                  stock_location:
+                    id: sloc_UkLWZg9DAJ
+                    state_abbr: NY
+                    name: Aleen Reynolds
+                    address1: 1600 Pennsylvania Ave NW
+                    city: Washington
+                    zipcode: '20500'
+                    country_iso: US
+                    country_name: United States of America
+                    state_text: NY
+                  delivery_rates:
+                  - id: dr_gbHJdmfrXB
+                    delivery_method_id: dm_UkLWZg9DAJ
+                    name: UPS Ground
+                    selected: true
+                    cost: '10.0'
+                    total: '10.0'
+                    additional_tax_total: '0.0'
+                    included_tax_total: '0.0'
+                    tax_total: '0.0'
+                    display_cost: $10.00
+                    display_total: $10.00
+                    display_additional_tax_total: $0.00
+                    display_included_tax_total: $0.00
+                    display_tax_total: $0.00
+                    delivery_method:
+                      id: dm_UkLWZg9DAJ
+                      name: UPS Ground
+                      code: UPS_GROUND
+                payments: []
+                billing_address:
+                  id: addr_EfhxLZ9ck8
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 153 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: false
+                  is_default_shipping: false
+                  state_name: New York
+                shipping_address:
+                  id: addr_VqXmZF31wY
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 154 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: false
+                  is_default_shipping: false
+                  state_name: New York
+                gift_card: null
+                market: null
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: order belongs to another user
+          content:
+            application/json:
+              example:
+                error:
+                  code: order_not_found
+                  message: Order not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/customers:
+    post:
+      summary: Register a new customer
+      tags:
+      - Customers
+      security:
+      - api_key: []
+      description: Creates a new customer account and returns a JWT token
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst auth = await client.customers.create({\n  email: 'newuser@example.com',\n  password: 'password123',\n  password_confirmation: 'password123',\n  first_name: 'John',\n  last_name: 'Doe',\n  phone: '+1234567890',\n  accepts_email_marketing: true,\n  metadata: { source: 'storefront' },\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: registration successful
+          content:
+            application/json:
+              example:
+                token: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3R5cGUiOiJjdXN0b21lciIsImp0aSI6IjlmZGNlNTdjLTY2NGQtNGZkNy1hOTU2LWQ1MjEzZjdhMjljYSIsImlzcyI6InNwcmVlIiwiYXVkIjoic3RvcmVfYXBpIiwiZXhwIjoxNzc5ODE1NjMwfQ.vLRThKiR034rnZQYwpQGrIOeQSdrYNKnFVJZ86pCuUo
+                refresh_token: GVssZP2L5Zk7uKQzTmwSQ4i5
+                user:
+                  id: cus_UkLWZg9DAJ
+                  email: newuser@example.com
+                  first_name: John
+                  last_name: Doe
+                  phone: '+1234567890'
+                  accepts_email_marketing: true
+                  full_name: John Doe
+                  available_store_credit_total: '0'
+                  display_available_store_credit_total: $0.00
+                  addresses: []
+                  default_billing_address: null
+                  default_shipping_address: null
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '422':
+          description: email already taken
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Email has already been taken
+                  details:
+                    email:
+                    - has already been taken
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: newuser@example.com
+                password:
+                  type: string
+                  minLength: 6
+                  example: password123
+                password_confirmation:
+                  type: string
+                  example: password123
+                first_name:
+                  type: string
+                  example: John
+                last_name:
+                  type: string
+                  example: Doe
+                phone:
+                  type: string
+                  example: '+1234567890'
+                accepts_email_marketing:
+                  type: boolean
+                  example: true
+                metadata:
+                  type: object
+                  example:
+                    source: storefront
+              required:
+              - email
+              - password
+  /api/v3/store/customers/me:
+    get:
+      summary: Get current customer profile
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns the profile of the currently authenticated customer
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst customer = await client.customer.get({\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer JWT token
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: profile found
+          content:
+            application/json:
+              example:
+                id: cus_UkLWZg9DAJ
+                email: jama.wolff@lynch.biz
+                first_name: Catarina
+                last_name: Padberg
+                phone: 555-555-0199
+                accepts_email_marketing: false
+                full_name: Catarina Padberg
+                available_store_credit_total: '0'
+                display_available_store_credit_total: $0.00
+                addresses:
+                - id: addr_gbHJdmfrXB
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 160 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: true
+                  is_default_shipping: false
+                  state_name: New York
+                - id: addr_UkLWZg9DAJ
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 159 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: false
+                  is_default_shipping: true
+                  state_name: New York
+                default_billing_address:
+                  id: addr_gbHJdmfrXB
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 160 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: true
+                  is_default_shipping: false
+                  state_name: New York
+                default_shipping_address:
+                  id: addr_UkLWZg9DAJ
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 159 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: false
+                  is_default_shipping: true
+                  state_name: New York
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          description: unauthorized - invalid token
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Update current customer profile
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Updates the profile of the currently authenticated customer
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst customer = await client.customer.update({\n  first_name: 'John',\n  last_name: 'Doe',\n  metadata: { preferred_contact: 'email' },\n}, {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: profile updated
+          content:
+            application/json:
+              example:
+                id: cus_UkLWZg9DAJ
+                email: kiera@treutel.com
+                first_name: Updated
+                last_name: Name
+                phone: 555-555-0199
+                accepts_email_marketing: false
+                full_name: Updated Name
+                available_store_credit_total: '0'
+                display_available_store_credit_total: $0.00
+                addresses:
+                - id: addr_gbHJdmfrXB
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 162 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: true
+                  is_default_shipping: false
+                  state_name: New York
+                - id: addr_UkLWZg9DAJ
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 161 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: false
+                  is_default_shipping: true
+                  state_name: New York
+                default_billing_address:
+                  id: addr_gbHJdmfrXB
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 162 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: true
+                  is_default_shipping: false
+                  state_name: New York
+                default_shipping_address:
+                  id: addr_UkLWZg9DAJ
+                  first_name: John
+                  last_name: Doe
+                  full_name: John Doe
+                  address1: 161 Lovely Street
+                  address2: Northwest
+                  postal_code: '10118'
+                  city: New York
+                  phone: 555-555-0199
+                  company: Company
+                  country_name: United States of America
+                  country_iso: US
+                  state_text: NY
+                  state_abbr: NY
+                  quick_checkout: false
+                  is_default_billing: false
+                  is_default_shipping: true
+                  state_name: New York
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Email can't be blank
+                  details:
+                    email:
+                    - can't be blank
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  example: John
+                last_name:
+                  type: string
+                  example: Doe
+                email:
+                  type: string
+                  format: email
+                  example: customer@example.com
+                password:
+                  type: string
+                  example: newpassword123
+                password_confirmation:
+                  type: string
+                  example: newpassword123
+                accepts_email_marketing:
+                  type: boolean
+                  example: true
+                phone:
+                  type: string
+                  example: +1 555 123 4567
+                metadata:
+                  type: object
+                  example:
+                    preferred_contact: email
+  /api/v3/store/customers/me/gift_cards:
+    get:
+      summary: List gift cards
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns all gift cards for the authenticated customer
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst giftCards = await client.customer.giftCards.list({}, {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: gift cards found
+          content:
+            application/json:
+              example:
+                data:
+                - id: gc_UkLWZg9DAJ
+                  code: 91F1E57C6C99A62C
+                  status: active
+                  currency: USD
+                  amount: '10.0'
+                  amount_used: '0.0'
+                  amount_authorized: '0.0'
+                  amount_remaining: '10.0'
+                  display_amount: $10.00
+                  display_amount_used: $0.00
+                  display_amount_remaining: $10.00
+                  expires_at: null
+                  redeemed_at: null
+                  expired: false
+                  active: true
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GiftCard'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/customers/me/gift_cards/{id}:
+    get:
+      summary: Get a gift card
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns a gift card by its ID
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst giftCard = await client.customer.giftCards.get('gc_abc123', {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,slug,price). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: gift card found
+          content:
+            application/json:
+              example:
+                id: gc_UkLWZg9DAJ
+                code: 76D77B6CFFA255C8
+                status: active
+                currency: USD
+                amount: '10.0'
+                amount_used: '0.0'
+                amount_authorized: '0.0'
+                amount_remaining: '10.0'
+                display_amount: $10.00
+                display_amount_used: $0.00
+                display_amount_remaining: $10.00
+                expires_at: null
+                redeemed_at: null
+                expired: false
+                active: true
+              schema:
+                $ref: '#/components/schemas/GiftCard'
+        '404':
+          description: gift card not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Gift card not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/customers/me/payment_setup_sessions:
+    post:
+      summary: Create payment setup session
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Creates a new payment setup session for saving a payment method for future use. Delegates to the payment gateway to initialize a provider-specific setup flow (e.g. Stripe SetupIntent, Adyen zero-auth tokenization).
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst session = await client.customer.paymentSetupSessions.create({\n  payment_method_id: 'pm_abc123',\n}, {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: payment setup session created
+          content:
+            application/json:
+              example:
+                id: pss_gbHJdmfrXB
+                status: pending
+                external_id: bogus_seti_e60689fe4c66251e2b4dd2f4
+                external_client_secret: bogus_seti_secret_633045dc9ddab700
+                external_data: {}
+                payment_method_id: pm_UkLWZg9DAJ
+                payment_source_id: null
+                payment_source_type: null
+                customer_id: cus_UkLWZg9DAJ
+                payment_method:
+                  id: pm_UkLWZg9DAJ
+                  name: Credit Card
+                  description: null
+                  type: bogus
+                  session_required: true
+                  source_required: true
+              schema:
+                $ref: '#/components/schemas/PaymentSetupSession'
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: payment method not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Payment method not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_method_id:
+                  type: string
+                  example: pm_abc123
+                  description: Payment method ID
+                external_data:
+                  type: object
+                  description: Provider-specific data passed to the gateway
+              required:
+              - payment_method_id
+  /api/v3/store/customers/me/payment_setup_sessions/{id}:
+    parameters:
+    - name: x-spree-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+    - name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Payment setup session ID
+      schema:
+        type: string
+    get:
+      summary: Get payment setup session
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns a payment setup session with its current status and provider data.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst session = await client.customer.paymentSetupSessions.get('pss_abc123', {\n  token: '<token>',\n})"
+      responses:
+        '200':
+          description: payment setup session found
+          content:
+            application/json:
+              example:
+                id: pss_UkLWZg9DAJ
+                status: pending
+                external_id: seti_test_7ac50408dcea6ac09aa04e3d
+                external_client_secret: seti_secret_77e80c695165694be5ef56b9
+                external_data:
+                  client_secret: secret_123
+                payment_method_id: pm_UkLWZg9DAJ
+                payment_source_id: null
+                payment_source_type: null
+                customer_id: cus_UkLWZg9DAJ
+                payment_method:
+                  id: pm_UkLWZg9DAJ
+                  name: Credit Card
+                  description: null
+                  type: bogus
+                  session_required: true
+                  source_required: true
+              schema:
+                $ref: '#/components/schemas/PaymentSetupSession'
+        '404':
+          description: payment setup session not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Payment setup session not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/customers/me/payment_setup_sessions/{id}/complete:
+    parameters:
+    - name: x-spree-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+    - name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      description: Payment setup session ID
+      schema:
+        type: string
+    patch:
+      summary: Complete payment setup session
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Completes a payment setup session by confirming the setup with the provider, resulting in a saved payment method.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst session = await client.customer.paymentSetupSessions.complete('pss_abc123', {}, {\n  token: '<token>',\n})"
+      parameters: []
+      responses:
+        '200':
+          description: payment setup session completed
+          content:
+            application/json:
+              example:
+                id: pss_UkLWZg9DAJ
+                status: completed
+                external_id: seti_test_6cb96d4ae6cdc1eadf02b1dc
+                external_client_secret: seti_secret_bb0a7727be4c699d8584292f
+                external_data:
+                  client_secret: secret_123
+                payment_method_id: pm_UkLWZg9DAJ
+                payment_source_id: card_UkLWZg9DAJ
+                payment_source_type: Spree::CreditCard
+                customer_id: cus_UkLWZg9DAJ
+                payment_method:
+                  id: pm_UkLWZg9DAJ
+                  name: Credit Card
+                  description: null
+                  type: bogus
+                  session_required: true
+                  source_required: true
+              schema:
+                $ref: '#/components/schemas/PaymentSetupSession'
+        '404':
+          description: payment setup session not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Payment setup session not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                external_data:
+                  type: object
+                  description: Provider-specific completion data
+  /api/v3/store/customers/me/store_credits:
+    get:
+      summary: List store credits
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: Returns store credits for the authenticated customer, filtered by current store and currency. Supports Ransack filtering.
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst credits = await client.customer.storeCredits.list({}, {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., amount,currency). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: store credits found
+          content:
+            application/json:
+              example:
+                data:
+                - id: credit_UkLWZg9DAJ
+                  amount: '100.0'
+                  amount_used: '0.0'
+                  amount_remaining: '100.0'
+                  display_amount: $100.00
+                  display_amount_used: $0.00
+                  display_amount_remaining: $100.00
+                  currency: USD
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StoreCredit'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v3/store/customers/me/store_credits/{id}:
+    get:
+      summary: Get a store credit
+      tags:
+      - Customers
+      security:
+      - api_key: []
+        bearer_auth: []
+      x-codeSamples:
+      - lang: javascript
+        label: Spree SDK
+        source: "import { createClient } from '@spree/sdk'\n\nconst client = createClient({\n  baseUrl: 'https://your-store.com',\n  publishableKey: '<api-key>',\n})\n\nconst credit = await client.customer.storeCredits.get('credit_abc123', {\n  token: '<token>',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., amount,currency). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: store credit found
+          content:
+            application/json:
+              example:
+                id: credit_UkLWZg9DAJ
+                amount: '100.0'
+                amount_used: '0.0'
+                amount_remaining: '100.0'
+                display_amount: $100.00
+                display_amount_used: $0.00
+                display_amount_remaining: $100.00
+                currency: USD
+              schema:
+                $ref: '#/components/schemas/StoreCredit'
+        '404':
+          description: store credit not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Store credit not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    LineItem:
+      type: object
+      properties:
+        id:
+          type: string
+        variant_id:
+          type: string
+        quantity:
+          type: number
+        currency:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        options_text:
+          type: string
+        price:
+          type: string
+        display_price:
+          type: string
+        total:
+          type: string
+        display_total:
+          type: string
+        adjustment_total:
+          type: string
+        display_adjustment_total:
+          type: string
+        additional_tax_total:
+          type: string
+        display_additional_tax_total:
+          type: string
+        included_tax_total:
+          type: string
+        display_included_tax_total:
+          type: string
+        discount_total:
+          type: string
+        display_discount_total:
+          type: string
+        pre_tax_amount:
+          type: string
+        display_pre_tax_amount:
+          type: string
+        discounted_amount:
+          type: string
+        display_discounted_amount:
+          type: string
+        display_compare_at_amount:
+          type: string
+          nullable: true
+        compare_at_amount:
+          type: string
+          nullable: true
+        thumbnail_url:
+          type: string
+          nullable: true
+        option_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionValue'
+        digital_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/DigitalLink'
+      required:
+      - id
+      - variant_id
+      - quantity
+      - currency
+      - name
+      - slug
+      - options_text
+      - price
+      - display_price
+      - total
+      - display_total
+      - adjustment_total
+      - display_adjustment_total
+      - additional_tax_total
+      - display_additional_tax_total
+      - included_tax_total
+      - display_included_tax_total
+      - discount_total
+      - display_discount_total
+      - pre_tax_amount
+      - display_pre_tax_amount
+      - discounted_amount
+      - display_discounted_amount
+      - display_compare_at_amount
+      - compare_at_amount
+      - thumbnail_url
+      - option_values
+      - digital_links
+      x-typelizer: true
+    PaymentSource:
+      type: object
+      properties:
+        id:
+          type: string
+        gateway_payment_profile_id:
+          type: string
+          nullable: true
+      required:
+      - id
+      - gateway_payment_profile_id
+      x-typelizer: true
+    PaymentSetupSession:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        external_id:
+          type: string
+          nullable: true
+        external_client_secret:
+          type: string
+          nullable: true
+        external_data:
+          type: object
+        payment_method_id:
+          type: string
+          nullable: true
+        payment_source_id:
+          type: string
+          nullable: true
+        payment_source_type:
+          type: string
+          nullable: true
+        customer_id:
+          type: string
+          nullable: true
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+      required:
+      - id
+      - status
+      - external_id
+      - external_client_secret
+      - external_data
+      - payment_method_id
+      - payment_source_id
+      - payment_source_type
+      - customer_id
+      - payment_method
+      x-typelizer: true
+    Address:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+        full_name:
+          type: string
+        address1:
+          type: string
+          nullable: true
+        address2:
+          type: string
+          nullable: true
+        postal_code:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        company:
+          type: string
+          nullable: true
+        country_name:
+          type: string
+        country_iso:
+          type: string
+        state_text:
+          type: string
+          nullable: true
+        state_abbr:
+          type: string
+          nullable: true
+        quick_checkout:
+          type: boolean
+        is_default_billing:
+          type: boolean
+        is_default_shipping:
+          type: boolean
+        state_name:
+          type: string
+          nullable: true
+      required:
+      - id
+      - first_name
+      - last_name
+      - full_name
+      - address1
+      - address2
+      - postal_code
+      - city
+      - phone
+      - company
+      - country_name
+      - country_iso
+      - state_text
+      - state_abbr
+      - quick_checkout
+      - is_default_billing
+      - is_default_shipping
+      - state_name
+      x-typelizer: true
+    DeliveryRate:
+      type: object
+      properties:
+        id:
+          type: string
+        delivery_method_id:
+          type: string
+        name:
+          type: string
+        selected:
+          type: boolean
+        cost:
+          type: string
+        total:
+          type: string
+        additional_tax_total:
+          type: string
+        included_tax_total:
+          type: string
+        tax_total:
+          type: string
+        display_cost:
+          type: string
+        display_total:
+          type: string
+        display_additional_tax_total:
+          type: string
+        display_included_tax_total:
+          type: string
+        display_tax_total:
+          type: string
+        delivery_method:
+          $ref: '#/components/schemas/DeliveryMethod'
+      required:
+      - id
+      - delivery_method_id
+      - name
+      - selected
+      - cost
+      - total
+      - additional_tax_total
+      - included_tax_total
+      - tax_total
+      - display_cost
+      - display_total
+      - display_additional_tax_total
+      - display_included_tax_total
+      - display_tax_total
+      - delivery_method
+      x-typelizer: true
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type: object
+              description: Field-specific validation errors
+              nullable: true
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
+    FulfillmentManifestItem:
+      type: object
+      description: An item within a fulfillment — which line item and how many units are in this fulfillment
+      properties:
+        item_id:
+          type: string
+          description: Line item ID
+          example: li_abc123
+        variant_id:
+          type: string
+          description: Variant ID
+          example: variant_abc123
+        quantity:
+          type: integer
+          description: Quantity in this fulfillment
+          example: 2
+      required:
+      - item_id
+      - variant_id
+      - quantity
+    DeliveryMethod:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        code:
+          type: string
+          nullable: true
+      required:
+      - id
+      - name
+      - code
+      x-typelizer: true
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT access token
+        refresh_token:
+          type: string
+          description: Refresh token for obtaining new access tokens
+        user:
+          $ref: '#/components/schemas/Customer'
+      required:
+      - token
+      - refresh_token
+      - user
+    Fulfillment:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          type: string
+        tracking:
+          type: string
+          nullable: true
+        tracking_url:
+          type: string
+          nullable: true
+        cost:
+          type: string
+        display_cost:
+          type: string
+        total:
+          type: string
+        display_total:
+          type: string
+        discount_total:
+          type: string
+        display_discount_total:
+          type: string
+        additional_tax_total:
+          type: string
+        display_additional_tax_total:
+          type: string
+        included_tax_total:
+          type: string
+        display_included_tax_total:
+          type: string
+        tax_total:
+          type: string
+        display_tax_total:
+          type: string
+        status:
+          type: string
+        fulfillment_type:
+          type: string
+        fulfilled_at:
+          type: string
+          nullable: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FulfillmentManifestItem'
+        delivery_method:
+          $ref: '#/components/schemas/DeliveryMethod'
+        stock_location:
+          $ref: '#/components/schemas/StockLocation'
+        delivery_rates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRate'
+      required:
+      - id
+      - number
+      - tracking
+      - tracking_url
+      - cost
+      - display_cost
+      - total
+      - display_total
+      - discount_total
+      - display_discount_total
+      - additional_tax_total
+      - display_additional_tax_total
+      - included_tax_total
+      - display_included_tax_total
+      - tax_total
+      - display_tax_total
+      - status
+      - fulfillment_type
+      - fulfilled_at
+      - items
+      - delivery_method
+      - stock_location
+      - delivery_rates
+      x-typelizer: true
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        first_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        accepts_email_marketing:
+          type: boolean
+        full_name:
+          type: string
+        available_store_credit_total:
+          type: string
+        display_available_store_credit_total:
+          type: string
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        default_billing_address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          nullable: true
+        default_shipping_address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          nullable: true
+      required:
+      - id
+      - email
+      - first_name
+      - last_name
+      - phone
+      - accepts_email_marketing
+      - full_name
+      - available_store_credit_total
+      - display_available_store_credit_total
+      - addresses
+      - default_billing_address
+      - default_shipping_address
+      x-typelizer: true
+    DigitalLink:
+      type: object
+      properties:
+        id:
+          type: string
+        access_counter:
+          type: number
+        filename:
+          type: string
+        content_type:
+          type: string
+        download_url:
+          type: string
+        authorizable:
+          type: boolean
+        expired:
+          type: boolean
+        access_limit_exceeded:
+          type: boolean
+      required:
+      - id
+      - access_counter
+      - filename
+      - content_type
+      - download_url
+      - authorizable
+      - expired
+      - access_limit_exceeded
+      x-typelizer: true
+    Market:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        currency:
+          type: string
+        default_locale:
+          type: string
+        tax_inclusive:
+          type: boolean
+        default:
+          type: boolean
+        country_isos:
+          type: array
+          items:
+            type: string
+        supported_locales:
+          type: array
+          items:
+            type: string
+        countries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Country'
+      required:
+      - id
+      - name
+      - currency
+      - default_locale
+      - tax_inclusive
+      - default
+      - country_isos
+      - supported_locales
+      x-typelizer: true
+    Discount:
+      type: object
+      properties:
+        id:
+          type: string
+        promotion_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+        amount:
+          type: string
+        display_amount:
+          type: string
+      required:
+      - id
+      - promotion_id
+      - name
+      - description
+      - code
+      - amount
+      - display_amount
+      x-typelizer: true
+    CreditCard:
+      type: object
+      properties:
+        id:
+          type: string
+        brand:
+          type: string
+        last4:
+          type: string
+        month:
+          type: number
+        year:
+          type: number
+        name:
+          type: string
+          nullable: true
+        default:
+          type: boolean
+        gateway_payment_profile_id:
+          type: string
+          nullable: true
+      required:
+      - id
+      - brand
+      - last4
+      - month
+      - year
+      - name
+      - default
+      - gateway_payment_profile_id
+      x-typelizer: true
+    StockLocation:
+      type: object
+      properties:
+        id:
+          type: string
+        state_abbr:
+          type: string
+          nullable: true
+        name:
+          type: string
+        address1:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        zipcode:
+          type: string
+          nullable: true
+        country_iso:
+          type: string
+          nullable: true
+        country_name:
+          type: string
+          nullable: true
+        state_text:
+          type: string
+          nullable: true
+      required:
+      - id
+      - state_abbr
+      - name
+      - address1
+      - city
+      - zipcode
+      - country_iso
+      - country_name
+      - state_text
+      x-typelizer: true
+    State:
+      type: object
+      properties:
+        abbr:
+          type: string
+        name:
+          type: string
+      required:
+      - abbr
+      - name
+      x-typelizer: true
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        type:
+          type: string
+        session_required:
+          type: boolean
+        source_required:
+          type: boolean
+      required:
+      - id
+      - name
+      - description
+      - type
+      - session_required
+      - source_required
+      x-typelizer: true
+    GiftCard:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        status:
+          type: string
+        currency:
+          type: string
+        amount:
+          type: string
+        amount_used:
+          type: string
+        amount_authorized:
+          type: string
+        amount_remaining:
+          type: string
+        display_amount:
+          type: string
+        display_amount_used:
+          type: string
+        display_amount_remaining:
+          type: string
+        expires_at:
+          type: string
+          nullable: true
+        redeemed_at:
+          type: string
+          nullable: true
+        expired:
+          type: boolean
+        active:
+          type: boolean
+      required:
+      - id
+      - code
+      - status
+      - currency
+      - amount
+      - amount_used
+      - amount_authorized
+      - amount_remaining
+      - display_amount
+      - display_amount_used
+      - display_amount_remaining
+      - expires_at
+      - redeemed_at
+      - expired
+      - active
+      x-typelizer: true
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        market_id:
+          type: string
+          nullable: true
+        channel_id:
+          type: string
+          nullable: true
+        number:
+          type: string
+        email:
+          type: string
+        customer_note:
+          type: string
+          nullable: true
+        currency:
+          type: string
+        locale:
+          type: string
+          nullable: true
+        total_quantity:
+          type: number
+        item_total:
+          type: string
+        display_item_total:
+          type: string
+        adjustment_total:
+          type: string
+        display_adjustment_total:
+          type: string
+        discount_total:
+          type: string
+        display_discount_total:
+          type: string
+        tax_total:
+          type: string
+        display_tax_total:
+          type: string
+        included_tax_total:
+          type: string
+        display_included_tax_total:
+          type: string
+        additional_tax_total:
+          type: string
+        display_additional_tax_total:
+          type: string
+        total:
+          type: string
+        display_total:
+          type: string
+        gift_card_total:
+          type: string
+        display_gift_card_total:
+          type: string
+        amount_due:
+          type: string
+        display_amount_due:
+          type: string
+        delivery_total:
+          type: string
+        display_delivery_total:
+          type: string
+        fulfillment_status:
+          type: string
+          nullable: true
+        payment_status:
+          type: string
+          nullable: true
+        completed_at:
+          type: string
+          nullable: true
+        store_credit_total:
+          type: string
+        display_store_credit_total:
+          type: string
+        covered_by_store_credit:
+          type: boolean
+        discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Discount'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+        fulfillments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fulfillment'
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+        billing_address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          nullable: true
+        shipping_address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          nullable: true
+        gift_card:
+          allOf:
+          - $ref: '#/components/schemas/GiftCard'
+          nullable: true
+        market:
+          allOf:
+          - $ref: '#/components/schemas/Market'
+          nullable: true
+      required:
+      - id
+      - market_id
+      - channel_id
+      - number
+      - email
+      - customer_note
+      - currency
+      - locale
+      - total_quantity
+      - item_total
+      - display_item_total
+      - adjustment_total
+      - display_adjustment_total
+      - discount_total
+      - display_discount_total
+      - tax_total
+      - display_tax_total
+      - included_tax_total
+      - display_included_tax_total
+      - additional_tax_total
+      - display_additional_tax_total
+      - total
+      - display_total
+      - gift_card_total
+      - display_gift_card_total
+      - amount_due
+      - display_amount_due
+      - delivery_total
+      - display_delivery_total
+      - fulfillment_status
+      - payment_status
+      - completed_at
+      - store_credit_total
+      - display_store_credit_total
+      - covered_by_store_credit
+      - discounts
+      - items
+      - fulfillments
+      - payments
+      - billing_address
+      - shipping_address
+      - gift_card
+      - market
+      x-typelizer: true
+    Country:
+      type: object
+      properties:
+        iso:
+          type: string
+        iso3:
+          type: string
+        name:
+          type: string
+        states_required:
+          type: boolean
+        zipcode_required:
+          type: boolean
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/State'
+        market:
+          allOf:
+          - $ref: '#/components/schemas/Market'
+          nullable: true
+      required:
+      - iso
+      - iso3
+      - name
+      - states_required
+      - zipcode_required
+      x-typelizer: true
+    OptionValue:
+      type: object
+      properties:
+        id:
+          type: string
+        option_type_id:
+          type: string
+        name:
+          type: string
+        label:
+          type: string
+        position:
+          type: number
+        color_code:
+          type: string
+          nullable: true
+        option_type_name:
+          type: string
+        option_type_label:
+          type: string
+        image_url:
+          type: string
+          nullable: true
+      required:
+      - id
+      - option_type_id
+      - name
+      - label
+      - position
+      - color_code
+      - option_type_name
+      - option_type_label
+      - image_url
+      x-typelizer: true
+    StoreCredit:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: string
+        amount_used:
+          type: string
+        amount_remaining:
+          type: string
+        display_amount:
+          type: string
+        display_amount_used:
+          type: string
+        display_amount_remaining:
+          type: string
+        currency:
+          type: string
+      required:
+      - id
+      - amount
+      - amount_used
+      - amount_remaining
+      - display_amount
+      - display_amount_used
+      - display_amount_remaining
+      - currency
+      x-typelizer: true
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 25
+        count:
+          type: integer
+          example: 100
+          description: Total number of records
+        pages:
+          type: integer
+          example: 4
+          description: Total number of pages
+        from:
+          type: integer
+          example: 1
+          description: Index of first record on this page
+        to:
+          type: integer
+          example: 25
+          description: Index of last record on this page
+        in:
+          type: integer
+          example: 25
+          description: Number of records on this page
+        previous:
+          type: integer
+          nullable: true
+          example: null
+          description: Previous page number
+        next:
+          type: integer
+          nullable: true
+          example: 2
+          description: Next page number
+      required:
+      - page
+      - limit
+      - count
+      - pages
+      - from
+      - to
+      - in
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        payment_method_id:
+          type: string
+        response_code:
+          type: string
+          nullable: true
+        number:
+          type: string
+        amount:
+          type: string
+        display_amount:
+          type: string
+        status:
+          type: string
+        source_type:
+          type: string
+          nullable: true
+          enum:
+          - credit_card
+          - store_credit
+          - payment_source
+        source_id:
+          type: string
+          nullable: true
+        source:
+          anyOf:
+          - $ref: '#/components/schemas/CreditCard'
+          - $ref: '#/components/schemas/StoreCredit'
+          - $ref: '#/components/schemas/PaymentSource'
+          nullable: true
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+      required:
+      - id
+      - payment_method_id
+      - response_code
+      - number
+      - amount
+      - display_amount
+      - status
+      - source_type
+      - source_id
+      - source
+      - payment_method
+      x-typelizer: true
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

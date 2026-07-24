@@ -1,0 +1,661 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Fulfillments API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Fulfillments
+  description: Order fulfillments — shipments, fulfill, cancel, resume, split
+paths:
+  /api/v3/admin/orders/{order_id}/fulfillments:
+    get:
+      summary: List fulfillments
+      tags:
+      - Fulfillments
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns all shipments for an order.
+
+
+        **Required scope:** `read_fulfillments` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: fulfillments } = await client.orders.fulfillments.list('or_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: order_id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., inventory_units, stock_location, shipping_rates). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., number,status,tracking,cost). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: fulfillments found
+          content:
+            application/json:
+              example:
+                data:
+                - id: ful_UkLWZg9DAJ
+                  number: H35590720789
+                  tracking: U10000
+                  tracking_url: null
+                  cost: '10.0'
+                  display_cost: $10.00
+                  total: '10.0'
+                  display_total: $10.00
+                  discount_total: '0.0'
+                  display_discount_total: $0.00
+                  additional_tax_total: '0.0'
+                  display_additional_tax_total: $0.00
+                  included_tax_total: '0.0'
+                  display_included_tax_total: $0.00
+                  tax_total: '0.0'
+                  display_tax_total: $0.00
+                  status: ready
+                  fulfillment_type: shipping
+                  fulfilled_at: null
+                  items:
+                  - item_id: li_UkLWZg9DAJ
+                    variant_id: variant_UkLWZg9DAJ
+                    quantity: 1
+                  metadata: {}
+                  adjustment_total: '0.0'
+                  pre_tax_amount: '0.0'
+                  created_at: '2026-06-12T17:24:25.258Z'
+                  updated_at: '2026-06-12T17:24:25.352Z'
+                  order_id: or_UkLWZg9DAJ
+                  stock_location_id: sloc_UkLWZg9DAJ
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+  /api/v3/admin/orders/{order_id}/fulfillments/{id}:
+    get:
+      summary: Show a shipment
+      tags:
+      - Fulfillments
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns details of a specific shipment.
+
+
+        **Required scope:** `read_fulfillments` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst fulfillment = await client.orders.fulfillments.get('or_UkLWZg9DAJ', 'ful_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: order_id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Fulfillment ID
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., inventory_units, stock_location, shipping_rates). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., number,status,tracking,cost). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: shipment found
+          content:
+            application/json:
+              example:
+                id: ful_UkLWZg9DAJ
+                number: H01928147257
+                tracking: U10000
+                tracking_url: null
+                cost: '10.0'
+                display_cost: $10.00
+                total: '10.0'
+                display_total: $10.00
+                discount_total: '0.0'
+                display_discount_total: $0.00
+                additional_tax_total: '0.0'
+                display_additional_tax_total: $0.00
+                included_tax_total: '0.0'
+                display_included_tax_total: $0.00
+                tax_total: '0.0'
+                display_tax_total: $0.00
+                status: ready
+                fulfillment_type: shipping
+                fulfilled_at: null
+                items:
+                - item_id: li_UkLWZg9DAJ
+                  variant_id: variant_UkLWZg9DAJ
+                  quantity: 1
+                metadata: {}
+                adjustment_total: '0.0'
+                pre_tax_amount: '0.0'
+                created_at: '2026-06-12T17:24:25.980Z'
+                updated_at: '2026-06-12T17:24:26.039Z'
+                order_id: or_UkLWZg9DAJ
+                stock_location_id: sloc_UkLWZg9DAJ
+    patch:
+      summary: Update a shipment
+      tags:
+      - Fulfillments
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates a shipment (tracking, shipping rate).
+
+
+        **Required scope:** `write_fulfillments` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst fulfillment = await client.orders.fulfillments.update('or_UkLWZg9DAJ', 'ful_UkLWZg9DAJ', {\n  tracking: '1Z999AA10123456784',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: order_id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Fulfillment ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: shipment updated
+          content:
+            application/json:
+              example:
+                id: ful_UkLWZg9DAJ
+                number: H47992763995
+                tracking: 1Z999AA10123456784
+                tracking_url: https://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=1Z999AA10123456784
+                cost: '10.0'
+                display_cost: $10.00
+                total: '10.0'
+                display_total: $10.00
+                discount_total: '0.0'
+                display_discount_total: $0.00
+                additional_tax_total: '0.0'
+                display_additional_tax_total: $0.00
+                included_tax_total: '0.0'
+                display_included_tax_total: $0.00
+                tax_total: '0.0'
+                display_tax_total: $0.00
+                status: ready
+                fulfillment_type: shipping
+                fulfilled_at: null
+                items:
+                - item_id: li_UkLWZg9DAJ
+                  variant_id: variant_UkLWZg9DAJ
+                  quantity: 1
+                metadata: {}
+                adjustment_total: '0.0'
+                pre_tax_amount: '0.0'
+                created_at: '2026-06-12T17:24:26.652Z'
+                updated_at: '2026-06-12T17:24:27.050Z'
+                order_id: or_UkLWZg9DAJ
+                stock_location_id: sloc_UkLWZg9DAJ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tracking:
+                  type: string
+                  example: 1Z999AA10123456784
+                selected_shipping_rate_id:
+                  type: string
+  /api/v3/admin/orders/{order_id}/fulfillments/{id}/fulfill:
+    patch:
+      summary: Fulfill a fulfillment
+      tags:
+      - Fulfillments
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Marks a fulfillment as fulfilled.
+
+
+        **Required scope:** `write_fulfillments` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst fulfillment = await client.orders.fulfillments.fulfill('or_UkLWZg9DAJ', 'ful_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: order_id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Fulfillment ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: fulfillment fulfilled
+          content:
+            application/json:
+              example:
+                id: ful_UkLWZg9DAJ
+                number: H21297889426
+                tracking: U10000
+                tracking_url: null
+                cost: '10.0'
+                display_cost: $10.00
+                total: '10.0'
+                display_total: $10.00
+                discount_total: '0.0'
+                display_discount_total: $0.00
+                additional_tax_total: '0.0'
+                display_additional_tax_total: $0.00
+                included_tax_total: '0.0'
+                display_included_tax_total: $0.00
+                tax_total: '0.0'
+                display_tax_total: $0.00
+                status: shipped
+                fulfillment_type: shipping
+                fulfilled_at: '2026-06-12T17:24:27Z'
+                items:
+                - item_id: li_UkLWZg9DAJ
+                  variant_id: variant_UkLWZg9DAJ
+                  quantity: 1
+                metadata: {}
+                adjustment_total: '0.0'
+                pre_tax_amount: '0.0'
+                created_at: '2026-06-12T17:24:27.408Z'
+                updated_at: '2026-06-12T17:24:27.765Z'
+                order_id: or_UkLWZg9DAJ
+                stock_location_id: sloc_UkLWZg9DAJ
+  /api/v3/admin/orders/{order_id}/fulfillments/{id}/cancel:
+    patch:
+      summary: Cancel a fulfillment
+      tags:
+      - Fulfillments
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Cancels a fulfillment.
+
+
+        **Required scope:** `write_fulfillments` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst fulfillment = await client.orders.fulfillments.cancel('or_UkLWZg9DAJ', 'ful_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: order_id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Fulfillment ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: fulfillment canceled
+          content:
+            application/json:
+              example:
+                id: ful_UkLWZg9DAJ
+                number: H36610642534
+                tracking: U10000
+                tracking_url: null
+                cost: '10.0'
+                display_cost: $10.00
+                total: '10.0'
+                display_total: $10.00
+                discount_total: '0.0'
+                display_discount_total: $0.00
+                additional_tax_total: '0.0'
+                display_additional_tax_total: $0.00
+                included_tax_total: '0.0'
+                display_included_tax_total: $0.00
+                tax_total: '0.0'
+                display_tax_total: $0.00
+                status: canceled
+                fulfillment_type: shipping
+                fulfilled_at: null
+                items:
+                - item_id: li_UkLWZg9DAJ
+                  variant_id: variant_UkLWZg9DAJ
+                  quantity: 1
+                metadata: {}
+                adjustment_total: '0.0'
+                pre_tax_amount: '0.0'
+                created_at: '2026-06-12T17:24:28.103Z'
+                updated_at: '2026-06-12T17:24:28.447Z'
+                order_id: or_UkLWZg9DAJ
+                stock_location_id: sloc_UkLWZg9DAJ
+  /api/v3/admin/orders/{order_id}/fulfillments/{id}/resume:
+    patch:
+      summary: Resume a fulfillment
+      tags:
+      - Fulfillments
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Resumes a canceled fulfillment.
+
+
+        **Required scope:** `write_fulfillments` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst fulfillment = await client.orders.fulfillments.resume('or_UkLWZg9DAJ', 'ful_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: order_id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Fulfillment ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: fulfillment resumed
+          content:
+            application/json:
+              example:
+                id: ful_UkLWZg9DAJ
+                number: H84093050628
+                tracking: U10000
+                tracking_url: null
+                cost: '10.0'
+                display_cost: $10.00
+                total: '10.0'
+                display_total: $10.00
+                discount_total: '0.0'
+                display_discount_total: $0.00
+                additional_tax_total: '0.0'
+                display_additional_tax_total: $0.00
+                included_tax_total: '0.0'
+                display_included_tax_total: $0.00
+                tax_total: '0.0'
+                display_tax_total: $0.00
+                status: pending
+                fulfillment_type: shipping
+                fulfilled_at: null
+                items:
+                - item_id: li_UkLWZg9DAJ
+                  variant_id: variant_UkLWZg9DAJ
+                  quantity: 1
+                metadata: {}
+                adjustment_total: '0.0'
+                pre_tax_amount: '0.0'
+                created_at: '2026-06-12T17:24:28.839Z'
+                updated_at: '2026-06-12T17:24:29.213Z'
+                order_id: or_UkLWZg9DAJ
+                stock_location_id: sloc_UkLWZg9DAJ
+  /api/v3/admin/orders/{order_id}/fulfillments/{id}/split:
+    patch:
+      summary: Split a fulfillment
+      tags:
+      - Fulfillments
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Transfers items from this shipment to a new shipment at a different stock location.
+
+
+        **Required scope:** `write_fulfillments` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst fulfillment = await client.orders.fulfillments.split('or_UkLWZg9DAJ', 'ful_UkLWZg9DAJ', {\n  quantity: 1,\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: order_id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Fulfillment ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: fulfillment split
+          content:
+            application/json:
+              example:
+                data:
+                - id: ful_gbHJdmfrXB
+                  number: H94460401316
+                  tracking: null
+                  tracking_url: null
+                  cost: '10.0'
+                  display_cost: $10.00
+                  total: '10.0'
+                  display_total: $10.00
+                  discount_total: '0.0'
+                  display_discount_total: $0.00
+                  additional_tax_total: '0.0'
+                  display_additional_tax_total: $0.00
+                  included_tax_total: '0.0'
+                  display_included_tax_total: $0.00
+                  tax_total: '0.0'
+                  display_tax_total: $0.00
+                  status: ready
+                  fulfillment_type: shipping
+                  fulfilled_at: null
+                  items:
+                  - item_id: li_UkLWZg9DAJ
+                    variant_id: variant_UkLWZg9DAJ
+                    quantity: 1
+                  metadata: {}
+                  adjustment_total: '0.0'
+                  pre_tax_amount: '0.0'
+                  created_at: '2026-06-12T17:24:29.915Z'
+                  updated_at: '2026-06-12T17:24:29.963Z'
+                  order_id: or_UkLWZg9DAJ
+                  stock_location_id: sloc_gbHJdmfrXB
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - variant_id
+              - quantity
+              properties:
+                variant_id:
+                  type: string
+                  description: Variant ID
+                quantity:
+                  type: integer
+                  example: 1
+                stock_location_id:
+                  type: string
+                  description: Target stock location ID
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

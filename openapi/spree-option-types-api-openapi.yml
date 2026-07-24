@@ -1,0 +1,1093 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Option Types API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Option Types
+  description: Option types and option values used to build product variants (e.g. Size, Color)
+paths:
+  /api/v3/admin/option_types:
+    get:
+      summary: List option types
+      tags:
+      - Option Types
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a paginated list of option types.
+
+
+        **Required scope:** `read_products` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: optionTypes } = await client.optionTypes.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Number of records per page
+        schema:
+          type: integer
+      - name: q[name_cont]
+        in: query
+        required: false
+        description: Filter by name (contains)
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., option_values). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,label,position). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: option types found
+          content:
+            application/json:
+              example:
+                data:
+                - id: opt_UkLWZg9DAJ
+                  name: foo-size-1
+                  label: Size
+                  position: 1
+                  kind: dropdown
+                  metadata: {}
+                  filterable: true
+                  created_at: '2026-06-12T17:24:22.583Z'
+                  updated_at: '2026-06-12T17:24:22.583Z'
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OptionType'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+                required:
+                - data
+                - meta
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create an option type
+      tags:
+      - Option Types
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Creates a new option type. Supports nested option values.
+
+
+        Option values can be provided inline and will be created or updated by name.
+
+
+
+        **Required scope:** `write_products` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst optionType = await client.optionTypes.create({\n  name: 'color',\n  presentation: 'Color',\n  option_values: [\n    { name: 'red', presentation: 'Red' },\n    { name: 'navy', presentation: 'Navy' },\n  ],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '201':
+          description: option type created
+          content:
+            application/json:
+              example:
+                id: opt_gbHJdmfrXB
+                name: material
+                label: Material
+                position: 2
+                kind: dropdown
+                metadata: {}
+                filterable: true
+                created_at: '2026-06-12T17:24:23.162Z'
+                updated_at: '2026-06-12T17:24:23.162Z'
+              schema:
+                $ref: '#/components/schemas/OptionType'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Name can't be blank and Presentation can't be blank
+                  details:
+                    name:
+                    - can't be blank
+                    presentation:
+                    - can't be blank
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: color
+                label:
+                  type: string
+                  example: Color
+                position:
+                  type: integer
+                  example: 1
+                filterable:
+                  type: boolean
+                  example: true
+                option_values:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: red
+                      label:
+                        type: string
+                        example: Red
+                      position:
+                        type: integer
+              required:
+              - name
+              - label
+  /api/v3/admin/option_types/{id}:
+    get:
+      summary: Get an option type
+      tags:
+      - Option Types
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a single option type by ID, including its option values.
+
+
+        **Required scope:** `read_products` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst optionType = await client.optionTypes.get('ot_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Option type ID
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., option_values). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., name,label,position). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: option type found
+          content:
+            application/json:
+              example:
+                id: opt_UkLWZg9DAJ
+                name: foo-size-5
+                label: Size
+                position: 1
+                kind: dropdown
+                metadata: {}
+                filterable: true
+                created_at: '2026-06-12T17:24:23.455Z'
+                updated_at: '2026-06-12T17:24:23.455Z'
+              schema:
+                $ref: '#/components/schemas/OptionType'
+        '404':
+          description: option type not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Option type not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Update an option type
+      tags:
+      - Option Types
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates an option type. Supports updating nested option values.
+
+
+        **Required scope:** `write_products` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst optionType = await client.optionTypes.update('ot_UkLWZg9DAJ', {\n  presentation: 'Updated Presentation',\n  option_values: [\n    { name: 'red', presentation: 'Crimson' },\n  ],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Option type ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: option type updated
+          content:
+            application/json:
+              example:
+                id: opt_UkLWZg9DAJ
+                name: foo-size-7
+                label: Updated Label
+                position: 1
+                kind: dropdown
+                metadata: {}
+                filterable: true
+                created_at: '2026-06-12T17:24:24.039Z'
+                updated_at: '2026-06-12T17:24:24.323Z'
+              schema:
+                $ref: '#/components/schemas/OptionType'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Presentation can't be blank
+                  details:
+                    presentation:
+                    - can't be blank
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: color
+                label:
+                  type: string
+                  example: Color
+                position:
+                  type: integer
+                  example: 1
+                filterable:
+                  type: boolean
+                  example: true
+                option_values:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Existing option value ID to update
+                      name:
+                        type: string
+                        example: red
+                      label:
+                        type: string
+                        example: Red
+                      position:
+                        type: integer
+    delete:
+      summary: Delete an option type
+      tags:
+      - Option Types
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Deletes an option type.
+
+
+        **Required scope:** `write_products` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.optionTypes.delete('ot_UkLWZg9DAJ')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Option type ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: option type deleted
+  /api/v2/platform/option_types:
+    get:
+      summary: Return a list of Option Types
+      tags:
+      - Option Types
+      security:
+      - bearer_auth: []
+      description: Returns a list of Option Types
+      operationId: option-types-list
+      parameters:
+      - name: page
+        in: query
+        example: 1
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        example: 50
+        schema:
+          type: integer
+      - name: filter[option_type_id_eq]
+        in: query
+        description: ''
+        example: '1'
+        schema:
+          type: string
+      - name: filter[name_cont]
+        in: query
+        description: ''
+        example: Size
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Records returned
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    data:
+                    - id: '68'
+                      type: option_type
+                      attributes:
+                        name: foo-size-68
+                        presentation: Size
+                        position: 1
+                        created_at: '2022-11-08T19:34:31.242Z'
+                        updated_at: '2022-11-08T19:34:31.242Z'
+                        filterable: true
+                        public_metadata: {}
+                        private_metadata: {}
+                      relationships:
+                        option_values:
+                          data: []
+                    - id: '69'
+                      type: option_type
+                      attributes:
+                        name: foo-size-69
+                        presentation: Size
+                        position: 2
+                        created_at: '2022-11-08T19:34:31.244Z'
+                        updated_at: '2022-11-08T19:34:31.244Z'
+                        filterable: true
+                        public_metadata: {}
+                        private_metadata: {}
+                      relationships:
+                        option_values:
+                          data: []
+                    meta:
+                      count: 2
+                      total_count: 2
+                      total_pages: 1
+                    links:
+                      self: http://www.example.com/api/v2/platform/option_types?page=1&per_page=&filter[option_type_id_eq]=&filter[name_cont]=
+                      next: http://www.example.com/api/v2/platform/option_types?filter%5Bname_cont%5D=&filter%5Boption_type_id_eq%5D=&page=1&per_page=
+                      prev: http://www.example.com/api/v2/platform/option_types?filter%5Bname_cont%5D=&filter%5Boption_type_id_eq%5D=&page=1&per_page=
+                      last: http://www.example.com/api/v2/platform/option_types?filter%5Bname_cont%5D=&filter%5Boption_type_id_eq%5D=&page=1&per_page=
+                      first: http://www.example.com/api/v2/platform/option_types?filter%5Bname_cont%5D=&filter%5Boption_type_id_eq%5D=&page=1&per_page=
+              schema:
+                $ref: '#/components/schemas/resources_list'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+    post:
+      summary: Create an Option Type
+      tags:
+      - Option Types
+      security:
+      - bearer_auth: []
+      description: Creates an Option Type
+      operationId: create-option-type
+      parameters: []
+      responses:
+        '201':
+          description: Record created
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    data:
+                      id: '72'
+                      type: option_type
+                      attributes:
+                        name: foo-size-72
+                        presentation: Size
+                        position: 1
+                        created_at: '2022-11-08T19:34:31.761Z'
+                        updated_at: '2022-11-08T19:34:31.761Z'
+                        filterable: true
+                        public_metadata: {}
+                        private_metadata: {}
+                      relationships:
+                        option_values:
+                          data: []
+              schema:
+                $ref: '#/components/schemas/resource'
+        '422':
+          description: Invalid request
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: Name can't be blank and Presentation can't be blank
+                    errors:
+                      name:
+                      - can't be blank
+                      presentation:
+                      - can't be blank
+              schema:
+                $ref: '#/components/schemas/validation_errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_option_type_params'
+  /api/v2/platform/option_types/{id}:
+    get:
+      summary: Return an Option Type
+      tags:
+      - Option Types
+      security:
+      - bearer_auth: []
+      description: Returns an Option Type
+      operationId: show-option-type
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Record found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    data:
+                      id: '73'
+                      type: option_type
+                      attributes:
+                        name: foo-size-73
+                        presentation: Size
+                        position: 1
+                        created_at: '2022-11-08T19:34:32.026Z'
+                        updated_at: '2022-11-08T19:34:32.026Z'
+                        filterable: true
+                        public_metadata: {}
+                        private_metadata: {}
+                      relationships:
+                        option_values:
+                          data: []
+              schema:
+                $ref: '#/components/schemas/resource'
+        '404':
+          description: Record not found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The resource you were looking for could not be found.
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+    patch:
+      summary: Update an Option Type
+      tags:
+      - Option Types
+      security:
+      - bearer_auth: []
+      description: Updates an Option Type
+      operationId: update-option-type
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Record updated
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    data:
+                      id: '75'
+                      type: option_type
+                      attributes:
+                        name: Size-X
+                        presentation: Size
+                        position: 1
+                        created_at: '2022-11-08T19:34:32.542Z'
+                        updated_at: '2022-11-08T19:34:32.772Z'
+                        filterable: true
+                        public_metadata: {}
+                        private_metadata: {}
+                      relationships:
+                        option_values:
+                          data: []
+              schema:
+                $ref: '#/components/schemas/resource'
+        '422':
+          description: Invalid request
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: Name can't be blank
+                    errors:
+                      name:
+                      - can't be blank
+              schema:
+                $ref: '#/components/schemas/validation_errors'
+        '404':
+          description: Record not found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The resource you were looking for could not be found.
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/update_option_type_params'
+    delete:
+      summary: Delete an Option Type
+      tags:
+      - Option Types
+      security:
+      - bearer_auth: []
+      description: Deletes an Option Type
+      operationId: delete-option-type
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Record deleted
+        '404':
+          description: Record not found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The resource you were looking for could not be found.
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+components:
+  schemas:
+    resource_properties:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        attributes:
+          type: object
+        relationships:
+          type: object
+      required:
+      - id
+      - type
+      - attributes
+      x-internal: false
+    error:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      x-internal: false
+    OptionValue:
+      type: object
+      properties:
+        id:
+          type: string
+        option_type_id:
+          type: string
+        name:
+          type: string
+        label:
+          type: string
+        position:
+          type: number
+        color_code:
+          type: string
+          nullable: true
+        option_type_name:
+          type: string
+        option_type_label:
+          type: string
+        image_url:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        option_type:
+          $ref: '#/components/schemas/OptionType'
+      required:
+      - id
+      - option_type_id
+      - name
+      - label
+      - position
+      - color_code
+      - option_type_name
+      - option_type_label
+      - image_url
+      - metadata
+      - created_at
+      - updated_at
+      x-typelizer: true
+    resources_list:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/resource_properties'
+        meta:
+          type: object
+          properties:
+            count:
+              type: integer
+            total_count:
+              type: integer
+            total_pages:
+              type: integer
+          required:
+          - count
+          - total_count
+          - total_pages
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+            next:
+              type: string
+            prev:
+              type: string
+            last:
+              type: string
+            first:
+              type: string
+          required:
+          - self
+          - next
+          - prev
+          - last
+          - first
+      required:
+      - data
+      - meta
+      - links
+      x-internal: false
+    create_option_type_params:
+      type: object
+      properties:
+        option_type:
+          type: object
+          required:
+          - name
+          - presentation
+          properties:
+            name:
+              type: string
+              example: color
+            presentation:
+              type: string
+              example: Color
+            public_metadata:
+              type: object
+            private_metadata:
+              type: object
+      required:
+      - option_type
+      x-internal: false
+    OptionType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        label:
+          type: string
+        position:
+          type: number
+        kind:
+          type: string
+        metadata:
+          type: object
+        filterable:
+          type: boolean
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        option_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionValue'
+      required:
+      - id
+      - name
+      - label
+      - position
+      - kind
+      - metadata
+      - filterable
+      - created_at
+      - updated_at
+      x-typelizer: true
+    resource:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/resource_properties'
+      required:
+      - data
+      x-internal: false
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 25
+        count:
+          type: integer
+          example: 100
+          description: Total number of records
+        pages:
+          type: integer
+          example: 4
+          description: Total number of pages
+        from:
+          type: integer
+          example: 1
+          description: Index of first record on this page
+        to:
+          type: integer
+          example: 25
+          description: Index of last record on this page
+        in:
+          type: integer
+          example: 25
+          description: Number of records on this page
+        previous:
+          type: integer
+          nullable: true
+          example: null
+          description: Previous page number
+        next:
+          type: integer
+          nullable: true
+          example: 2
+          description: Next page number
+      required:
+      - page
+      - limit
+      - count
+      - pages
+      - from
+      - to
+      - in
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type: object
+              description: Field-specific validation errors
+              nullable: true
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
+    validation_errors:
+      type: object
+      properties:
+        error:
+          type: string
+        errors:
+          type: object
+      required:
+      - error
+      - errors
+      x-internal: false
+    update_option_type_params:
+      type: object
+      properties:
+        option_type:
+          type: object
+          properties:
+            name:
+              type: string
+              example: color
+            presentation:
+              type: string
+              example: Color
+            public_metadata:
+              type: object
+            private_metadata:
+              type: object
+      required:
+      - option_type
+      x-internal: false
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

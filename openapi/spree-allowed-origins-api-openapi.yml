@@ -1,0 +1,508 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Allowed Origins API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Allowed Origins
+  description: CORS allowlist for storefront and admin client origins
+paths:
+  /api/v3/admin/allowed_origins:
+    get:
+      summary: List allowed origins
+      tags:
+      - Allowed Origins
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns the CORS allowlist for the current store. Each entry is a
+
+        bare `scheme://host[:port]` permitted to call the admin API from a
+
+        browser. Backs the `Rack::Cors` allowlist and the CSRF boundary of
+
+        the admin cookie session (see
+
+        `docs/plans/5.5-admin-auth-cookie-refresh.md`).
+
+
+
+        **Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: origins } = await client.allowedOrigins.list()"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Number of records per page
+        schema:
+          type: integer
+      - name: q[origin_cont]
+        in: query
+        required: false
+        description: Filter by origin (contains)
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        description: Sort by field. Prefix with `-` for descending (e.g., `-created_at`).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include. id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: allowed origins found
+          content:
+            application/json:
+              example:
+                data:
+                - id: ao_UkLWZg9DAJ
+                  origin: https://shop.example.com
+                  created_at: '2026-06-12T17:23:42.410Z'
+                  updated_at: '2026-06-12T17:23:42.410Z'
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 1
+                  pages: 1
+                  from: 1
+                  to: 1
+                  in: 1
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AllowedOrigin'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+                required:
+                - data
+                - meta
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: authentication_required
+                  message: Authentication required
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create an allowed origin
+      tags:
+      - Allowed Origins
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Adds an origin to the admin CORS allowlist. The value must be a bare
+
+        `scheme://host[:port]` (no path, query, or fragment) and use `http` or
+
+        `https`.
+
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst origin = await client.allowedOrigins.create({\n  origin: 'https://admin.example.com',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '201':
+          description: allowed origin created
+          content:
+            application/json:
+              example:
+                id: ao_gbHJdmfrXB
+                origin: https://admin.example.com
+                created_at: '2026-06-12T17:23:43.075Z'
+                updated_at: '2026-06-12T17:23:43.075Z'
+              schema:
+                $ref: '#/components/schemas/AllowedOrigin'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Origin is invalid
+                  details:
+                    origin:
+                    - is invalid
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                origin:
+                  type: string
+                  example: https://admin.example.com
+              required:
+              - origin
+  /api/v3/admin/allowed_origins/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Allowed origin ID
+      schema:
+        type: string
+    get:
+      summary: Get an allowed origin
+      tags:
+      - Allowed Origins
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a single allowed origin by prefixed ID.
+
+
+        **Required scope:** `read_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst origin = await client.allowedOrigins.get('ao_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include. id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: allowed origin found
+          content:
+            application/json:
+              example:
+                id: ao_UkLWZg9DAJ
+                origin: https://shop.example.com
+                created_at: '2026-06-12T17:23:43.396Z'
+                updated_at: '2026-06-12T17:23:43.396Z'
+              schema:
+                $ref: '#/components/schemas/AllowedOrigin'
+        '404':
+          description: allowed origin not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: record_not_found
+                  message: Allowed origin not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Update an allowed origin
+      tags:
+      - Allowed Origins
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates an existing allowed origin.
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst origin = await client.allowedOrigins.update('ao_xxx', {\n  origin: 'https://www.example.com',\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '200':
+          description: allowed origin updated
+          content:
+            application/json:
+              example:
+                id: ao_UkLWZg9DAJ
+                origin: https://www.example.com
+                created_at: '2026-06-12T17:23:44.064Z'
+                updated_at: '2026-06-12T17:23:44.366Z'
+              schema:
+                $ref: '#/components/schemas/AllowedOrigin'
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Origin must be an origin (scheme and host) without path, query, or fragment
+                  details:
+                    origin:
+                    - must be an origin (scheme and host) without path, query, or fragment
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                origin:
+                  type: string
+    delete:
+      summary: Delete an allowed origin
+      tags:
+      - Allowed Origins
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Removes an origin from the admin CORS allowlist. After deletion the
+
+        admin SPA running at that origin will no longer be able to call the
+
+        admin API from a browser.
+
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.allowedOrigins.delete('ao_xxx')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      responses:
+        '204':
+          description: allowed origin deleted
+components:
+  schemas:
+    AllowedOrigin:
+      type: object
+      properties:
+        id:
+          type: string
+        origin:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - id
+      - origin
+      - created_at
+      - updated_at
+      x-typelizer: true
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 25
+        count:
+          type: integer
+          example: 100
+          description: Total number of records
+        pages:
+          type: integer
+          example: 4
+          description: Total number of pages
+        from:
+          type: integer
+          example: 1
+          description: Index of first record on this page
+        to:
+          type: integer
+          example: 25
+          description: Index of last record on this page
+        in:
+          type: integer
+          example: 25
+          description: Number of records on this page
+        previous:
+          type: integer
+          nullable: true
+          example: null
+          description: Previous page number
+        next:
+          type: integer
+          nullable: true
+          example: 2
+          description: Next page number
+      required:
+      - page
+      - limit
+      - count
+      - pages
+      - from
+      - to
+      - in
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type: object
+              description: Field-specific validation errors
+              nullable: true
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

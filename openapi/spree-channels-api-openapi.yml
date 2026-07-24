@@ -1,0 +1,514 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Channels API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Channels
+  description: Sales channels and product publication across channels
+paths:
+  /api/v3/admin/channels:
+    get:
+      summary: List channels
+      tags:
+      - Channels
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns the channels configured for the current store.
+
+
+        **Required scope:** `read_settings` (for API-key authentication).'
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: channels found
+          content:
+            application/json:
+              example:
+                data:
+                - id: ch_UkLWZg9DAJ
+                  name: Online Store
+                  code: online
+                  active: true
+                  default: true
+                  preferred_order_routing_strategy: null
+                  created_at: '2026-06-12T17:23:41.100Z'
+                  updated_at: '2026-06-12T17:23:41.100Z'
+                - id: ch_gbHJdmfrXB
+                  name: Wholesale
+                  code: wholesale
+                  active: true
+                  default: false
+                  preferred_order_routing_strategy: null
+                  created_at: '2026-06-12T17:23:49.367Z'
+                  updated_at: '2026-06-12T17:23:49.367Z'
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 2
+                  pages: 1
+                  from: 1
+                  to: 2
+                  in: 2
+                  previous: null
+                  next: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Channel'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+                required:
+                - data
+                - meta
+    post:
+      summary: Create a channel
+      tags:
+      - Channels
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Creates a new channel on the current store. `code` is normalized to a
+
+        URL-safe slug (`Point of Sale` → `point-of-sale`); when omitted it''s
+
+        derived from `name`.
+
+
+
+        **Required scope:** `write_settings` (for API-key authentication).'
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: channel created
+          content:
+            application/json:
+              example:
+                id: ch_EfhxLZ9ck8
+                name: Marketplace
+                code: marketplace
+                active: true
+                default: false
+                preferred_order_routing_strategy: null
+                created_at: '2026-06-12T17:23:50.024Z'
+                updated_at: '2026-06-12T17:23:50.024Z'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  example: Point of Sale
+                code:
+                  type: string
+                  example: pos
+                  description: Slug — auto-derived from `name` when blank.
+                active:
+                  type: boolean
+                  default: true
+  /api/v3/admin/channels/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Get a channel
+      tags:
+      - Channels
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: '**Required scope:** `read_settings` (for API-key authentication).'
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: channel found
+          content:
+            application/json:
+              example:
+                id: ch_gbHJdmfrXB
+                name: Wholesale
+                code: wholesale
+                active: true
+                default: false
+                preferred_order_routing_strategy: null
+                created_at: '2026-06-12T17:23:50.035Z'
+                updated_at: '2026-06-12T17:23:50.035Z'
+    patch:
+      summary: Update a channel
+      tags:
+      - Channels
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: '**Required scope:** `write_settings` (for API-key authentication).'
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: channel updated
+          content:
+            application/json:
+              example:
+                id: ch_gbHJdmfrXB
+                name: Wholesale (Updated)
+                code: wholesale
+                active: true
+                default: false
+                preferred_order_routing_strategy: null
+                created_at: '2026-06-12T17:23:50.514Z'
+                updated_at: '2026-06-12T17:23:50.908Z'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                code:
+                  type: string
+                active:
+                  type: boolean
+    delete:
+      summary: Delete a channel
+      tags:
+      - Channels
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: '**Required scope:** `write_settings` (for API-key authentication).'
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: channel deleted
+  /api/v3/admin/channels/{id}/add_products:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Publish products on a channel
+      tags:
+      - Channels
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Publishes the listed products on this channel. Idempotent — re-publishing
+
+        an already-published product updates its publication window. Products from
+
+        sibling stores are silently dropped.
+
+
+
+        **Required scope:** `write_products` (for API-key authentication).'
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: products published
+          content:
+            application/json:
+              example:
+                product_count: 1
+              schema:
+                type: object
+                properties:
+                  product_count:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - product_ids
+              properties:
+                product_ids:
+                  type: array
+                  items:
+                    type: string
+                published_at:
+                  type: string
+                  format: date-time
+                  nullable: true
+                  description: When the publications go live. `null` means immediately.
+                unpublished_at:
+                  type: string
+                  format: date-time
+                  nullable: true
+                  description: When the publications come down. `null` means never.
+  /api/v3/admin/channels/{id}/remove_products:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Unpublish products from a channel
+      tags:
+      - Channels
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Unpublishes the listed products from this channel.
+
+
+        **Required scope:** `write_products` (for API-key authentication).'
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: products unpublished
+          content:
+            application/json:
+              example:
+                product_count: 1
+              schema:
+                type: object
+                properties:
+                  product_count:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - product_ids
+              properties:
+                product_ids:
+                  type: array
+                  items:
+                    type: string
+components:
+  schemas:
+    Channel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        code:
+          type: string
+        active:
+          type: boolean
+        default:
+          type: boolean
+        preferred_order_routing_strategy:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - id
+      - name
+      - code
+      - active
+      - default
+      - preferred_order_routing_strategy
+      - created_at
+      - updated_at
+      x-typelizer: true
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 25
+        count:
+          type: integer
+          example: 100
+          description: Total number of records
+        pages:
+          type: integer
+          example: 4
+          description: Total number of pages
+        from:
+          type: integer
+          example: 1
+          description: Index of first record on this page
+        to:
+          type: integer
+          example: 25
+          description: Index of last record on this page
+        in:
+          type: integer
+          example: 25
+          description: Number of records on this page
+        previous:
+          type: integer
+          nullable: true
+          example: null
+          description: Previous page number
+        next:
+          type: integer
+          nullable: true
+          example: 2
+          description: Next page number
+      required:
+      - page
+      - limit
+      - count
+      - pages
+      - from
+      - to
+      - in
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks

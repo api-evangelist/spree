@@ -1,0 +1,1780 @@
+openapi: 3.0.3
+info:
+  title: Admin Account / Address Variants API
+  contact:
+    name: Spree Commerce
+    url: https://spreecommerce.org
+    email: hello@spreecommerce.org
+  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
+  version: v3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+tags:
+- name: Variants
+  description: Product variants — the individual SKUs (size/color combinations) sold under a product
+paths:
+  /api/v3/admin/products/{product_id}/variants:
+    get:
+      summary: List product variants
+      tags:
+      - Variants
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a paginated list of variants for a product, including the master variant.
+
+
+        **Required scope:** `read_products` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst { data: variants } = await client.products.variants.list('prod_86Rf07xd4z', {\n  expand: ['prices', 'stock_items'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: product_id
+        in: path
+        required: true
+        description: Product ID
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Number of records per page
+        schema:
+          type: integer
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., images, prices, stock_items, option_values). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., sku,price,stock). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: variants found
+          content:
+            application/json:
+              example:
+                data:
+                - id: variant_UkLWZg9DAJ
+                  product_id: prod_UkLWZg9DAJ
+                  sku: SKU-97
+                  options_text: ''
+                  track_inventory: true
+                  media_count: 0
+                  thumbnail_url: null
+                  purchasable: false
+                  in_stock: false
+                  backorderable: false
+                  weight: 0.0
+                  height: null
+                  width: null
+                  depth: null
+                  price:
+                    id: null
+                    amount: null
+                    amount_in_cents: 0
+                    compare_at_amount: null
+                    compare_at_amount_in_cents: null
+                    currency: USD
+                    display_amount: $0.00
+                    display_compare_at_amount: null
+                    price_list_id: null
+                  original_price: null
+                  option_values: []
+                  metadata: {}
+                  position: 1
+                  cost_price: '17.0'
+                  cost_currency: USD
+                  barcode: null
+                  weight_unit: lb
+                  dimensions_unit: null
+                  deleted_at: null
+                  created_at: '2026-06-12T17:25:20.879Z'
+                  updated_at: '2026-06-12T17:25:20.888Z'
+                  tax_category_id: taxcat_UkLWZg9DAJ
+                  available_stock: 0
+                  reserved_quantity: 0
+                  total_on_hand: 0
+                  product_name: Product 79237
+                - id: variant_gbHJdmfrXB
+                  product_id: prod_UkLWZg9DAJ
+                  sku: SKU-98
+                  options_text: 'Size: S'
+                  track_inventory: true
+                  media_count: 0
+                  thumbnail_url: null
+                  purchasable: true
+                  in_stock: false
+                  backorderable: true
+                  weight: 175.85
+                  height: 52.53
+                  width: 61.32
+                  depth: 150.97
+                  price:
+                    id: price_gbHJdmfrXB
+                    amount: '19.99'
+                    amount_in_cents: 1999
+                    compare_at_amount: null
+                    compare_at_amount_in_cents: null
+                    currency: USD
+                    display_amount: $19.99
+                    display_compare_at_amount: null
+                    price_list_id: null
+                  original_price: null
+                  option_values:
+                  - id: optval_UkLWZg9DAJ
+                    option_type_id: opt_UkLWZg9DAJ
+                    name: size-19
+                    label: S
+                    position: 1
+                    color_code: null
+                    option_type_name: foo-size-28
+                    option_type_label: Size
+                    image_url: null
+                    metadata: {}
+                    created_at: '2026-06-12T17:25:20.901Z'
+                    updated_at: '2026-06-12T17:25:20.901Z'
+                  metadata: {}
+                  position: 2
+                  cost_price: '17.0'
+                  cost_currency: USD
+                  barcode: null
+                  weight_unit: lb
+                  dimensions_unit: null
+                  deleted_at: null
+                  created_at: '2026-06-12T17:25:20.899Z'
+                  updated_at: '2026-06-12T17:25:20.911Z'
+                  tax_category_id: taxcat_UkLWZg9DAJ
+                  available_stock: 0
+                  reserved_quantity: 0
+                  total_on_hand: 0
+                  product_name: Product 79237
+                meta:
+                  page: 1
+                  limit: 25
+                  count: 2
+                  pages: 1
+                  from: 1
+                  to: 2
+                  in: 2
+                  previous: null
+                  next: null
+    post:
+      summary: Create a variant
+      tags:
+      - Variants
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Creates a new variant for a product. Supports nested prices and stock items.
+
+
+        Option types and values are auto-created if they don''t exist.
+
+        Prices are upserted by currency. Stock items are upserted by stock location.
+
+
+
+        **Required scope:** `write_products` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst variant = await client.products.variants.create('prod_86Rf07xd4z', {\n  sku: 'TSHIRT-L-NAVY',\n  options: [\n    { name: 'size', value: 'Large' },\n    { name: 'color', value: 'navy' },\n  ],\n  prices: [\n    { currency: 'USD', amount: 29.99, compare_at_amount: 34.99 },\n    { currency: 'EUR', amount: 27.99 },\n  ],\n  stock_items: [\n    { stock_location_id: 'sloc_UkLWZg9DAJ', count_on_hand: 25 },\n  ],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: product_id
+        in: path
+        required: true
+        description: Product ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: variant created
+          content:
+            application/json:
+              example:
+                id: variant_EfhxLZ9ck8
+                product_id: prod_UkLWZg9DAJ
+                sku: NEW-SKU-001
+                options_text: 'Size: XL'
+                track_inventory: true
+                media_count: 0
+                thumbnail_url: null
+                purchasable: false
+                in_stock: false
+                backorderable: false
+                weight: 0.0
+                height: null
+                width: null
+                depth: null
+                price:
+                  id: price_EfhxLZ9ck8
+                  amount: '24.99'
+                  amount_in_cents: 2499
+                  compare_at_amount: null
+                  compare_at_amount_in_cents: null
+                  currency: USD
+                  display_amount: $24.99
+                  display_compare_at_amount: null
+                  price_list_id: null
+                original_price: null
+                option_values:
+                - id: optval_gbHJdmfrXB
+                  option_type_id: opt_gbHJdmfrXB
+                  name: xl
+                  label: XL
+                  position: 1
+                  color_code: null
+                  option_type_name: size
+                  option_type_label: Size
+                  image_url: null
+                  metadata: {}
+                  created_at: '2026-06-12T17:25:21.569Z'
+                  updated_at: '2026-06-12T17:25:21.569Z'
+                metadata: {}
+                position: 3
+                cost_price: null
+                cost_currency: USD
+                barcode: null
+                weight_unit: lb
+                dimensions_unit: null
+                deleted_at: null
+                created_at: '2026-06-12T17:25:21.573Z'
+                updated_at: '2026-06-12T17:25:21.575Z'
+                tax_category_id: taxcat_UkLWZg9DAJ
+                available_stock: 0
+                reserved_quantity: 0
+                total_on_hand: 0
+                product_name: Product 804516
+        '422':
+          description: validation error
+          content:
+            application/json:
+              example:
+                error:
+                  code: validation_error
+                  message: Option value variants can't be blank
+                  details:
+                    option_value_variants:
+                    - can't be blank
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sku:
+                  type: string
+                  example: SKU-001
+                price:
+                  type: number
+                  example: 29.99
+                compare_at_price:
+                  type: number
+                  example: 39.99
+                cost_price:
+                  type: number
+                  example: 10.0
+                cost_currency:
+                  type: string
+                  example: USD
+                weight:
+                  type: number
+                height:
+                  type: number
+                width:
+                  type: number
+                depth:
+                  type: number
+                weight_unit:
+                  type: string
+                dimensions_unit:
+                  type: string
+                track_inventory:
+                  type: boolean
+                tax_category_id:
+                  type: string
+                options:
+                  type: array
+                  description: One pair per option type the variant participates in (e.g. size + color). Option types and values are auto-created if missing.
+                  items:
+                    type: object
+                    required:
+                    - name
+                    - value
+                    properties:
+                      name:
+                        type: string
+                        example: size
+                      value:
+                        type: string
+                        example: Small
+                position:
+                  type: integer
+                barcode:
+                  type: string
+                prices:
+                  type: array
+                  description: Per-currency prices. Upserted by currency.
+                  items:
+                    type: object
+                    required:
+                    - currency
+                    - amount
+                    properties:
+                      currency:
+                        type: string
+                        example: USD
+                      amount:
+                        type: number
+                        example: 29.99
+                      compare_at_amount:
+                        type: number
+                        example: 39.99
+                stock_items:
+                  type: array
+                  description: Per-stock-location inventory. Upserted by stock_location_id.
+                  items:
+                    type: object
+                    required:
+                    - stock_location_id
+                    - count_on_hand
+                    properties:
+                      stock_location_id:
+                        type: string
+                        description: Stock location ID (e.g. sloc_xxx)
+                      count_on_hand:
+                        type: integer
+                        example: 50
+                      backorderable:
+                        type: boolean
+  /api/v3/admin/products/{product_id}/variants/{id}:
+    get:
+      summary: Get a variant
+      tags:
+      - Variants
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Returns a single variant by ID.
+
+
+        **Required scope:** `read_products` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst variant = await client.products.variants.get('prod_86Rf07xd4z', 'variant_k5nR8xLq', {\n  expand: ['prices', 'stock_items'],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: product_id
+        in: path
+        required: true
+        description: Product ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Variant ID
+        schema:
+          type: string
+      - name: expand
+        in: query
+        required: false
+        description: Comma-separated associations to expand (e.g., images, prices, stock_items, option_values). Use dot notation for nested expand (max 4 levels).
+        schema:
+          type: string
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include (e.g., sku,price,stock). id is always included.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: variant found
+          content:
+            application/json:
+              example:
+                id: variant_gbHJdmfrXB
+                product_id: prod_UkLWZg9DAJ
+                sku: SKU-104
+                options_text: 'Size: S'
+                track_inventory: true
+                media_count: 0
+                thumbnail_url: null
+                purchasable: true
+                in_stock: false
+                backorderable: true
+                weight: 1.16
+                height: 177.59
+                width: 10.65
+                depth: 151.88
+                price:
+                  id: price_gbHJdmfrXB
+                  amount: '19.99'
+                  amount_in_cents: 1999
+                  compare_at_amount: null
+                  compare_at_amount_in_cents: null
+                  currency: USD
+                  display_amount: $19.99
+                  display_compare_at_amount: null
+                  price_list_id: null
+                original_price: null
+                option_values:
+                - id: optval_UkLWZg9DAJ
+                  option_type_id: opt_UkLWZg9DAJ
+                  name: size-22
+                  label: S
+                  position: 1
+                  color_code: null
+                  option_type_name: foo-size-31
+                  option_type_label: Size
+                  image_url: null
+                  metadata: {}
+                  created_at: '2026-06-12T17:25:21.996Z'
+                  updated_at: '2026-06-12T17:25:21.996Z'
+                metadata: {}
+                position: 2
+                cost_price: '17.0'
+                cost_currency: USD
+                barcode: null
+                weight_unit: lb
+                dimensions_unit: null
+                deleted_at: null
+                created_at: '2026-06-12T17:25:21.994Z'
+                updated_at: '2026-06-12T17:25:22.006Z'
+                tax_category_id: taxcat_UkLWZg9DAJ
+                available_stock: 0
+                reserved_quantity: 0
+                total_on_hand: 0
+                product_name: Product 828789
+        '404':
+          description: variant not found
+          content:
+            application/json:
+              example:
+                error:
+                  code: variant_not_found
+                  message: Variant not found
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Update a variant
+      tags:
+      - Variants
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Updates a variant. Only provided fields are updated.
+
+
+        **Required scope:** `write_products` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nconst variant = await client.products.variants.update('prod_86Rf07xd4z', 'variant_k5nR8xLq', {\n  sku: 'UPDATED-SKU',\n  stock_items: [\n    { stock_location_id: 'sloc_UkLWZg9DAJ', count_on_hand: 75 },\n  ],\n})"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: product_id
+        in: path
+        required: true
+        description: Product ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Variant ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: variant updated
+          content:
+            application/json:
+              example:
+                id: variant_gbHJdmfrXB
+                product_id: prod_UkLWZg9DAJ
+                sku: UPDATED-SKU
+                options_text: 'Size: S'
+                track_inventory: true
+                media_count: 0
+                thumbnail_url: null
+                purchasable: true
+                in_stock: false
+                backorderable: true
+                weight: 30.56
+                height: 40.97
+                width: 164.18
+                depth: 171.93
+                price:
+                  id: price_gbHJdmfrXB
+                  amount: '19.99'
+                  amount_in_cents: 1999
+                  compare_at_amount: null
+                  compare_at_amount_in_cents: null
+                  currency: USD
+                  display_amount: $19.99
+                  display_compare_at_amount: null
+                  price_list_id: null
+                original_price: null
+                option_values:
+                - id: optval_UkLWZg9DAJ
+                  option_type_id: opt_UkLWZg9DAJ
+                  name: size-24
+                  label: S
+                  position: 1
+                  color_code: null
+                  option_type_name: foo-size-33
+                  option_type_label: Size
+                  image_url: null
+                  metadata: {}
+                  created_at: '2026-06-12T17:25:22.723Z'
+                  updated_at: '2026-06-12T17:25:22.723Z'
+                metadata: {}
+                position: 2
+                cost_price: '17.0'
+                cost_currency: USD
+                barcode: null
+                weight_unit: lb
+                dimensions_unit: null
+                deleted_at: null
+                created_at: '2026-06-12T17:25:22.720Z'
+                updated_at: '2026-06-12T17:25:23.019Z'
+                tax_category_id: taxcat_UkLWZg9DAJ
+                available_stock: 0
+                reserved_quantity: 0
+                total_on_hand: 0
+                product_name: Product 845657
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sku:
+                  type: string
+                  example: SKU-001
+                price:
+                  type: number
+                  example: 29.99
+                compare_at_price:
+                  type: number
+                  example: 39.99
+                cost_price:
+                  type: number
+                  example: 10.0
+                cost_currency:
+                  type: string
+                  example: USD
+                weight:
+                  type: number
+                height:
+                  type: number
+                width:
+                  type: number
+                depth:
+                  type: number
+                weight_unit:
+                  type: string
+                dimensions_unit:
+                  type: string
+                track_inventory:
+                  type: boolean
+                tax_category_id:
+                  type: string
+                options:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: Size
+                      value:
+                        type: string
+                        example: Large
+                total_on_hand:
+                  type: integer
+                  example: 100
+                position:
+                  type: integer
+                barcode:
+                  type: string
+                prices:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      currency:
+                        type: string
+                        example: USD
+                      amount:
+                        type: number
+                        example: 29.99
+                      compare_at_amount:
+                        type: number
+                        example: 39.99
+                    required:
+                    - currency
+                    - amount
+                stock_items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      stock_location_id:
+                        type: string
+                      count_on_hand:
+                        type: integer
+                      backorderable:
+                        type: boolean
+    delete:
+      summary: Delete a variant
+      tags:
+      - Variants
+      security:
+      - api_key: []
+        bearer_auth: []
+      description: 'Soft-deletes a variant.
+
+
+        **Required scope:** `write_products` (for API-key authentication).'
+      x-codeSamples:
+      - lang: javascript
+        label: Spree Admin SDK
+        source: "import { createAdminClient } from '@spree/admin-sdk'\n\nconst client = createAdminClient({\n  baseUrl: 'https://your-store.com',\n  secretKey: 'sk_xxx',\n})\n\nawait client.products.variants.delete('prod_86Rf07xd4z', 'variant_k5nR8xLq')"
+      parameters:
+      - name: x-spree-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token for admin authentication
+        schema:
+          type: string
+      - name: product_id
+        in: path
+        required: true
+        description: Product ID
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: Variant ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: variant deleted
+  /api/v2/platform/variants:
+    get:
+      summary: Return a list of Variants
+      tags:
+      - Variants
+      security:
+      - bearer_auth: []
+      description: Returns a list of Variants
+      operationId: variants-list
+      parameters:
+      - name: page
+        in: query
+        example: 1
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        example: 50
+        schema:
+          type: integer
+      - name: include
+        in: query
+        description: 'Select which associated resources you would like to fetch, see: <a href="https://jsonapi.org/format/#fetching-includes">https://jsonapi.org/format/#fetching-includes</a>'
+        example: product,tax_category,images,digitals
+        schema:
+          type: string
+      - name: filter[product_id_eq]
+        in: query
+        description: ''
+        example: '1'
+        schema:
+          type: string
+      - name: filter[sku_i_cont]
+        in: query
+        description: ''
+        example: SKU123
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Records returned
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    data:
+                    - id: '284'
+                      type: variant
+                      attributes:
+                        sku: SKU-283
+                        weight: '0.0'
+                        height: null
+                        depth: null
+                        deleted_at: null
+                        is_master: true
+                        cost_price: '17.0'
+                        position: 1
+                        cost_currency: USD
+                        track_inventory: true
+                        updated_at: '2022-11-08T19:35:56.573Z'
+                        discontinue_on: null
+                        created_at: '2022-11-08T19:35:56.573Z'
+                        public_metadata: {}
+                        private_metadata: {}
+                        barcode: null
+                        display_price: $19.99
+                        display_compare_at_price: null
+                        name: Product 213286
+                        options_text: ''
+                        total_on_hand: 0
+                        purchasable: true
+                        in_stock: false
+                        backorderable: true
+                        available: true
+                        currency: USD
+                        price: '19.99'
+                        compare_at_price: null
+                      relationships:
+                        product:
+                          data:
+                            id: '214'
+                            type: product
+                        tax_category:
+                          data: null
+                        digitals:
+                          data: []
+                        images:
+                          data: []
+                        option_values:
+                          data: []
+                        stock_items:
+                          data:
+                          - id: '300'
+                            type: stock_item
+                        stock_locations:
+                          data:
+                          - id: '187'
+                            type: stock_location
+                    - id: '285'
+                      type: variant
+                      attributes:
+                        sku: SKU-284
+                        weight: '23.12'
+                        height: '92.8'
+                        depth: '47.37'
+                        deleted_at: null
+                        is_master: false
+                        cost_price: '17.0'
+                        position: 2
+                        cost_currency: USD
+                        track_inventory: true
+                        updated_at: '2022-11-08T19:35:56.608Z'
+                        discontinue_on: null
+                        created_at: '2022-11-08T19:35:56.605Z'
+                        public_metadata: {}
+                        private_metadata: {}
+                        barcode: null
+                        display_price: $19.99
+                        display_compare_at_price: null
+                        name: Product 213286
+                        options_text: 'Size: S'
+                        total_on_hand: 0
+                        purchasable: true
+                        in_stock: false
+                        backorderable: true
+                        available: true
+                        currency: USD
+                        price: '19.99'
+                        compare_at_price: null
+                      relationships:
+                        product:
+                          data:
+                            id: '214'
+                            type: product
+                        tax_category:
+                          data: null
+                        digitals:
+                          data: []
+                        images:
+                          data: []
+                        option_values:
+                          data:
+                          - id: '83'
+                            type: option_value
+                        stock_items:
+                          data:
+                          - id: '301'
+                            type: stock_item
+                        stock_locations:
+                          data:
+                          - id: '187'
+                            type: stock_location
+                    - id: '286'
+                      type: variant
+                      attributes:
+                        sku: SKU-285
+                        weight: '90.94'
+                        height: '108.64'
+                        depth: '191.7'
+                        deleted_at: null
+                        is_master: false
+                        cost_price: '17.0'
+                        position: 3
+                        cost_currency: USD
+                        track_inventory: true
+                        updated_at: '2022-11-08T19:35:56.633Z'
+                        discontinue_on: null
+                        created_at: '2022-11-08T19:35:56.629Z'
+                        public_metadata: {}
+                        private_metadata: {}
+                        barcode: null
+                        display_price: $19.99
+                        display_compare_at_price: null
+                        name: Product 213286
+                        options_text: 'Size: S'
+                        total_on_hand: 0
+                        purchasable: true
+                        in_stock: false
+                        backorderable: true
+                        available: true
+                        currency: USD
+                        price: '19.99'
+                        compare_at_price: null
+                      relationships:
+                        product:
+                          data:
+                            id: '214'
+                            type: product
+                        tax_category:
+                          data: null
+                        digitals:
+                          data: []
+                        images:
+                          data: []
+                        option_values:
+                          data:
+                          - id: '84'
+                            type: option_value
+                        stock_items:
+                          data:
+                          - id: '302'
+                            type: stock_item
+                        stock_locations:
+                          data:
+                          - id: '187'
+                            type: stock_location
+                    meta:
+                      count: 3
+                      total_count: 3
+                      total_pages: 1
+                    links:
+                      self: http://www.example.com/api/v2/platform/variants?page=1&per_page=&include=&filter[product_id_eq]=&filter[sku_i_cont]=
+                      next: http://www.example.com/api/v2/platform/variants?filter%5Bproduct_id_eq%5D=&filter%5Bsku_i_cont%5D=&include=&page=1&per_page=
+                      prev: http://www.example.com/api/v2/platform/variants?filter%5Bproduct_id_eq%5D=&filter%5Bsku_i_cont%5D=&include=&page=1&per_page=
+                      last: http://www.example.com/api/v2/platform/variants?filter%5Bproduct_id_eq%5D=&filter%5Bsku_i_cont%5D=&include=&page=1&per_page=
+                      first: http://www.example.com/api/v2/platform/variants?filter%5Bproduct_id_eq%5D=&filter%5Bsku_i_cont%5D=&include=&page=1&per_page=
+              schema:
+                $ref: '#/components/schemas/resources_list'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+  /api/v2/platform/variants/{id}:
+    get:
+      summary: Return a Variant
+      tags:
+      - Variants
+      security:
+      - bearer_auth: []
+      description: Returns a Variant
+      operationId: show-variant
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include
+        in: query
+        description: 'Select which associated resources you would like to fetch, see: <a href="https://jsonapi.org/format/#fetching-includes">https://jsonapi.org/format/#fetching-includes</a>'
+        example: product,tax_category,images,digitals
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Record found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    data:
+                      id: '291'
+                      type: variant
+                      attributes:
+                        sku: SKU-290
+                        weight: '185.0'
+                        height: '33.55'
+                        depth: '3.78'
+                        deleted_at: null
+                        is_master: false
+                        cost_price: '17.0'
+                        position: 2
+                        cost_currency: USD
+                        track_inventory: true
+                        updated_at: '2022-11-08T19:35:57.221Z'
+                        discontinue_on: null
+                        created_at: '2022-11-08T19:35:57.218Z'
+                        public_metadata: {}
+                        private_metadata: {}
+                        barcode: null
+                        display_price: $19.99
+                        display_compare_at_price: null
+                        name: Product 2153349
+                        options_text: 'Size: S'
+                        total_on_hand: 0
+                        purchasable: true
+                        in_stock: false
+                        backorderable: true
+                        available: true
+                        currency: USD
+                        price: '19.99'
+                        compare_at_price: null
+                      relationships:
+                        product:
+                          data:
+                            id: '216'
+                            type: product
+                        tax_category:
+                          data: null
+                        digitals:
+                          data: []
+                        images:
+                          data: []
+                        option_values:
+                          data:
+                          - id: '87'
+                            type: option_value
+                        stock_items:
+                          data:
+                          - id: '307'
+                            type: stock_item
+                        stock_locations:
+                          data:
+                          - id: '189'
+                            type: stock_location
+              schema:
+                $ref: '#/components/schemas/resource'
+        '404':
+          description: Record not found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The resource you were looking for could not be found.
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+    delete:
+      summary: Delete a Variant
+      tags:
+      - Variants
+      security:
+      - bearer_auth: []
+      description: Deletes a Variant
+      operationId: delete-variant
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Record deleted
+        '404':
+          description: Record not found
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The resource you were looking for could not be found.
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Authentication Failed
+          content:
+            application/vnd.api+json:
+              examples:
+                Example:
+                  value:
+                    error: The access token is invalid
+              schema:
+                $ref: '#/components/schemas/error'
+  /api/v2/storefront/products/{product_slug}/variants:
+    get:
+      description: 'Returns a list of product variants. You can use product permalink:
+
+
+        ```
+
+        GET /api/v2/storefront/products/knitted-high-neck-sweater/variants
+
+        ```
+
+
+        Or Product ID:
+
+
+        ```
+
+        GET /api/v2/storefront/products/21/variants
+
+        ```
+
+
+        **Note** API will attempt a permalink lookup before an ID lookup.'
+      tags:
+      - Variants
+      operationId: variants-list
+      parameters:
+      - $ref: '#/components/parameters/ProductSlug'
+      - in: query
+        name: filter[options][color]
+        schema:
+          type: string
+        example: red
+        description: Find Variants that have the specified option (eg. color, size) and value (eg. red, XS)
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PerPageParam'
+      - $ref: '#/components/parameters/VariantIncludeParam'
+      - $ref: '#/components/parameters/SparseFieldsVariant'
+      responses:
+        '200':
+          $ref: '#/components/responses/VariantList'
+      summary: List all Product Variants
+components:
+  schemas:
+    error:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      x-internal: false
+    Timestamp:
+      type: string
+      format: date-time
+      example: '2020-02-16T07:14:54.617Z'
+      x-internal: false
+      title: Time Stamp
+      x-examples:
+        example-1: '2020-02-16T07:14:54.617Z'
+    resource:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/resource_properties'
+      required:
+      - data
+      x-internal: false
+    Image:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '1'
+        type:
+          type: string
+          default: image
+        attributes:
+          type: object
+          properties:
+            position:
+              type: integer
+              description: Sort order of images set in the Admin Panel
+              example: 0
+              minimum: 0
+            styles:
+              type: array
+              description: An array of pre-scaled image styles
+              items:
+                $ref: '#/components/schemas/ImageStyle'
+      required:
+      - id
+      - type
+      - attributes
+      title: Image
+      x-internal: false
+    ImageStyle:
+      x-internal: false
+      title: Image Style
+      type: object
+      properties:
+        url:
+          type: string
+          example: http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJbWQyWVhKcFlXNTBjeTltWm1sMmRURlNORFpZWjJaSFpYUkdZMjk2WWsxM1RHWXZNVGs1T1RCak5XVmlNamN4TlRnd1pqVTBabUpqTWpCbFkyVXhZMlZpTTJFd05ERTJZemMzT0dKaE5tSTFNREkyT0dKaFpqa3paV1JtWTJWaE16aGxaQVk2QmtWVSIsImV4cCI6IjIwMTgtMDYtMjRUMTM6NTk6NTguOTY5WiIsInB1ciI6ImJsb2Jfa2V5In19--5e9ff358dc747f73754e332678c5762114ac6f3f/ror_jr_spaghetti.jpeg?content_type=image%2Fjpeg&disposition=inline%3B+filename%3D%22ror_jr_spaghetti.jpeg%22%3B+filename%2A%3DUTF-8%27%27ror_jr_spaghetti.jpeg
+          description: Absolute URL of the uploaded image in selected style (width/height)
+        width:
+          type: integer
+          example: 1920
+          description: Actual width of image
+        height:
+          type: integer
+          example: 1080
+          description: Actual height of image
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type: object
+              description: Field-specific validation errors
+              nullable: true
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
+    resource_properties:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        attributes:
+          type: object
+        relationships:
+          type: object
+      required:
+      - id
+      - type
+      - attributes
+      x-internal: false
+    resources_list:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/resource_properties'
+        meta:
+          type: object
+          properties:
+            count:
+              type: integer
+            total_count:
+              type: integer
+            total_pages:
+              type: integer
+          required:
+          - count
+          - total_count
+          - total_pages
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+            next:
+              type: string
+            prev:
+              type: string
+            last:
+              type: string
+            first:
+              type: string
+          required:
+          - self
+          - next
+          - prev
+          - last
+          - first
+      required:
+      - data
+      - meta
+      - links
+      x-internal: false
+    ListLinks:
+      x-internal: false
+      type: object
+      title: Pagination Links
+      properties:
+        self:
+          type: string
+          description: URL to the current page of the listing
+        next:
+          type: string
+          description: URL to the next page of the listing
+        prev:
+          type: string
+          description: URL to the previous page of the listing
+        last:
+          type: string
+          description: URL to the last page of the listing
+        first:
+          type: string
+          description: URL to the first page of the listing
+    Relation:
+      type: object
+      nullable: true
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+      required:
+      - id
+      - type
+      x-internal: false
+      description: ''
+    VariantIncludes:
+      x-internal: true
+      title: Product Includes
+      anyOf:
+      - $ref: '#/components/schemas/Product'
+      - $ref: '#/components/schemas/Image'
+      - $ref: '#/components/schemas/OptionValue'
+    ListMeta:
+      type: object
+      x-internal: false
+      title: Pagination Meta
+      properties:
+        count:
+          type: number
+          example: 7
+          description: Number of items on the current listing
+        total_count:
+          type: number
+          example: 145
+          description: Number of all items matching the criteria
+        total_pages:
+          type: number
+          example: 10
+          description: Number of all pages containing items matching the criteria
+    OptionValue:
+      title: Option Value
+      type: object
+      x-internal: true
+      properties:
+        id:
+          type: string
+          example: '1'
+        type:
+          type: string
+          default: option_value
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              example: color
+            presentation:
+              type: string
+              example: Color
+            position:
+              type: integer
+              example: 1
+        relationships:
+          type: object
+          properties:
+            option_type:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Relation'
+            filter_value:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Relation'
+      required:
+      - id
+      - type
+      - attributes
+      - relationships
+    Product:
+      type: object
+      title: Product
+      x-internal: false
+      properties:
+        id:
+          type: string
+          example: '1'
+        type:
+          type: string
+          default: product
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Example product
+            description:
+              type: string
+              example: Example description
+              nullable: true
+            available_on:
+              type: string
+              example: '2012-10-17T03:43:57Z'
+              nullable: true
+            slug:
+              type: string
+              example: example-product
+            price:
+              type: string
+              example: '15.99'
+              nullable: true
+            currency:
+              type: string
+              example: USD
+            display_price:
+              type: string
+              example: $15.99
+              nullable: true
+            purchasable:
+              type: boolean
+              description: Indicates if any of Variants are in stock or backorderable
+            in_stock:
+              type: boolean
+              description: Indicates if any of Variants are in stock
+            backorderable:
+              type: boolean
+              description: Indicates if any of Variants are backeorderable
+            meta_description:
+              type: string
+              example: Example product
+              nullable: true
+            meta_keywords:
+              type: string
+              example: example, product
+              nullable: true
+            updated_at:
+              $ref: '#/components/schemas/Timestamp'
+            sku:
+              type: string
+              example: 9238-WS
+            available:
+              type: boolean
+            compare_at_price:
+              type: string
+              example: '49.99'
+              nullable: true
+            display_compare_at_price:
+              type: string
+              example: $49.99
+              nullable: true
+            localized_slugs:
+              type: object
+              description: Provides product's slugs in other locales
+            tags:
+              type: array
+              items:
+                type: string
+              description: List of tags associated with the product
+            labels:
+              type: array
+              items:
+                type: string
+              description: List of labels associated with the product
+        relationships:
+          type: object
+          properties:
+            variants:
+              type: object
+              description: List of Product Variants, excluding Master Variant
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Relation'
+            option_types:
+              type: object
+              description: List of Product Option Types
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Relation'
+            product_properties:
+              type: object
+              description: List of Product Properties
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Relation'
+            taxons:
+              type: object
+              description: List of Taxons associated with this Product
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Relation'
+            images:
+              type: object
+              description: List of Images associated with this Product
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Relation'
+            default_variant:
+              type: object
+              description: The default Variant for this product
+              properties:
+                data:
+                  $ref: '#/components/schemas/Relation'
+            primary_variant:
+              type: object
+              description: The Primary Variant for this product
+              properties:
+                data:
+                  $ref: '#/components/schemas/Relation'
+      required:
+      - id
+      - type
+      - attributes
+      - relationships
+    Variant:
+      title: Variant
+      description: 'Variant records track the individual variants of a Product. Variants are of two types: master variants and normal variants.'
+      x-examples: {}
+      type: object
+      x-internal: false
+      properties:
+        id:
+          type: string
+          example: '1'
+        type:
+          type: string
+          default: variant
+        attributes:
+          type: object
+          properties:
+            sku:
+              type: string
+              example: SKU-1001
+            price:
+              type: string
+              example: '15.99'
+            currency:
+              type: string
+              example: USD
+            display_price:
+              type: string
+              example: $15.99
+            weight:
+              type: string
+              example: '10'
+              nullable: true
+            height:
+              type: string
+              example: '10'
+              nullable: true
+            width:
+              type: string
+              example: '10'
+              nullable: true
+            depth:
+              type: string
+              example: '10'
+              nullable: true
+            is_master:
+              type: boolean
+              description: Indicates if Variant is the master Variant
+            options_text:
+              type: string
+              example: 'Size: small, Color: red'
+            options:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  value:
+                    type: string
+                  presentation:
+                    type: string
+            purchasable:
+              type: boolean
+              description: Indicates if Variant is in stock or backorderable
+            in_stock:
+              type: boolean
+              description: Indicates if Variant is in stock
+            backorderable:
+              type: boolean
+        relationships:
+          type: object
+          properties:
+            product:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/Relation'
+            images:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Relation'
+            option_values:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Relation'
+      required:
+      - id
+      - type
+      - attributes
+      - relationships
+  parameters:
+    VariantIncludeParam:
+      name: include
+      in: query
+      schema:
+        type: string
+      description: 'Specify what related resources (relationships) you would like to receive in the response body. Eg.
+
+
+        ```
+
+        product,option_values,images,filter_values
+
+        ```
+
+
+        [More information](https://jsonapi.org/format/#fetching-includes)'
+      example: product,option_values,images,filter_values
+    ProductSlug:
+      name: product_slug
+      in: path
+      required: true
+      description: Product Slug
+      schema:
+        type: string
+      example: knitted-high-neck-sweater
+    SparseFieldsVariant:
+      name: fields[variant]
+      in: query
+      description: Specify the fields you would like returned in the response body. [More information](https://jsonapi.org/format/#fetching-sparse-fieldsets).
+      schema:
+        type: string
+      example: price,currency,options,options_text
+    PageParam:
+      name: page
+      in: query
+      description: Number of requested page when paginating collection
+      schema:
+        type: integer
+      example: 1
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of requested records per page when paginating collection
+      schema:
+        type: integer
+      example: 25
+  responses:
+    VariantList:
+      description: 200 Success - Returns an array of `variant` objects.
+      content:
+        application/vnd.api+json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Variant'
+              included:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VariantIncludes'
+              meta:
+                $ref: '#/components/schemas/ListMeta'
+              links:
+                $ref: '#/components/schemas/ListLinks'
+            required:
+            - data
+            - meta
+            - links
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-spree-api-key
+      in: header
+      description: Secret API key for admin access
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for admin user authentication
+x-tagGroups:
+- name: Authentication
+  tags:
+  - Authentication
+- name: Products & Catalog
+  tags:
+  - Products
+  - Variants
+  - Option Types
+  - Custom Fields
+  - Channels
+- name: Pricing
+  tags:
+  - Pricing
+  - Markets
+- name: Orders & Fulfillment
+  tags:
+  - Orders
+  - Payments
+  - Fulfillments
+  - Refunds
+- name: Customers
+  tags:
+  - Customers
+  - Customer Groups
+- name: Promotions & Gift Cards
+  tags:
+  - Promotions
+  - Gift Cards
+- name: Data
+  tags:
+  - Exports
+- name: Configuration
+  tags:
+  - Settings
+  - Stock Locations
+  - Payment Methods
+  - Staff
+  - API Keys
+  - Allowed Origins
+  - Webhooks
