@@ -2,7 +2,20 @@ aid: spree
 name: Spree Commerce
 description: Open-source headless e-commerce framework with a REST API for managing products, variants, orders, customers, inventory, promotions, and payment processing. Spree provides two OpenAPI 3.0-documented APIs — a Store API for customer-facing operations and an Admin API for back-office management — along with a TypeScript SDK, CLI, and Next.js storefront starter.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/spree.png
 url: https://raw.githubusercontent.com/api-evangelist/spree/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -18,80 +31,1048 @@ tags:
   - Open Source
   - Ruby on Rails
 apis:
-  - aid: spree:spree-store-api
-    name: Spree Store API
-    description: Customer-facing REST API for browsing products, managing carts, placing orders, and handling checkout. Documented with OpenAPI 3.0.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://spreecommerce.org/docs/api-reference/introduction
-    baseURL: https://yourdomain.com/api/v3/store
-    tags:
-      - Products
-      - Cart
-      - Checkout
-      - Orders
-      - Customers
-      - Storefront
-    properties:
-      - type: Documentation
-        url: https://spreecommerce.org/docs/api-reference/introduction
-      - type: OpenAPI
-        url: openapi/spree-store-api.yaml
-
-  - aid: spree:spree-admin-api
-    name: Spree Admin API
-    description: Back-office REST API for managing products, variants, inventory, promotions, orders, users, and store configuration. Documented with OpenAPI 3.0.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://spreecommerce.org/docs/api-reference/introduction
-    baseURL: https://yourdomain.com/api/v3/admin
-    tags:
-      - Products
-      - Variants
-      - Inventory
-      - Promotions
-      - Orders
-      - Users
-      - Administration
-    properties:
-      - type: Documentation
-        url: https://spreecommerce.org/docs/api-reference/introduction
-      - type: OpenAPI
-        url: openapi/spree-admin-api.yaml
-
-  - aid: spree:spree-storefront-api
-    name: Spree Storefront API
-    description: Legacy storefront REST API for customer-facing operations including products, cart, checkout, and account management. OpenAPI 3.0 documented.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://spreecommerce.org/docs/api-reference/introduction
-    baseURL: https://demo.spreecommerce.org
-    tags:
-      - Products
-      - Cart
-      - Checkout
-      - Orders
-      - Storefront
-    properties:
-      - type: Documentation
-        url: https://spreecommerce.org/docs/api-reference/introduction
-      - type: OpenAPI
-        url: openapi/spree-storefront-api.yaml
-
-  - aid: spree:spree-platform-api
-    name: Spree Platform API
-    description: Platform-level REST API for multi-tenant and enterprise Spree deployments, covering advanced store configuration, multi-vendor, and platform management. OpenAPI 3.0 documented.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://spreecommerce.org/docs/api-reference/introduction
-    baseURL: https://yourdomain.com/api/v3
-    tags:
-      - Platform
-      - Multi-Vendor
-      - Administration
-      - Store Configuration
-    properties:
-      - type: Documentation
-        url: https://spreecommerce.org/docs/api-reference/introduction
-      - type: OpenAPI
-        url: openapi/spree-platform-api.yaml
-
+- aid: spree:spree-account-address-api
+  name: Spree Commerce Account / Address API
+  description: The Account / Address API from Spree Commerce — 2 operation(s) for account / address.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Account / Address
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-account-address-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-account-api
+  name: Spree Commerce Account API
+  description: The Account API from Spree Commerce — 1 operation(s) for account.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-account-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-account-credit-cards-api
+  name: Spree Commerce Account / Credit Cards API
+  description: >-
+    The Account / Credit Cards API from Spree Commerce — 3 operation(s) for account / credit cards.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Account / Credit Cards
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-account-credit-cards-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-account-orders-api
+  name: Spree Commerce Account / Orders API
+  description: The Account / Orders API from Spree Commerce — 2 operation(s) for account / orders.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Account / Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-account-orders-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-addresses-api
+  name: Spree Commerce Addresses API
+  description: The Addresses API from Spree Commerce — 2 operation(s) for addresses.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Addresses
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-addresses-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-adjustments-api
+  name: Spree Commerce Adjustments API
+  description: The Adjustments API from Spree Commerce — 2 operation(s) for adjustments.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Adjustments
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-adjustments-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-adyen-api
+  name: Spree Commerce Adyen API
+  description: The Adyen API from Spree Commerce — 3 operation(s) for adyen.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Adyen
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-adyen-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-allowed-origins-api
+  name: Spree Commerce Allowed Origins API
+  description: CORS allowlist for storefront and admin client origins
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Allowed Origins
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-allowed-origins-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-api-keys-api
+  name: Spree Commerce API Keys API
+  description: Secret and publishable API keys
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - API Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-authentication-api
+  name: Spree Commerce Authentication API
+  description: Admin user login, logout, token refresh, and current user profile
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-cart-api
+  name: Spree Commerce Cart API
+  description: The Cart API from Spree Commerce — 1 operation(s) for cart.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Cart
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-cart-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-cart-coupons-api
+  name: Spree Commerce Cart / Coupons API
+  description: The Cart / Coupons API from Spree Commerce — 3 operation(s) for cart / coupons.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Cart / Coupons
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-cart-coupons-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-cart-line-items-api
+  name: Spree Commerce Cart / Line Items API
+  description: The Cart / Line Items API from Spree Commerce — 3 operation(s) for cart / line items.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Cart / Line Items
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-cart-line-items-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-cart-other-api
+  name: Spree Commerce Cart / Other API
+  description: The Cart / Other API from Spree Commerce — 4 operation(s) for cart / other.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Cart / Other
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-cart-other-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-carts-api
+  name: Spree Commerce Carts API
+  description: Shopping cart management
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Carts
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-carts-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-channels-api
+  name: Spree Commerce Channels API
+  description: Sales channels and product publication across channels
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-channels-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-checkout-api
+  name: Spree Commerce Checkout API
+  description: The Checkout API from Spree Commerce — 2 operation(s) for checkout.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Checkout
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-checkout-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-checkout-payments-api
+  name: Spree Commerce Checkout / Payments API
+  description: >-
+    The Checkout / Payments API from Spree Commerce — 2 operation(s) for checkout / payments.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Checkout / Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-checkout-payments-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-checkout-shipments-api
+  name: Spree Commerce Checkout / Shipments API
+  description: >-
+    The Checkout / Shipments API from Spree Commerce — 2 operation(s) for checkout / shipments.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Checkout / Shipments
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-checkout-shipments-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-checkout-state-api
+  name: Spree Commerce Checkout / State API
+  description: The Checkout / State API from Spree Commerce — 3 operation(s) for checkout / state.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Checkout / State
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-checkout-state-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-checkout-store-credit-api
+  name: Spree Commerce Checkout / Store Credit API
+  description: >-
+    The Checkout / Store Credit API from Spree Commerce — 2 operation(s) for checkout / store credit.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Checkout / Store Credit
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-checkout-store-credit-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-classifications-api
+  name: Spree Commerce Classifications API
+  description: The Classifications API from Spree Commerce — 2 operation(s) for classifications.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Classifications
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-classifications-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-cms-pages-api
+  name: Spree Commerce CMS Pages API
+  description: The CMS Pages API from Spree Commerce — 2 operation(s) for cms pages.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - CMS Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-cms-pages-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-cms-sections-api
+  name: Spree Commerce CMS Sections API
+  description: The CMS Sections API from Spree Commerce — 2 operation(s) for cms sections.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - CMS Sections
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-cms-sections-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-countries-api
+  name: Spree Commerce Countries API
+  description: The Countries API from Spree Commerce — 5 operation(s) for countries.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Countries
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-countries-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-custom-fields-api
+  name: Spree Commerce Custom Fields API
+  description: Custom field definitions for products, variants, customers, and other resources
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Custom Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-custom-fields-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-customer-groups-api
+  name: Spree Commerce Customer Groups API
+  description: >-
+    Customer groups for segmenting customers (e.g. wholesale, VIP) used by pricing and promotions
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Customer Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-customer-groups-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-customers-api
+  name: Spree Commerce Customers API
+  description: Customer profiles, addresses, credit cards, and store credits
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-customers-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-data-feeds-api
+  name: Spree Commerce Data Feeds API
+  description: The Data Feeds API from Spree Commerce — 2 operation(s) for data feeds.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Data Feeds
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-data-feeds-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-digital-assets-api
+  name: Spree Commerce Digital Assets API
+  description: The Digital Assets API from Spree Commerce — 2 operation(s) for digital assets.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Digital Assets
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-digital-assets-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-digital-downloads-api
+  name: Spree Commerce Digital Downloads API
+  description: The Digital Downloads API from Spree Commerce — 1 operation(s) for digital downloads.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Digital Downloads
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-digital-downloads-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-digital-links-api
+  name: Spree Commerce Digital Links API
+  description: The Digital Links API from Spree Commerce — 3 operation(s) for digital links.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Digital Links
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-digital-links-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-digitals-api
+  name: Spree Commerce Digitals API
+  description: Digital product downloads
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Digitals
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-digitals-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-exports-api
+  name: Spree Commerce Exports API
+  description: Async CSV exports of admin resources
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Exports
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-exports-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-fulfillments-api
+  name: Spree Commerce Fulfillments API
+  description: Order fulfillments — shipments, fulfill, cancel, resume, split
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Fulfillments
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-fulfillments-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-gift-cards-api
+  name: Spree Commerce Gift Cards API
+  description: Gift cards and gift card batches
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Gift Cards
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-gift-cards-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-line-items-api
+  name: Spree Commerce Line Items API
+  description: The Line Items API from Spree Commerce — 2 operation(s) for line items.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Line Items
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-line-items-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-markets-api
+  name: Spree Commerce Markets API
+  description: Markets — geographic groupings of countries used for pricing, tax, and fulfillment rules
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Markets
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-markets-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-menu-items-api
+  name: Spree Commerce Menu Items API
+  description: The Menu Items API from Spree Commerce — 3 operation(s) for menu items.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Menu Items
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-menu-items-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-menus-api
+  name: Spree Commerce Menus API
+  description: The Menus API from Spree Commerce — 2 operation(s) for menus.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Menus
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-menus-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-newsletter-subscribers-api
+  name: Spree Commerce Newsletter Subscribers API
+  description: Guest and customer newsletter subscriptions (double opt-in)
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Newsletter Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-newsletter-subscribers-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-option-types-api
+  name: Spree Commerce Option Types API
+  description: Option types and option values used to build product variants (e.g. Size, Color)
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Option Types
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-option-types-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-option-values-api
+  name: Spree Commerce Option Values API
+  description: The Option Values API from Spree Commerce — 2 operation(s) for option values.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Option Values
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-option-values-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-order-status-api
+  name: Spree Commerce Order Status API
+  description: The Order Status API from Spree Commerce — 1 operation(s) for order status.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Order Status
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-order-status-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-orders-api
+  name: Spree Commerce Orders API
+  description: Orders, order items, applied gift cards, and applied store credits
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-orders-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-payment-methods-api
+  name: Spree Commerce Payment Methods API
+  description: Configured payment providers and their available types
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Payment Methods
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-payment-methods-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-payments-api
+  name: Spree Commerce Payments API
+  description: Order payments — list, capture, void
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-payments-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-policies-api
+  name: Spree Commerce Policies API
+  description: Store policies (return policy, privacy policy, terms of service)
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-policies-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-post-categories-api
+  name: Spree Commerce Post Categories API
+  description: The Post Categories API from Spree Commerce — 2 operation(s) for post categories.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Post Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-post-categories-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-posts-api
+  name: Spree Commerce Posts API
+  description: The Posts API from Spree Commerce — 2 operation(s) for posts.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Posts
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-posts-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-pricing-api
+  name: Spree Commerce Pricing API
+  description: Prices and price lists for currency-, market-, and customer-group-specific pricing
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Pricing
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-pricing-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-product-catalog-api
+  name: Spree Commerce Product Catalog API
+  description: Products and categories
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Product Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-product-catalog-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-products-api
+  name: Spree Commerce Products API
+  description: Products, taxons/categories, product custom field values, and bulk product operations
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-products-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-promotion-actions-api
+  name: Spree Commerce Promotion Actions API
+  description: The Promotion Actions API from Spree Commerce — 2 operation(s) for promotion actions.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Promotion Actions
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-promotion-actions-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-promotion-categories-api
+  name: Spree Commerce Promotion Categories API
+  description: >-
+    The Promotion Categories API from Spree Commerce — 2 operation(s) for promotion categories.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Promotion Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-promotion-categories-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-promotion-rules-api
+  name: Spree Commerce Promotion Rules API
+  description: The Promotion Rules API from Spree Commerce — 2 operation(s) for promotion rules.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Promotion Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-promotion-rules-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-promotions-api
+  name: Spree Commerce Promotions API
+  description: Promotions, promotion rules, promotion actions, and coupon codes
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Promotions
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-promotions-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-refunds-api
+  name: Spree Commerce Refunds API
+  description: Order refunds
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Refunds
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-refunds-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-roles-api
+  name: Spree Commerce Roles API
+  description: The Roles API from Spree Commerce — 2 operation(s) for roles.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-roles-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-settings-api
+  name: Spree Commerce Settings API
+  description: Store-level settings — store profile, tags, store credit categories
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-settings-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-shipments-api
+  name: Spree Commerce Shipments API
+  description: The Shipments API from Spree Commerce — 9 operation(s) for shipments.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Shipments
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-shipments-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-shipping-categories-api
+  name: Spree Commerce Shipping Categories API
+  description: >-
+    The Shipping Categories API from Spree Commerce — 2 operation(s) for shipping categories.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Shipping Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-shipping-categories-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-shipping-methods-api
+  name: Spree Commerce Shipping Methods API
+  description: The Shipping Methods API from Spree Commerce — 2 operation(s) for shipping methods.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Shipping Methods
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-shipping-methods-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-staff-api
+  name: Spree Commerce Staff API
+  description: Admin users, roles, and invitations to the store
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Staff
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-staff-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-states-api
+  name: Spree Commerce States API
+  description: The States API from Spree Commerce — 2 operation(s) for states.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - States
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-states-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-stock-items-api
+  name: Spree Commerce Stock Items API
+  description: The Stock Items API from Spree Commerce — 2 operation(s) for stock items.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Stock Items
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-stock-items-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-stock-locations-api
+  name: Spree Commerce Stock Locations API
+  description: Warehouses and physical fulfillment locations
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Stock Locations
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-stock-locations-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-store-credit-categories-api
+  name: Spree Commerce Store Credit Categories API
+  description: >-
+    The Store Credit Categories API from Spree Commerce — 2 operation(s) for store credit categories.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Store Credit Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-store-credit-categories-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-store-credit-types-api
+  name: Spree Commerce Store Credit Types API
+  description: The Store Credit Types API from Spree Commerce — 2 operation(s) for store credit types.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Store Credit Types
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-store-credit-types-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-store-credits-api
+  name: Spree Commerce Store Credits API
+  description: The Store Credits API from Spree Commerce — 2 operation(s) for store credits.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Store Credits
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-store-credits-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-stores-api
+  name: Spree Commerce Stores API
+  description: The Stores API from Spree Commerce — 1 operation(s) for stores.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Stores
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-stores-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-stripe-api
+  name: Spree Commerce Stripe API
+  description: The Stripe API from Spree Commerce — 4 operation(s) for stripe.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Stripe
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-stripe-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-tax-categories-api
+  name: Spree Commerce Tax Categories API
+  description: The Tax Categories API from Spree Commerce — 2 operation(s) for tax categories.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Tax Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-tax-categories-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-tax-rates-api
+  name: Spree Commerce Tax Rates API
+  description: The Tax Rates API from Spree Commerce — 2 operation(s) for tax rates.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Tax Rates
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-tax-rates-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-taxonomies-api
+  name: Spree Commerce Taxonomies API
+  description: The Taxonomies API from Spree Commerce — 2 operation(s) for taxonomies.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Taxonomies
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-taxonomies-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-taxons-api
+  name: Spree Commerce Taxons API
+  description: The Taxons API from Spree Commerce — 5 operation(s) for taxons.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Taxons
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-taxons-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-users-api
+  name: Spree Commerce Users API
+  description: The Users API from Spree Commerce — 2 operation(s) for users.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-users-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-variants-api
+  name: Spree Commerce Variants API
+  description: Product variants — the individual SKUs (size/color combinations) sold under a product
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Variants
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-variants-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-vendors-api
+  name: Spree Commerce Vendors API
+  description: The Vendors API from Spree Commerce — 10 operation(s) for vendors.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Vendors
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-vendors-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-webhook-events-api
+  name: Spree Commerce Webhook Events API
+  description: The Webhook Events API from Spree Commerce — 1 operation(s) for webhook events.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Webhook Events
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-webhook-events-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-webhook-subscribers-api
+  name: Spree Commerce Webhook Subscribers API
+  description: >-
+    The Webhook Subscribers API from Spree Commerce — 2 operation(s) for webhook subscribers.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Webhook Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-webhook-subscribers-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-webhooks-api
+  name: Spree Commerce Webhooks API
+  description: Webhook endpoints and webhook delivery history
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-wished-items-api
+  name: Spree Commerce Wished Items API
+  description: The Wished Items API from Spree Commerce — 2 operation(s) for wished items.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Wished Items
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-wished-items-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-wishlists-api
+  name: Spree Commerce Wishlists API
+  description: The Wishlists API from Spree Commerce — 9 operation(s) for wishlists.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Wishlists
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-wishlists-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-wishlists-wished-items-api
+  name: Spree Commerce Wishlists / Wished Items API
+  description: >-
+    The Wishlists / Wished Items API from Spree Commerce — 5 operation(s) for wishlists / wished items.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Wishlists / Wished Items
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-wishlists-wished-items-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
+- aid: spree:spree-zones-api
+  name: Spree Commerce Zones API
+  description: The Zones API from Spree Commerce — 2 operation(s) for zones.
+  humanURL: https://spreecommerce.org/docs/api-reference/introduction
+  baseURL: https://yourdomain.com/api/v3/store
+  tags:
+  - Zones
+  properties:
+  - type: OpenAPI
+    url: openapi/spree-zones-api-openapi.yml
+  - type: Documentation
+    url: https://spreecommerce.org/docs/api-reference/introduction
 common:
   - type: AgenticAccess
     url: agentic-access/spree-agentic-access.yml
