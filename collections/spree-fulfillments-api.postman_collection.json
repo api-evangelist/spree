@@ -1,0 +1,1323 @@
+{
+  "item": [
+    {
+      "id": "0d445485-6984-4a96-be05-dfc6cc92d273",
+      "name": "Fulfillments",
+      "description": {
+        "content": "Order fulfillments — shipments, fulfill, cancel, resume, split",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "18fd535d-5190-4d8d-8bd2-800327b31a1b",
+          "name": "List fulfillments",
+          "request": {
+            "name": "List fulfillments",
+            "description": {
+              "content": "Returns all shipments for an order.\n\n**Required scope:** `read_fulfillments` (for API-key authentication).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "admin",
+                "orders",
+                ":order_id",
+                "fulfillments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Comma-separated associations to expand (e.g., inventory_units, stock_location, shipping_rates). Use dot notation for nested expand (max 4 levels)."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include (e.g., number,status,tracking,cost). id is always included."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "order_id",
+                  "description": "(Required) Order ID"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cfdc7035-09ee-490c-a209-539a52b77f3b",
+              "name": "fulfillments found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "admin",
+                    "orders",
+                    ":order_id",
+                    "fulfillments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "order_id",
+                      "description": "(Required) Order ID"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer token for admin authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"ful_UkLWZg9DAJ\",\n      \"number\": \"H35590720789\",\n      \"tracking\": \"U10000\",\n      \"tracking_url\": null,\n      \"cost\": \"10.0\",\n      \"display_cost\": \"$10.00\",\n      \"total\": \"10.0\",\n      \"display_total\": \"$10.00\",\n      \"discount_total\": \"0.0\",\n      \"display_discount_total\": \"$0.00\",\n      \"additional_tax_total\": \"0.0\",\n      \"display_additional_tax_total\": \"$0.00\",\n      \"included_tax_total\": \"0.0\",\n      \"display_included_tax_total\": \"$0.00\",\n      \"tax_total\": \"0.0\",\n      \"display_tax_total\": \"$0.00\",\n      \"status\": \"ready\",\n      \"fulfillment_type\": \"shipping\",\n      \"fulfilled_at\": null,\n      \"items\": [\n        {\n          \"item_id\": \"li_UkLWZg9DAJ\",\n          \"variant_id\": \"variant_UkLWZg9DAJ\",\n          \"quantity\": 1\n        }\n      ],\n      \"metadata\": {},\n      \"adjustment_total\": \"0.0\",\n      \"pre_tax_amount\": \"0.0\",\n      \"created_at\": \"2026-06-12T17:24:25.258Z\",\n      \"updated_at\": \"2026-06-12T17:24:25.352Z\",\n      \"order_id\": \"or_UkLWZg9DAJ\",\n      \"stock_location_id\": \"sloc_UkLWZg9DAJ\"\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"limit\": 25,\n    \"count\": 1,\n    \"pages\": 1,\n    \"from\": 1,\n    \"to\": 1,\n    \"in\": 1,\n    \"previous\": null,\n    \"next\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a00547ea-b0d6-4664-bef5-4cadeba66e38",
+          "name": "Show a shipment",
+          "request": {
+            "name": "Show a shipment",
+            "description": {
+              "content": "Returns details of a specific shipment.\n\n**Required scope:** `read_fulfillments` (for API-key authentication).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "admin",
+                "orders",
+                ":order_id",
+                "fulfillments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Comma-separated associations to expand (e.g., inventory_units, stock_location, shipping_rates). Use dot notation for nested expand (max 4 levels)."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include (e.g., number,status,tracking,cost). id is always included."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "order_id",
+                  "description": "(Required) Order ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fulfillment ID"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "dca90c02-a13d-4f60-9c7a-11bfa9f60741",
+              "name": "shipment found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "admin",
+                    "orders",
+                    ":order_id",
+                    "fulfillments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "order_id",
+                      "description": "(Required) Order ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Fulfillment ID"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer token for admin authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ful_UkLWZg9DAJ\",\n  \"number\": \"H01928147257\",\n  \"tracking\": \"U10000\",\n  \"tracking_url\": null,\n  \"cost\": \"10.0\",\n  \"display_cost\": \"$10.00\",\n  \"total\": \"10.0\",\n  \"display_total\": \"$10.00\",\n  \"discount_total\": \"0.0\",\n  \"display_discount_total\": \"$0.00\",\n  \"additional_tax_total\": \"0.0\",\n  \"display_additional_tax_total\": \"$0.00\",\n  \"included_tax_total\": \"0.0\",\n  \"display_included_tax_total\": \"$0.00\",\n  \"tax_total\": \"0.0\",\n  \"display_tax_total\": \"$0.00\",\n  \"status\": \"ready\",\n  \"fulfillment_type\": \"shipping\",\n  \"fulfilled_at\": null,\n  \"items\": [\n    {\n      \"item_id\": \"li_UkLWZg9DAJ\",\n      \"variant_id\": \"variant_UkLWZg9DAJ\",\n      \"quantity\": 1\n    }\n  ],\n  \"metadata\": {},\n  \"adjustment_total\": \"0.0\",\n  \"pre_tax_amount\": \"0.0\",\n  \"created_at\": \"2026-06-12T17:24:25.980Z\",\n  \"updated_at\": \"2026-06-12T17:24:26.039Z\",\n  \"order_id\": \"or_UkLWZg9DAJ\",\n  \"stock_location_id\": \"sloc_UkLWZg9DAJ\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "05932c16-135d-4011-a9f0-6f1701ac834b",
+          "name": "Update a shipment",
+          "request": {
+            "name": "Update a shipment",
+            "description": {
+              "content": "Updates a shipment (tracking, shipping rate).\n\n**Required scope:** `write_fulfillments` (for API-key authentication).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "admin",
+                "orders",
+                ":order_id",
+                "fulfillments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "order_id",
+                  "description": "(Required) Order ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fulfillment ID"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tracking\": \"<string>\",\n  \"selected_shipping_rate_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b4aaebeb-4b9c-4053-8ce2-aa0b9058e026",
+              "name": "shipment updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "admin",
+                    "orders",
+                    ":order_id",
+                    "fulfillments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "order_id",
+                      "description": "(Required) Order ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Fulfillment ID"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer token for admin authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tracking\": \"1Z999AA10123456784\",\n  \"selected_shipping_rate_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ful_UkLWZg9DAJ\",\n  \"number\": \"H47992763995\",\n  \"tracking\": \"1Z999AA10123456784\",\n  \"tracking_url\": \"https://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=1Z999AA10123456784\",\n  \"cost\": \"10.0\",\n  \"display_cost\": \"$10.00\",\n  \"total\": \"10.0\",\n  \"display_total\": \"$10.00\",\n  \"discount_total\": \"0.0\",\n  \"display_discount_total\": \"$0.00\",\n  \"additional_tax_total\": \"0.0\",\n  \"display_additional_tax_total\": \"$0.00\",\n  \"included_tax_total\": \"0.0\",\n  \"display_included_tax_total\": \"$0.00\",\n  \"tax_total\": \"0.0\",\n  \"display_tax_total\": \"$0.00\",\n  \"status\": \"ready\",\n  \"fulfillment_type\": \"shipping\",\n  \"fulfilled_at\": null,\n  \"items\": [\n    {\n      \"item_id\": \"li_UkLWZg9DAJ\",\n      \"variant_id\": \"variant_UkLWZg9DAJ\",\n      \"quantity\": 1\n    }\n  ],\n  \"metadata\": {},\n  \"adjustment_total\": \"0.0\",\n  \"pre_tax_amount\": \"0.0\",\n  \"created_at\": \"2026-06-12T17:24:26.652Z\",\n  \"updated_at\": \"2026-06-12T17:24:27.050Z\",\n  \"order_id\": \"or_UkLWZg9DAJ\",\n  \"stock_location_id\": \"sloc_UkLWZg9DAJ\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ec78ab3-068f-4de8-983e-f11f3f928618",
+          "name": "Fulfill a fulfillment",
+          "request": {
+            "name": "Fulfill a fulfillment",
+            "description": {
+              "content": "Marks a fulfillment as fulfilled.\n\n**Required scope:** `write_fulfillments` (for API-key authentication).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "admin",
+                "orders",
+                ":order_id",
+                "fulfillments",
+                ":id",
+                "fulfill"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "order_id",
+                  "description": "(Required) Order ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fulfillment ID"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7105d4a5-bc23-4603-b7c8-8bd97aecf348",
+              "name": "fulfillment fulfilled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "admin",
+                    "orders",
+                    ":order_id",
+                    "fulfillments",
+                    ":id",
+                    "fulfill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "order_id",
+                      "description": "(Required) Order ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Fulfillment ID"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer token for admin authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ful_UkLWZg9DAJ\",\n  \"number\": \"H21297889426\",\n  \"tracking\": \"U10000\",\n  \"tracking_url\": null,\n  \"cost\": \"10.0\",\n  \"display_cost\": \"$10.00\",\n  \"total\": \"10.0\",\n  \"display_total\": \"$10.00\",\n  \"discount_total\": \"0.0\",\n  \"display_discount_total\": \"$0.00\",\n  \"additional_tax_total\": \"0.0\",\n  \"display_additional_tax_total\": \"$0.00\",\n  \"included_tax_total\": \"0.0\",\n  \"display_included_tax_total\": \"$0.00\",\n  \"tax_total\": \"0.0\",\n  \"display_tax_total\": \"$0.00\",\n  \"status\": \"shipped\",\n  \"fulfillment_type\": \"shipping\",\n  \"fulfilled_at\": \"2026-06-12T17:24:27Z\",\n  \"items\": [\n    {\n      \"item_id\": \"li_UkLWZg9DAJ\",\n      \"variant_id\": \"variant_UkLWZg9DAJ\",\n      \"quantity\": 1\n    }\n  ],\n  \"metadata\": {},\n  \"adjustment_total\": \"0.0\",\n  \"pre_tax_amount\": \"0.0\",\n  \"created_at\": \"2026-06-12T17:24:27.408Z\",\n  \"updated_at\": \"2026-06-12T17:24:27.765Z\",\n  \"order_id\": \"or_UkLWZg9DAJ\",\n  \"stock_location_id\": \"sloc_UkLWZg9DAJ\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4095b5e-639b-4a24-ac72-f4d383211ee5",
+          "name": "Cancel a fulfillment",
+          "request": {
+            "name": "Cancel a fulfillment",
+            "description": {
+              "content": "Cancels a fulfillment.\n\n**Required scope:** `write_fulfillments` (for API-key authentication).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "admin",
+                "orders",
+                ":order_id",
+                "fulfillments",
+                ":id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "order_id",
+                  "description": "(Required) Order ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fulfillment ID"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9e924020-a78d-48eb-88cd-ba8fdb0d3377",
+              "name": "fulfillment canceled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "admin",
+                    "orders",
+                    ":order_id",
+                    "fulfillments",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "order_id",
+                      "description": "(Required) Order ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Fulfillment ID"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer token for admin authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ful_UkLWZg9DAJ\",\n  \"number\": \"H36610642534\",\n  \"tracking\": \"U10000\",\n  \"tracking_url\": null,\n  \"cost\": \"10.0\",\n  \"display_cost\": \"$10.00\",\n  \"total\": \"10.0\",\n  \"display_total\": \"$10.00\",\n  \"discount_total\": \"0.0\",\n  \"display_discount_total\": \"$0.00\",\n  \"additional_tax_total\": \"0.0\",\n  \"display_additional_tax_total\": \"$0.00\",\n  \"included_tax_total\": \"0.0\",\n  \"display_included_tax_total\": \"$0.00\",\n  \"tax_total\": \"0.0\",\n  \"display_tax_total\": \"$0.00\",\n  \"status\": \"canceled\",\n  \"fulfillment_type\": \"shipping\",\n  \"fulfilled_at\": null,\n  \"items\": [\n    {\n      \"item_id\": \"li_UkLWZg9DAJ\",\n      \"variant_id\": \"variant_UkLWZg9DAJ\",\n      \"quantity\": 1\n    }\n  ],\n  \"metadata\": {},\n  \"adjustment_total\": \"0.0\",\n  \"pre_tax_amount\": \"0.0\",\n  \"created_at\": \"2026-06-12T17:24:28.103Z\",\n  \"updated_at\": \"2026-06-12T17:24:28.447Z\",\n  \"order_id\": \"or_UkLWZg9DAJ\",\n  \"stock_location_id\": \"sloc_UkLWZg9DAJ\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ee986258-254f-4265-8169-454b85947e6c",
+          "name": "Resume a fulfillment",
+          "request": {
+            "name": "Resume a fulfillment",
+            "description": {
+              "content": "Resumes a canceled fulfillment.\n\n**Required scope:** `write_fulfillments` (for API-key authentication).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "admin",
+                "orders",
+                ":order_id",
+                "fulfillments",
+                ":id",
+                "resume"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "order_id",
+                  "description": "(Required) Order ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fulfillment ID"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d301008f-d8b7-4f72-87a8-76dc0c71b2c5",
+              "name": "fulfillment resumed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "admin",
+                    "orders",
+                    ":order_id",
+                    "fulfillments",
+                    ":id",
+                    "resume"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "order_id",
+                      "description": "(Required) Order ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Fulfillment ID"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer token for admin authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ful_UkLWZg9DAJ\",\n  \"number\": \"H84093050628\",\n  \"tracking\": \"U10000\",\n  \"tracking_url\": null,\n  \"cost\": \"10.0\",\n  \"display_cost\": \"$10.00\",\n  \"total\": \"10.0\",\n  \"display_total\": \"$10.00\",\n  \"discount_total\": \"0.0\",\n  \"display_discount_total\": \"$0.00\",\n  \"additional_tax_total\": \"0.0\",\n  \"display_additional_tax_total\": \"$0.00\",\n  \"included_tax_total\": \"0.0\",\n  \"display_included_tax_total\": \"$0.00\",\n  \"tax_total\": \"0.0\",\n  \"display_tax_total\": \"$0.00\",\n  \"status\": \"pending\",\n  \"fulfillment_type\": \"shipping\",\n  \"fulfilled_at\": null,\n  \"items\": [\n    {\n      \"item_id\": \"li_UkLWZg9DAJ\",\n      \"variant_id\": \"variant_UkLWZg9DAJ\",\n      \"quantity\": 1\n    }\n  ],\n  \"metadata\": {},\n  \"adjustment_total\": \"0.0\",\n  \"pre_tax_amount\": \"0.0\",\n  \"created_at\": \"2026-06-12T17:24:28.839Z\",\n  \"updated_at\": \"2026-06-12T17:24:29.213Z\",\n  \"order_id\": \"or_UkLWZg9DAJ\",\n  \"stock_location_id\": \"sloc_UkLWZg9DAJ\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "818c8539-610d-4189-a40a-d2ace1096ad6",
+          "name": "Split a fulfillment",
+          "request": {
+            "name": "Split a fulfillment",
+            "description": {
+              "content": "Transfers items from this shipment to a new shipment at a different stock location.\n\n**Required scope:** `write_fulfillments` (for API-key authentication).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "admin",
+                "orders",
+                ":order_id",
+                "fulfillments",
+                ":id",
+                "split"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "order_id",
+                  "description": "(Required) Order ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fulfillment ID"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"variant_id\": \"<string>\",\n  \"quantity\": \"<integer>\",\n  \"stock_location_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "16e20934-8481-4aaf-88de-a333e16692a4",
+              "name": "fulfillment split",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "admin",
+                    "orders",
+                    ":order_id",
+                    "fulfillments",
+                    ":id",
+                    "split"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "order_id",
+                      "description": "(Required) Order ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Fulfillment ID"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer token for admin authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"variant_id\": \"<string>\",\n  \"quantity\": 1,\n  \"stock_location_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"ful_gbHJdmfrXB\",\n      \"number\": \"H94460401316\",\n      \"tracking\": null,\n      \"tracking_url\": null,\n      \"cost\": \"10.0\",\n      \"display_cost\": \"$10.00\",\n      \"total\": \"10.0\",\n      \"display_total\": \"$10.00\",\n      \"discount_total\": \"0.0\",\n      \"display_discount_total\": \"$0.00\",\n      \"additional_tax_total\": \"0.0\",\n      \"display_additional_tax_total\": \"$0.00\",\n      \"included_tax_total\": \"0.0\",\n      \"display_included_tax_total\": \"$0.00\",\n      \"tax_total\": \"0.0\",\n      \"display_tax_total\": \"$0.00\",\n      \"status\": \"ready\",\n      \"fulfillment_type\": \"shipping\",\n      \"fulfilled_at\": null,\n      \"items\": [\n        {\n          \"item_id\": \"li_UkLWZg9DAJ\",\n          \"variant_id\": \"variant_UkLWZg9DAJ\",\n          \"quantity\": 1\n        }\n      ],\n      \"metadata\": {},\n      \"adjustment_total\": \"0.0\",\n      \"pre_tax_amount\": \"0.0\",\n      \"created_at\": \"2026-06-12T17:24:29.915Z\",\n      \"updated_at\": \"2026-06-12T17:24:29.963Z\",\n      \"order_id\": \"or_UkLWZg9DAJ\",\n      \"stock_location_id\": \"sloc_gbHJdmfrXB\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost:3000",
+      "key": "defaultHost"
+    },
+    {
+      "type": "string",
+      "value": "http://{{defaultHost}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ee94902a-e049-4f02-b377-a98d3de5c7a1",
+    "name": "Admin Account / Address Fulfillments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n\n\nContact Support:\n Name: Spree Commerce\n Email: hello@spreecommerce.org",
+      "type": "text/plain"
+    }
+  }
+}

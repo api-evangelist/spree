@@ -1,0 +1,1401 @@
+{
+  "item": [
+    {
+      "id": "8ea567e1-f9a1-4b44-a995-b99191c68ab0",
+      "name": "CMS Sections",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c68cf014-2616-4993-ba8e-c3b5459855fe",
+          "name": "Return a list of CMS Sections",
+          "request": {
+            "name": "Return a list of CMS Sections",
+            "description": {
+              "content": "Returns a list of CMS Sections",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "cms_sections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[name_eq]",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fec85a70-c0dd-41f2-b864-7668b0e046ef",
+              "name": "Records returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "50"
+                    },
+                    {
+                      "key": "include",
+                      "value": "product"
+                    },
+                    {
+                      "key": "filter[name_eq]",
+                      "value": "Hero"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"1\",\n      \"type\": \"cms_section\",\n      \"attributes\": {\n        \"name\": \"Culpa natus incidunt nisi itaque quod harum quisquam nesciunt.\",\n        \"content\": {},\n        \"settings\": {\n          \"gutters\": \"No Gutters\"\n        },\n        \"fit\": \"Screen\",\n        \"destination\": null,\n        \"type\": \"Spree::Cms::Sections::HeroImage\",\n        \"position\": 1,\n        \"linked_resource_type\": \"Spree::Taxon\",\n        \"created_at\": \"2022-11-08T19:34:03.525Z\",\n        \"updated_at\": \"2022-11-08T19:34:03.525Z\"\n      },\n      \"relationships\": {\n        \"cms_page\": {\n          \"data\": {\n            \"id\": \"13\",\n            \"type\": \"cms_page\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": null\n        }\n      }\n    },\n    {\n      \"id\": \"2\",\n      \"type\": \"cms_section\",\n      \"attributes\": {\n        \"name\": \"Aperiam quo deserunt qui quidem unde ratione.\",\n        \"content\": {\n          \"link_type_one\": \"Spree::Taxon\",\n          \"link_type_two\": \"Spree::Taxon\",\n          \"link_type_three\": \"Spree::Taxon\"\n        },\n        \"settings\": {\n          \"layout_style\": \"Default\"\n        },\n        \"fit\": \"Container\",\n        \"destination\": null,\n        \"type\": \"Spree::Cms::Sections::ImageGallery\",\n        \"position\": 2,\n        \"linked_resource_type\": null,\n        \"created_at\": \"2022-11-08T19:34:03.529Z\",\n        \"updated_at\": \"2022-11-08T19:34:03.529Z\"\n      },\n      \"relationships\": {\n        \"cms_page\": {\n          \"data\": {\n            \"id\": \"13\",\n            \"type\": \"cms_page\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": null\n        }\n      }\n    },\n    {\n      \"id\": \"3\",\n      \"type\": \"cms_section\",\n      \"attributes\": {\n        \"name\": \"Molestiae quo distinctio enim dignissimos laborum cumque.\",\n        \"content\": {},\n        \"settings\": {\n          \"gutters\": \"No Gutters\"\n        },\n        \"fit\": \"Screen\",\n        \"destination\": null,\n        \"type\": \"Spree::Cms::Sections::FeaturedArticle\",\n        \"position\": 3,\n        \"linked_resource_type\": \"Spree::Taxon\",\n        \"created_at\": \"2022-11-08T19:34:03.534Z\",\n        \"updated_at\": \"2022-11-08T19:34:03.534Z\"\n      },\n      \"relationships\": {\n        \"cms_page\": {\n          \"data\": {\n            \"id\": \"13\",\n            \"type\": \"cms_page\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": null\n        }\n      }\n    },\n    {\n      \"id\": \"4\",\n      \"type\": \"cms_section\",\n      \"attributes\": {\n        \"name\": \"Quaerat ad enim consequuntur vitae.\",\n        \"content\": {},\n        \"settings\": {\n          \"gutters\": \"No Gutters\"\n        },\n        \"fit\": \"Screen\",\n        \"destination\": null,\n        \"type\": \"Spree::Cms::Sections::HeroImage\",\n        \"position\": 4,\n        \"linked_resource_type\": \"Spree::Product\",\n        \"created_at\": \"2022-11-08T19:34:03.539Z\",\n        \"updated_at\": \"2022-11-08T19:34:03.539Z\"\n      },\n      \"relationships\": {\n        \"cms_page\": {\n          \"data\": {\n            \"id\": \"13\",\n            \"type\": \"cms_page\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": {\n            \"id\": \"21\",\n            \"type\": \"product\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"5\",\n      \"type\": \"cms_section\",\n      \"attributes\": {\n        \"name\": \"Quod saepe occaecati et eaque eum expedita ut.\",\n        \"content\": {},\n        \"settings\": {\n          \"gutters\": \"No Gutters\"\n        },\n        \"fit\": \"Screen\",\n        \"destination\": null,\n        \"type\": \"Spree::Cms::Sections::HeroImage\",\n        \"position\": 5,\n        \"linked_resource_type\": \"Spree::Product\",\n        \"created_at\": \"2022-11-08T19:34:03.543Z\",\n        \"updated_at\": \"2022-11-08T19:34:03.543Z\"\n      },\n      \"relationships\": {\n        \"cms_page\": {\n          \"data\": {\n            \"id\": \"13\",\n            \"type\": \"cms_page\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": {\n            \"id\": \"21\",\n            \"type\": \"product\"\n          }\n        }\n      }\n    }\n  ],\n  \"meta\": {\n    \"count\": 5,\n    \"total_count\": 5,\n    \"total_pages\": 1\n  },\n  \"links\": {\n    \"self\": \"http://www.example.com/api/v2/platform/cms_sections?page=1&per_page=&include=&filter[name_eq]=\",\n    \"next\": \"http://www.example.com/api/v2/platform/cms_sections?filter%5Bname_eq%5D=&include=&page=1&per_page=\",\n    \"prev\": \"http://www.example.com/api/v2/platform/cms_sections?filter%5Bname_eq%5D=&include=&page=1&per_page=\",\n    \"last\": \"http://www.example.com/api/v2/platform/cms_sections?filter%5Bname_eq%5D=&include=&page=1&per_page=\",\n    \"first\": \"http://www.example.com/api/v2/platform/cms_sections?filter%5Bname_eq%5D=&include=&page=1&per_page=\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "755b5f0b-55d3-4512-9c8c-f488e4cf9aa6",
+              "name": "Authentication Failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "50"
+                    },
+                    {
+                      "key": "include",
+                      "value": "product"
+                    },
+                    {
+                      "key": "filter[name_eq]",
+                      "value": "Hero"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The access token is invalid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c10a11f-8f2c-4463-ae99-72edad4188b8",
+          "name": "Create a CMS Section",
+          "request": {
+            "name": "Create a CMS Section",
+            "description": {
+              "content": "Creates a CMS Section",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "cms_sections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cms_section\": {\n    \"name\": \"<string>\",\n    \"cms_page_id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"linked_resource_type\": \"<string>\",\n    \"linked_resource_id\": \"<string>\",\n    \"fit\": \"<string>\",\n    \"position\": \"<integer>\",\n    \"gutters\": \"<string>\",\n    \"button_text\": \"<string>\",\n    \"title\": \"<string>\",\n    \"cms_section[image_one]\": \"<binary>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7138f892-d4f9-4037-92b0-45111b680a43",
+              "name": "Record created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "product"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cms_section\": {\n    \"name\": \"<string>\",\n    \"cms_page_id\": \"<string>\",\n    \"type\": \"Spree::Cms::Sections::HeroImage\",\n    \"linked_resource_type\": \"Spree::Taxon\",\n    \"linked_resource_id\": \"1\",\n    \"fit\": \"Screen\",\n    \"position\": 2,\n    \"gutters\": \"No Gutters\",\n    \"button_text\": \"Click Here\",\n    \"title\": \"Shop Today\",\n    \"cms_section[image_one]\": \"<binary>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"13\",\n    \"type\": \"cms_section\",\n    \"attributes\": {\n      \"name\": \"Hic iste cupiditate corrupti esse minima.\",\n      \"content\": {},\n      \"settings\": {\n        \"gutters\": \"No Gutters\"\n      },\n      \"fit\": \"Screen\",\n      \"destination\": null,\n      \"type\": \"Spree::Cms::Sections::HeroImage\",\n      \"position\": 3,\n      \"linked_resource_type\": \"Spree::Product\",\n      \"created_at\": \"2022-11-08T19:34:04.185Z\",\n      \"updated_at\": \"2022-11-08T19:34:04.185Z\"\n    },\n    \"relationships\": {\n      \"cms_page\": {\n        \"data\": {\n          \"id\": \"15\",\n          \"type\": \"cms_page\"\n        }\n      },\n      \"linked_resource\": {\n        \"data\": {\n          \"id\": \"23\",\n          \"type\": \"product\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a51c6709-c4b0-4d27-b9bf-89fd755e5b4a",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "product"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cms_section\": {\n    \"name\": \"<string>\",\n    \"cms_page_id\": \"<string>\",\n    \"type\": \"Spree::Cms::Sections::HeroImage\",\n    \"linked_resource_type\": \"Spree::Taxon\",\n    \"linked_resource_id\": \"1\",\n    \"fit\": \"Screen\",\n    \"position\": 2,\n    \"gutters\": \"No Gutters\",\n    \"button_text\": \"Click Here\",\n    \"title\": \"Shop Today\",\n    \"cms_section[image_one]\": \"<binary>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Name can't be blank, Cms page can't be blank, and Type can't be blank\",\n  \"errors\": {\n    \"name\": [\n      \"can't be blank\"\n    ],\n    \"cms_page\": [\n      \"can't be blank\"\n    ],\n    \"type\": [\n      \"can't be blank\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0774cd89-7277-49ed-8ce7-96a50b710d2f",
+          "name": "Return a CMS Section",
+          "request": {
+            "name": "Return a CMS Section",
+            "description": {
+              "content": "Returns a CMS Section",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "cms_sections",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "dbe76d51-0983-4edc-be54-2c3c1c15d1d1",
+              "name": "Record found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "product"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"19\",\n    \"type\": \"cms_section\",\n    \"attributes\": {\n      \"name\": \"Debitis rerum nulla maiores quam ut impedit.\",\n      \"content\": {},\n      \"settings\": {\n        \"gutters\": \"No Gutters\"\n      },\n      \"fit\": \"Screen\",\n      \"destination\": null,\n      \"type\": \"Spree::Cms::Sections::HeroImage\",\n      \"position\": 4,\n      \"linked_resource_type\": \"Spree::Product\",\n      \"created_at\": \"2022-11-08T19:34:04.573Z\",\n      \"updated_at\": \"2022-11-08T19:34:04.573Z\"\n    },\n    \"relationships\": {\n      \"cms_page\": {\n        \"data\": {\n          \"id\": \"17\",\n          \"type\": \"cms_page\"\n        }\n      },\n      \"linked_resource\": {\n        \"data\": {\n          \"id\": \"25\",\n          \"type\": \"product\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "768c69e9-0f55-4f5d-9489-4ae31634e1a3",
+              "name": "Authentication Failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "product"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The access token is invalid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1d16630-1ef0-4bb3-a194-874015cb3241",
+              "name": "Record not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "product"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The resource you were looking for could not be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b758a858-6aa2-48aa-a772-3648309d874b",
+          "name": "Update a CMS Section",
+          "request": {
+            "name": "Update a CMS Section",
+            "description": {
+              "content": "Updates a CMS Section",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "cms_sections",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cms_section\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"linked_resource_type\": \"<string>\",\n    \"linked_resource_id\": \"<string>\",\n    \"fit\": \"<string>\",\n    \"position\": \"<integer>\",\n    \"gutters\": \"<string>\",\n    \"button_text\": \"<string>\",\n    \"title\": \"<string>\",\n    \"cms_section[image_one]\": \"<binary>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "62d73d5b-f595-4b74-85a8-4e2638ad40b5",
+              "name": "Record updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "product"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cms_section\": {\n    \"name\": \"<string>\",\n    \"type\": \"Spree::Cms::Sections::ProductCarousel\",\n    \"linked_resource_type\": \"Spree::Taxon\",\n    \"linked_resource_id\": \"1\",\n    \"fit\": \"Screen\",\n    \"position\": 2,\n    \"gutters\": \"No Gutters\",\n    \"button_text\": \"Click Here\",\n    \"title\": \"Shop Today\",\n    \"cms_section[image_one]\": \"<binary>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"29\",\n    \"type\": \"cms_section\",\n    \"attributes\": {\n      \"name\": \"Super Hero\",\n      \"content\": {},\n      \"settings\": {\n        \"gutters\": \"No Gutters\"\n      },\n      \"fit\": \"Screen\",\n      \"destination\": null,\n      \"type\": \"Spree::Cms::Sections::HeroImage\",\n      \"position\": 1,\n      \"linked_resource_type\": \"Spree::Product\",\n      \"created_at\": \"2022-11-08T19:34:05.290Z\",\n      \"updated_at\": \"2022-11-08T19:34:05.525Z\"\n    },\n    \"relationships\": {\n      \"cms_page\": {\n        \"data\": {\n          \"id\": \"20\",\n          \"type\": \"cms_page\"\n        }\n      },\n      \"linked_resource\": {\n        \"data\": {\n          \"id\": \"28\",\n          \"type\": \"product\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61a52f92-debe-452b-846b-ffab2fc2944a",
+              "name": "Authentication Failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "product"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cms_section\": {\n    \"name\": \"<string>\",\n    \"type\": \"Spree::Cms::Sections::ProductCarousel\",\n    \"linked_resource_type\": \"Spree::Taxon\",\n    \"linked_resource_id\": \"1\",\n    \"fit\": \"Screen\",\n    \"position\": 2,\n    \"gutters\": \"No Gutters\",\n    \"button_text\": \"Click Here\",\n    \"title\": \"Shop Today\",\n    \"cms_section[image_one]\": \"<binary>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The access token is invalid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e80cf4c-d08a-406c-bd25-627fc98349c0",
+              "name": "Record not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "product"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cms_section\": {\n    \"name\": \"<string>\",\n    \"type\": \"Spree::Cms::Sections::ProductCarousel\",\n    \"linked_resource_type\": \"Spree::Taxon\",\n    \"linked_resource_id\": \"1\",\n    \"fit\": \"Screen\",\n    \"position\": 2,\n    \"gutters\": \"No Gutters\",\n    \"button_text\": \"Click Here\",\n    \"title\": \"Shop Today\",\n    \"cms_section[image_one]\": \"<binary>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The resource you were looking for could not be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f424df97-a881-46e5-ac51-885db2d5e9aa",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "product"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cms_section\": {\n    \"name\": \"<string>\",\n    \"type\": \"Spree::Cms::Sections::ProductCarousel\",\n    \"linked_resource_type\": \"Spree::Taxon\",\n    \"linked_resource_id\": \"1\",\n    \"fit\": \"Screen\",\n    \"position\": 2,\n    \"gutters\": \"No Gutters\",\n    \"button_text\": \"Click Here\",\n    \"title\": \"Shop Today\",\n    \"cms_section[image_one]\": \"<binary>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Name can't be blank\",\n  \"errors\": {\n    \"name\": [\n      \"can't be blank\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b4430af7-30c2-404a-823c-4873a59bc9c7",
+          "name": "Delete a CMS Section",
+          "request": {
+            "name": "Delete a CMS Section",
+            "description": {
+              "content": "Deletes a CMS Section",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "cms_sections",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4030ecc0-3fc6-4fb0-bbdf-7638c64c8a1d",
+              "name": "Record deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ec4e8eae-a146-4c4c-b20f-d7bf700b162b",
+              "name": "Authentication Failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The access token is invalid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83125e22-0c9b-49f4-be31-302a0b4c725f",
+              "name": "Record not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "cms_sections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The resource you were looking for could not be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost:3000",
+      "key": "defaultHost"
+    },
+    {
+      "type": "string",
+      "value": "http://{{defaultHost}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d7719c39-6db2-44a2-ba83-4d795f73de5e",
+    "name": "Admin Account / Address CMS Sections API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n\n\nContact Support:\n Name: Spree Commerce\n Email: hello@spreecommerce.org",
+      "type": "text/plain"
+    }
+  }
+}

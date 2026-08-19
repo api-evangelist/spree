@@ -1,0 +1,261 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Admin Account / Address Authentication API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Login",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/admin/auth/login",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Authenticates an admin user and returns a short-lived JWT access token.\nThe rotatable refresh token is set in an HttpOnly cookie — it is not\nincluded in the response body.\n\nDispatches by the `provider` field to a strategy registered in\n`Spree.admin_authentication_strategies`. When `provider` is omitted it\ndefaults to `email`, which uses the built-in email/password strategy.\n\nTo plug in a third-party identity provider (Okta, Azure AD, Google\nWorkspace SSO, a custom JWT issuer, SAML, etc.), regist"
+        },
+        {
+          "info": {
+            "name": "Refresh token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/admin/auth/refresh",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Exchanges the HttpOnly refresh-token cookie for a new access JWT and a\nrotated refresh token cookie. No request body or Authorization header\nis required — the cookie alone authenticates the call.\n"
+        },
+        {
+          "info": {
+            "name": "Logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/admin/auth/logout",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Revokes the refresh-token cookie, effectively logging the admin out."
+        },
+        {
+          "info": {
+            "name": "Get current admin user and permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/me",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the current admin user profile and a serialized list of permissions (CanCanCan rules). The SPA uses these to drive UI permission checks."
+        },
+        {
+          "info": {
+            "name": "Login",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/store/auth/login",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Authenticates a customer and returns a JWT access token + refresh token.\n\nDispatches by the `provider` field to a strategy registered in\n`Spree.store_authentication_strategies`. When `provider` is omitted it\ndefaults to `email`, which uses the built-in email/password strategy.\n\nTo plug in a third-party identity provider (Auth0, Okta, Firebase, a\ncustom JWT issuer, SAML, etc.), register a `Spree::Authentication::Strategies::BaseStrategy`\nsubclass under a provider key, then send `{ \"provider\": \"<y"
+        },
+        {
+          "info": {
+            "name": "Refresh token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/store/auth/refresh",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Exchanges a refresh token for a new access JWT and rotated refresh token. No Authorization header needed."
+        },
+        {
+          "info": {
+            "name": "Logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/store/auth/logout",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Revokes the submitted refresh token. The refresh token itself is the credential — no Authorization header is required, so a client with an expired access JWT can still log out."
+        },
+        {
+          "info": {
+            "name": "Request a password reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/store/password_resets",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Sends a password reset email if an account exists for the given email address. Always returns 202 Accepted to prevent email enumeration."
+        },
+        {
+          "info": {
+            "name": "Reset password with token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://{defaultHost}/api/v3/store/password_resets/:token",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "Password reset token from the email"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resets the password using a token received via email. Returns a JWT token on success (auto-login)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

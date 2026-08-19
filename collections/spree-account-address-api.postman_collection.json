@@ -1,0 +1,790 @@
+{
+  "item": [
+    {
+      "id": "332c8020-ba30-45d9-8c50-04af60754711",
+      "name": "Account / Address",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ef863b65-a89c-48f1-9ca2-80d385a92d23",
+          "name": "List all Addresses",
+          "request": {
+            "name": "List all Addresses",
+            "description": {
+              "content": "Returns a list of addresses for the current user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "storefront",
+                "account",
+                "addresses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields[address]",
+                  "value": "<string>",
+                  "description": "Specify the fields you would like returned in the response body. [More information](https://jsonapi.org/format/#fetching-sparse-fieldsets)."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[exclude_quick_checkout]",
+                  "value": "<boolean>",
+                  "description": "Exclude addresses that were created during quick checkout"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "126fda0c-2d94-4378-9162-e5c466b6d49e",
+              "name": "200 Success - Returns an array of `address` objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "storefront",
+                    "account",
+                    "addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields[address]",
+                      "value": "firstname,lastname,country_name"
+                    },
+                    {
+                      "key": "filter[exclude_quick_checkout]",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"11\",\n      \"type\": \"address\",\n      \"attributes\": {\n        \"firstname\": \"Tyler\",\n        \"lastname\": \"Durden\",\n        \"address1\": \"12312 Street\",\n        \"address2\": \"Basment Entrance\",\n        \"city\": \"LA\",\n        \"zipcode\": \"90210\",\n        \"phone\": 8173762736,\n        \"state_name\": \"California\",\n        \"company\": \"Paper Street Soap Co\",\n        \"country_name\": \"United States\",\n        \"country_iso3\": \"USA\",\n        \"country_iso\": \"US\",\n        \"label\": \"Home\",\n        \"state_code\": \"CA\"\n      }\n    },\n    {\n      \"id\": \"28\",\n      \"type\": \"address\",\n      \"attributes\": {\n        \"firstname\": \"John\",\n        \"lastname\": \"Snow\",\n        \"address1\": \"7735 Old Georgetown Road\",\n        \"address2\": \"2nd Floor\",\n        \"city\": \"Bethesda\",\n        \"zipcode\": \"20814\",\n        \"phone\": \"3014445002\",\n        \"state_name\": \"Maryland\",\n        \"company\": null,\n        \"country_name\": \"United States\",\n        \"country_iso3\": \"USA\",\n        \"country_iso\": \"US\",\n        \"label\": null,\n        \"state_code\": \"MD\"\n      }\n    },\n    {\n      \"id\": \"29\",\n      \"type\": \"address\",\n      \"attributes\": {\n        \"firstname\": \"Emma\",\n        \"lastname\": \"Carragher\",\n        \"address1\": \"775645 Old Georgetown Road\",\n        \"address2\": \"3rd Floor\",\n        \"city\": \"Qethesda\",\n        \"zipcode\": \"90210\",\n        \"phone\": \"3488545445002\",\n        \"state_name\": \"California\",\n        \"company\": null,\n        \"country_name\": \"United States\",\n        \"country_iso3\": \"USA\",\n        \"country_iso\": \"US\",\n        \"label\": \"Work\",\n        \"state_code\": \"CA\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"count\": 3,\n    \"total_count\": 3,\n    \"total_pages\": 1\n  },\n  \"links\": {\n    \"self\": \"http://localhost:3000/api/v2/storefront/account/addresses\",\n    \"next\": \"http://localhost:3000/api/v2/storefront/account/addresses?page=1\",\n    \"prev\": \"http://localhost:3000/api/v2/storefront/account/addresses?page=1\",\n    \"last\": \"http://localhost:3000/api/v2/storefront/account/addresses?page=1\",\n    \"first\": \"http://localhost:3000/api/v2/storefront/account/addresses?page=1\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fac680b5-2842-4baf-b660-6663dad22733",
+              "name": "403 Forbidden - You are not authorized to access this page.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "storefront",
+                    "account",
+                    "addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields[address]",
+                      "value": "firstname,lastname,country_name"
+                    },
+                    {
+                      "key": "filter[exclude_quick_checkout]",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"You are not authorized to access this page.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "862d094b-3007-48fe-9db6-bfc74824d7fe",
+          "name": "Create an Address",
+          "request": {
+            "name": "Create an Address",
+            "description": {
+              "content": "Creates a new address for the current user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "storefront",
+                "account",
+                "addresses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields[address]",
+                  "value": "<string>",
+                  "description": "Specify the fields you would like returned in the response body. [More information](https://jsonapi.org/format/#fetching-sparse-fieldsets)."
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": {\n    \"firstname\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"address1\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country_iso\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"zipcode\": \"<string>\",\n    \"state_name\": \"<string>\",\n    \"company\": \"<string>\",\n    \"label\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "204cb93d-2a74-4ea9-a5d9-61114a42ba5b",
+              "name": "200 Success - Returns the `address` object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "storefront",
+                    "account",
+                    "addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields[address]",
+                      "value": "firstname,lastname,country_name"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"firstname\": \"Mark\",\n    \"lastname\": \"Winterburn\",\n    \"company\": \"Paper Street Soap Co.\",\n    \"address1\": \"775 Old Georgetown Road\",\n    \"address2\": \"3rd Floor\",\n    \"city\": \"Qethesda\",\n    \"phone\": \"3488545445002\",\n    \"zipcode\": \"90210\",\n    \"state_name\": \"CA\",\n    \"country_iso\": \"US\",\n    \"label\": \"Work\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"29\",\n    \"type\": \"address\",\n    \"attributes\": {\n      \"firstname\": \"Mark\",\n      \"lastname\": \"Winterburn\",\n      \"address1\": \"775645 Old Georgetown Road\",\n      \"address2\": \"3rd Floor\",\n      \"city\": \"Qethesda\",\n      \"zipcode\": \"90210\",\n      \"phone\": \"3488545445002\",\n      \"state_name\": \"California\",\n      \"company\": \"Paper Street Soap Co.\",\n      \"country_name\": \"United States\",\n      \"country_iso3\": \"USA\",\n      \"country_iso\": \"US\",\n      \"label\": \"Work\",\n      \"state_code\": \"CA\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1d45ccc-46df-4672-bef5-c6acd13bfe21",
+              "name": "403 Forbidden - You are not authorized to access this page.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "storefront",
+                    "account",
+                    "addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields[address]",
+                      "value": "firstname,lastname,country_name"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"firstname\": \"Mark\",\n    \"lastname\": \"Winterburn\",\n    \"company\": \"Paper Street Soap Co.\",\n    \"address1\": \"775 Old Georgetown Road\",\n    \"address2\": \"3rd Floor\",\n    \"city\": \"Qethesda\",\n    \"phone\": \"3488545445002\",\n    \"zipcode\": \"90210\",\n    \"state_name\": \"CA\",\n    \"country_iso\": \"US\",\n    \"label\": \"Work\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"You are not authorized to access this page.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d1cc097-3836-41dd-8d08-db718e8b1998",
+          "name": "Remove an Address",
+          "request": {
+            "name": "Remove an Address",
+            "description": {
+              "content": "This endpoint removes the specified address for the current user. It uses a soft delete to retain address information for pre-existing orders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "storefront",
+                "account",
+                "addresses",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID of the specified `address`."
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "b26ef134-6fc2-47eb-9187-20be64d1b613",
+              "name": "204 Success No Content Returned - Requested Address has been removed from the User Account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "storefront",
+                    "account",
+                    "addresses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the specified `address`."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a9f39d82-aad8-4b00-8104-ba3731fc7012",
+              "name": "404 Not Found - Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "storefront",
+                    "account",
+                    "addresses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the specified `address`."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The resource you were looking for could not be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0bcb15fa-f37f-47dc-905b-fc7990b5ed51",
+          "name": "Update an Address",
+          "request": {
+            "name": "Update an Address",
+            "description": {
+              "content": "Updates the specified address for the current user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "storefront",
+                "account",
+                "addresses",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields[address]",
+                  "value": "<string>",
+                  "description": "Specify the fields you would like returned in the response body. [More information](https://jsonapi.org/format/#fetching-sparse-fieldsets)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID of the specified `address`."
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": {\n    \"firstname\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"address1\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country_iso\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"zipcode\": \"<string>\",\n    \"state_name\": \"<string>\",\n    \"company\": \"<string>\",\n    \"label\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e4fff2e5-bd73-4891-8604-144a1026a08a",
+              "name": "200 Success - Returns the `address` object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "storefront",
+                    "account",
+                    "addresses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields[address]",
+                      "value": "firstname,lastname,country_name"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the specified `address`."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"firstname\": \"Stephen\",\n    \"lastname\": \"Smith\",\n    \"company\": \"Woodbank School\",\n    \"address1\": \"234 Old Georgetown Road\",\n    \"address2\": \"1st Floor\",\n    \"city\": \"Aethesda\",\n    \"phone\": \"34885493845002\",\n    \"zipcode\": \"90211\",\n    \"state_name\": \"CA\",\n    \"country_iso\": \"US\",\n    \"label\": \"Office\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"29\",\n    \"type\": \"address\",\n    \"attributes\": {\n      \"firstname\": \"Mark\",\n      \"lastname\": \"Winterburn\",\n      \"address1\": \"775645 Old Georgetown Road\",\n      \"address2\": \"3rd Floor\",\n      \"city\": \"Qethesda\",\n      \"zipcode\": \"90210\",\n      \"phone\": \"3488545445002\",\n      \"state_name\": \"California\",\n      \"company\": \"Paper Street Soap Co.\",\n      \"country_name\": \"United States\",\n      \"country_iso3\": \"USA\",\n      \"country_iso\": \"US\",\n      \"label\": \"Work\",\n      \"state_code\": \"CA\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c05b96f6-f029-4e40-a71d-34022ca1b155",
+              "name": "403 Forbidden - You are not authorized to access this page.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "storefront",
+                    "account",
+                    "addresses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields[address]",
+                      "value": "firstname,lastname,country_name"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the specified `address`."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"firstname\": \"Stephen\",\n    \"lastname\": \"Smith\",\n    \"company\": \"Woodbank School\",\n    \"address1\": \"234 Old Georgetown Road\",\n    \"address2\": \"1st Floor\",\n    \"city\": \"Aethesda\",\n    \"phone\": \"34885493845002\",\n    \"zipcode\": \"90211\",\n    \"state_name\": \"CA\",\n    \"country_iso\": \"US\",\n    \"label\": \"Office\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"You are not authorized to access this page.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost:3000",
+      "key": "defaultHost"
+    },
+    {
+      "type": "string",
+      "value": "http://{{defaultHost}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f1127308-850f-486d-bc0e-685b164be821",
+    "name": "Admin Account / Address API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n\n\nContact Support:\n Name: Spree Commerce\n Email: hello@spreecommerce.org",
+      "type": "text/plain"
+    }
+  }
+}

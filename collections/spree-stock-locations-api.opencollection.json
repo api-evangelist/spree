@@ -1,0 +1,383 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Admin Account / Address Stock Locations API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stock Locations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List stock locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/stock_locations",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page"
+              },
+              {
+                "name": "q[name_cont]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name (contains)"
+              },
+              {
+                "name": "q[active_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by active status"
+              },
+              {
+                "name": "q[kind_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by kind (built-in: 'warehouse', 'store', 'fulfillment_center')"
+              },
+              {
+                "name": "q[pickup_enabled_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by pickup-enabled flag"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort by field. Prefix with `-` for descending (e.g., `-created_at`)."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include. id is always included."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the configured stock locations. Stock locations are global\n(shared across stores). Filter with Ransack predicates such as\n`q[active_eq]`, `q[kind_eq]`, `q[pickup_enabled_eq]`, or\n`q[name_cont]`.\n\nPickup-related attributes (`kind`, `pickup_enabled`,\n`pickup_stock_policy`, `pickup_ready_in_minutes`,\n`pickup_instructions`) drive merchant pickup support at checkout —\ncustomers can collect orders from any active location with\n`pickup_enabled: true`.\n\n\n**Required scope:** `read_stock` (for API"
+        },
+        {
+          "info": {
+            "name": "Create a stock location",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/admin/stock_locations",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new stock location.\n\nSetting `default: true` automatically demotes the previous default\nlocation.\n\n\n**Required scope:** `write_stock` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Get a stock location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/stock_locations/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Stock location ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include. id is always included."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a single stock location by prefixed ID.\n\n**Required scope:** `read_stock` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Update a stock location",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://{defaultHost}/api/v3/admin/stock_locations/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Stock location ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates an existing stock location. Same address-field conventions as\nthe create endpoint.\n\nSetting `default: true` automatically demotes the previous default.\n\n\n**Required scope:** `write_stock` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Delete a stock location",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{defaultHost}/api/v3/admin/stock_locations/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Stock location ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Soft-deletes the stock location (sets `deleted_at`). Existing\nfulfillments that referenced it keep the historical record via\n`Spree::StockLocation.with_deleted`.\n\n\n**Required scope:** `write_stock` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Return a list of Stock Locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v2/platform/stock_locations",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query"
+              },
+              {
+                "name": "per_page",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "include",
+                "value": "country",
+                "type": "query",
+                "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of Stock Locations"
+        },
+        {
+          "info": {
+            "name": "Create a Stock Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v2/platform/stock_locations",
+            "params": [
+              {
+                "name": "include",
+                "value": "country",
+                "type": "query",
+                "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a Stock Location"
+        },
+        {
+          "info": {
+            "name": "Return a Stock Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v2/platform/stock_locations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include",
+                "value": "country",
+                "type": "query",
+                "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a Stock Location"
+        },
+        {
+          "info": {
+            "name": "Update a Stock Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://{defaultHost}/api/v2/platform/stock_locations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include",
+                "value": "country",
+                "type": "query",
+                "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a Stock Location"
+        },
+        {
+          "info": {
+            "name": "Delete a Stock Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{defaultHost}/api/v2/platform/stock_locations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Stock Location"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

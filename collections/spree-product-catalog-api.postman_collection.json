@@ -1,0 +1,1462 @@
+{
+  "item": [
+    {
+      "id": "54ee1d70-d19b-4465-92db-32f825f49a0b",
+      "name": "Product Catalog",
+      "description": {
+        "content": "Products and categories",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dd746e74-06de-47b3-9bb6-51bc49c6fa48",
+          "name": "List categories",
+          "request": {
+            "name": "List categories",
+            "description": {
+              "content": "Returns a paginated list of categories for the current store",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "store",
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "q[name_cont]",
+                  "value": "<string>",
+                  "description": "Filter by name"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include (e.g., name,slug,price). id is always included."
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f35b2985-23a2-4490-9920-5f3aa8b6eb47",
+              "name": "categories found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "q[name_cont]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"ctg_UkLWZg9DAJ\",\n      \"name\": \"taxonomy_3\",\n      \"permalink\": \"taxonomy-3\",\n      \"position\": 0,\n      \"depth\": 0,\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"meta_keywords\": null,\n      \"children_count\": 1,\n      \"parent_id\": null,\n      \"description\": \"\",\n      \"description_html\": \"\",\n      \"image_url\": null,\n      \"square_image_url\": null,\n      \"is_root\": true,\n      \"is_child\": false,\n      \"is_leaf\": false\n    },\n    {\n      \"id\": \"ctg_gbHJdmfrXB\",\n      \"name\": \"taxon_3\",\n      \"permalink\": \"taxonomy-3/taxon-3\",\n      \"position\": 0,\n      \"depth\": 1,\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"meta_keywords\": null,\n      \"children_count\": 1,\n      \"parent_id\": \"ctg_UkLWZg9DAJ\",\n      \"description\": \"\",\n      \"description_html\": \"\",\n      \"image_url\": null,\n      \"square_image_url\": null,\n      \"is_root\": false,\n      \"is_child\": true,\n      \"is_leaf\": false\n    },\n    {\n      \"id\": \"ctg_EfhxLZ9ck8\",\n      \"name\": \"taxon_4\",\n      \"permalink\": \"taxonomy-3/taxon-3/taxon-4\",\n      \"position\": 0,\n      \"depth\": 2,\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"meta_keywords\": null,\n      \"children_count\": 0,\n      \"parent_id\": \"ctg_gbHJdmfrXB\",\n      \"description\": \"\",\n      \"description_html\": \"\",\n      \"image_url\": null,\n      \"square_image_url\": null,\n      \"is_root\": false,\n      \"is_child\": true,\n      \"is_leaf\": true\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"limit\": 25,\n    \"count\": 3,\n    \"pages\": 1,\n    \"from\": 1,\n    \"to\": 3,\n    \"in\": 3,\n    \"previous\": null,\n    \"next\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d74ef726-92e3-4e56-9243-f41bb2a002f4",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "q[name_cont]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_token\",\n    \"message\": \"Valid API key required\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1454e62-e5ab-438f-b315-dd47d52271b6",
+          "name": "Get a category",
+          "request": {
+            "name": "Get a category",
+            "description": {
+              "content": "Returns a single category by permalink or prefix ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "store",
+                "categories",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Expand associations (children, parent, ancestors, custom_fields)"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include (e.g., name,slug,price). id is always included."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Category permalink (e.g., clothing/shirts) or prefix ID (e.g., ctg_abc123)"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f56f8a78-c247-42c5-b69a-daf4c1eb7be5",
+              "name": "category found by prefix ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "categories",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Category permalink (e.g., clothing/shirts) or prefix ID (e.g., ctg_abc123)"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ctg_gbHJdmfrXB\",\n  \"name\": \"taxon_12\",\n  \"permalink\": \"taxonomy-9/taxon-12\",\n  \"position\": 0,\n  \"depth\": 1,\n  \"meta_title\": null,\n  \"meta_description\": null,\n  \"meta_keywords\": null,\n  \"children_count\": 1,\n  \"parent_id\": \"ctg_UkLWZg9DAJ\",\n  \"description\": \"\",\n  \"description_html\": \"\",\n  \"image_url\": null,\n  \"square_image_url\": null,\n  \"is_root\": false,\n  \"is_child\": true,\n  \"is_leaf\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb6cf3dd-21a4-49ed-b393-206944aed31e",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "categories",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Category permalink (e.g., clothing/shirts) or prefix ID (e.g., ctg_abc123)"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_token\",\n    \"message\": \"Valid API key required\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ed5f949-59b1-47f4-8aab-10cbf05e1754",
+              "name": "category from other store not accessible",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "categories",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Category permalink (e.g., clothing/shirts) or prefix ID (e.g., ctg_abc123)"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"record_not_found\",\n    \"message\": \"Category not found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fad09666-27a2-4dec-b5a4-a5415fe2169a",
+          "name": "List products",
+          "request": {
+            "name": "List products",
+            "description": {
+              "content": "Returns a paginated list of active products for the current store",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "store",
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number (default: 1)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items per page (default: 25, max: 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Sort order. Prefix with - for descending. Values: price, -price, best_selling, name, -name, -available_on, available_on"
+                },
+                {
+                  "disabled": false,
+                  "key": "q[name_cont]",
+                  "value": "<string>",
+                  "description": "Filter by name containing string"
+                },
+                {
+                  "disabled": false,
+                  "key": "q[in_category]",
+                  "value": "<string>",
+                  "description": "Filter by category prefixed ID (includes descendants)"
+                },
+                {
+                  "disabled": false,
+                  "key": "q[in_categories][]",
+                  "value": "<string>",
+                  "description": "Filter by multiple category prefixed IDs (OR logic, includes descendants)"
+                },
+                {
+                  "disabled": false,
+                  "key": "q[price_gte]",
+                  "value": "<number>",
+                  "description": "Filter by minimum price"
+                },
+                {
+                  "disabled": false,
+                  "key": "q[price_lte]",
+                  "value": "<number>",
+                  "description": "Filter by maximum price"
+                },
+                {
+                  "disabled": false,
+                  "key": "q[with_option_value_ids][]",
+                  "value": "<string>",
+                  "description": "Filter by option value prefix IDs (e.g., optval_abc). Pass multiple values for OR logic."
+                },
+                {
+                  "disabled": false,
+                  "key": "q[in_stock]",
+                  "value": "<boolean>",
+                  "description": "Filter to only in-stock products"
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Comma-separated associations to expand (variants, media, categories, option_types)"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include (e.g., name,slug,price). id is always included."
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Publishable API key",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b1f8c53c-fd51-4d58-ae87-3dd1e67502ee",
+              "name": "products found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[name_cont]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[in_category]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[in_categories][]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[price_gte]",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "q[price_lte]",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "q[with_option_value_ids][]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[in_stock]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Publishable API key",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"prod_UkLWZg9DAJ\",\n      \"name\": \"Product 1421251\",\n      \"slug\": \"product-1421251\",\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"meta_keywords\": null,\n      \"variant_count\": 1,\n      \"available_on\": \"2025-05-26T16:14:22.402Z\",\n      \"purchasable\": true,\n      \"in_stock\": false,\n      \"backorderable\": true,\n      \"available\": true,\n      \"description\": \"A comfortable cotton t-shirt.\",\n      \"description_html\": \"<p>A <strong>comfortable</strong> cotton t-shirt.</p>\",\n      \"default_variant_id\": \"variant_gbHJdmfrXB\",\n      \"thumbnail_url\": null,\n      \"tags\": [],\n      \"price\": {\n        \"id\": \"price_gbHJdmfrXB\",\n        \"amount\": \"19.99\",\n        \"amount_in_cents\": 1999,\n        \"compare_at_amount\": null,\n        \"compare_at_amount_in_cents\": null,\n        \"currency\": \"USD\",\n        \"display_amount\": \"$19.99\",\n        \"display_compare_at_amount\": null,\n        \"price_list_id\": null\n      },\n      \"original_price\": null\n    },\n    {\n      \"id\": \"prod_gbHJdmfrXB\",\n      \"name\": \"Product 1435220\",\n      \"slug\": \"product-1435220\",\n      \"meta_title\": null,\n      \"meta_description\": null,\n      \"meta_keywords\": null,\n      \"variant_count\": 0,\n      \"available_on\": \"2025-05-26T16:14:22.472Z\",\n      \"purchasable\": true,\n      \"in_stock\": false,\n      \"backorderable\": true,\n      \"available\": true,\n      \"description\": \"Architecto dignissimos nemo inventore incidunt enim. Odit accusamus repellat error saepe culpa unde eius. Cupiditate officiis voluptatem autem perferendis qui vitae omnis sunt. Debitis dolor tempore ad impedit itaque reprehenderit delectus. Doloremque laudantium iure recusandae iusto debitis laborum consequuntur. Impedit eum optio commodi tempora cum quidem. Facere voluptatum nam possimus veritatis nostrum explicabo dolore ex. Adipisci iure unde nobis itaque amet nesciunt voluptatibus impedit. Numquam in accusantium magni itaque exercitationem. Quas vero maxime voluptatem rem impedit inventore. Esse perferendis asperiores ea expedita aut tenetur soluta. Enim accusantium dolor adipisci impedit. Error maxime neque accusamus facere provident eum. Cum officia velit asperiores quod cupiditate fugiat. Possimus tenetur aut consequuntur iusto cumque quas. Ab velit ullam qui pariatur veritatis omnis. Accusantium vero occaecati explicabo neque animi commodi. Necessitatibus perspiciatis iste culpa totam quibusdam voluptate distinctio. Quod aliquam ut et autem. Saepe ut asperiores et quisquam perspiciatis molestiae. Vel recusandae sunt nemo et accusamus veniam ducimus. Laborum modi quasi perferendis culpa laboriosam quaerat magnam. Facere at tempora iusto ex magni aliquam modi debitis.\",\n      \"description_html\": \"Architecto dignissimos nemo inventore incidunt enim. Odit accusamus repellat error saepe culpa unde eius. Cupiditate officiis voluptatem autem perferendis qui vitae omnis sunt. Debitis dolor tempore ad impedit itaque reprehenderit delectus. Doloremque laudantium iure recusandae iusto debitis laborum consequuntur.\\nImpedit eum optio commodi tempora cum quidem. Facere voluptatum nam possimus veritatis nostrum explicabo dolore ex. Adipisci iure unde nobis itaque amet nesciunt voluptatibus impedit. Numquam in accusantium magni itaque exercitationem. Quas vero maxime voluptatem rem impedit inventore.\\nEsse perferendis asperiores ea expedita aut tenetur soluta. Enim accusantium dolor adipisci impedit. Error maxime neque accusamus facere provident eum. Cum officia velit asperiores quod cupiditate fugiat. Possimus tenetur aut consequuntur iusto cumque quas.\\nAb velit ullam qui pariatur veritatis omnis. Accusantium vero occaecati explicabo neque animi commodi. Necessitatibus perspiciatis iste culpa totam quibusdam voluptate distinctio. Quod aliquam ut et autem. Saepe ut asperiores et quisquam perspiciatis molestiae.\\nVel recusandae sunt nemo et accusamus veniam ducimus. Laborum modi quasi perferendis culpa laboriosam quaerat magnam. Facere at tempora iusto ex magni aliquam modi debitis.\",\n      \"default_variant_id\": \"variant_EfhxLZ9ck8\",\n      \"thumbnail_url\": null,\n      \"tags\": [],\n      \"price\": {\n        \"id\": \"price_EfhxLZ9ck8\",\n        \"amount\": \"19.99\",\n        \"amount_in_cents\": 1999,\n        \"compare_at_amount\": null,\n        \"compare_at_amount_in_cents\": null,\n        \"currency\": \"USD\",\n        \"display_amount\": \"$19.99\",\n        \"display_compare_at_amount\": null,\n        \"price_list_id\": null\n      },\n      \"original_price\": null\n    }\n  ],\n  \"meta\": {\n    \"page\": 1,\n    \"limit\": 25,\n    \"count\": 2,\n    \"pages\": 1,\n    \"from\": 1,\n    \"to\": 2,\n    \"in\": 2,\n    \"previous\": null,\n    \"next\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3fbb066-5b9e-404e-9d52-9e69656d2f08",
+              "name": "unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[name_cont]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[in_category]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[in_categories][]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[price_gte]",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "q[price_lte]",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "q[with_option_value_ids][]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[in_stock]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Publishable API key",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_token\",\n    \"message\": \"Valid API key required\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "32c83a3b-ce82-4c52-a087-fe4d469cff31",
+          "name": "Get a product",
+          "request": {
+            "name": "Get a product",
+            "description": {
+              "content": "Returns a single product by slug or prefix ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "store",
+                "products",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Comma-separated associations to expand"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include (e.g., name,slug,price). id is always included."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Product slug (e.g., spree-tote) or prefix ID (e.g., product_abc123)"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Publishable API key",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "36ced51d-2420-4733-b113-b52b71bbf40d",
+              "name": "product without prior_price expanded does not include field",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "products",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Product slug (e.g., spree-tote) or prefix ID (e.g., product_abc123)"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Publishable API key",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"prod_UkLWZg9DAJ\",\n  \"name\": \"Product 1702106\",\n  \"slug\": \"product-1702106\",\n  \"meta_title\": null,\n  \"meta_description\": null,\n  \"meta_keywords\": null,\n  \"variant_count\": 1,\n  \"available_on\": \"2025-05-26T16:14:24.749Z\",\n  \"purchasable\": true,\n  \"in_stock\": false,\n  \"backorderable\": true,\n  \"available\": true,\n  \"description\": \"A comfortable cotton t-shirt.\",\n  \"description_html\": \"<p>A <strong>comfortable</strong> cotton t-shirt.</p>\",\n  \"default_variant_id\": \"variant_gbHJdmfrXB\",\n  \"thumbnail_url\": null,\n  \"tags\": [],\n  \"price\": {\n    \"id\": \"price_gbHJdmfrXB\",\n    \"amount\": \"19.99\",\n    \"amount_in_cents\": 1999,\n    \"compare_at_amount\": null,\n    \"compare_at_amount_in_cents\": null,\n    \"currency\": \"USD\",\n    \"display_amount\": \"$19.99\",\n    \"display_compare_at_amount\": null,\n    \"price_list_id\": null\n  },\n  \"original_price\": null,\n  \"prior_price\": {\n    \"id\": \"_AXs1igzRC6\",\n    \"amount\": \"9.99\",\n    \"amount_in_cents\": 999,\n    \"currency\": \"USD\",\n    \"display_amount\": \"$9.99\",\n    \"recorded_at\": \"2026-05-11T16:14:24Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc938a35-5305-4e5f-a66d-54743cb2a802",
+              "name": "draft product not visible",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "products",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Product slug (e.g., spree-tote) or prefix ID (e.g., product_abc123)"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Publishable API key",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"record_not_found\",\n    \"message\": \"Product not found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "301db49e-b0a9-4a06-93f9-d682c79ee366",
+          "name": "Get product filters",
+          "request": {
+            "name": "Get product filters",
+            "description": {
+              "content": "Returns available filters for products with their options and counts.\nUse this endpoint to build filter UIs for product listing pages.\n\nThe filters are context-aware - when a category_id is provided, only filters\nrelevant to products in that category are returned.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "store",
+                "products",
+                "filters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "category_id",
+                  "value": "<string>",
+                  "description": "Scope filters to products in this category (prefix ID)"
+                },
+                {
+                  "disabled": false,
+                  "key": "q[name_cont]",
+                  "value": "<string>",
+                  "description": "Filter by name containing string"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Publishable API key",
+                "key": "x-spree-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-spree-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "36d5594e-ff23-4e2f-a5bd-9cb94a71dcde",
+              "name": "filters scoped to category",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "products",
+                    "filters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[name_cont]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Publishable API key",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"filters\": [\n    {\n      \"id\": \"price\",\n      \"type\": \"price_range\",\n      \"min\": 19.99,\n      \"max\": 19.99,\n      \"currency\": \"USD\"\n    },\n    {\n      \"id\": \"availability\",\n      \"type\": \"availability\",\n      \"options\": [\n        {\n          \"id\": \"in_stock\",\n          \"count\": 2\n        },\n        {\n          \"id\": \"out_of_stock\",\n          \"count\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"opt_UkLWZg9DAJ\",\n      \"type\": \"option\",\n      \"name\": \"size\",\n      \"label\": \"Size\",\n      \"kind\": \"dropdown\",\n      \"options\": [\n        {\n          \"id\": \"optval_UkLWZg9DAJ\",\n          \"name\": \"small\",\n          \"label\": \"S\",\n          \"position\": 1,\n          \"color_code\": null,\n          \"image_url\": null,\n          \"count\": 1\n        }\n      ]\n    },\n    {\n      \"id\": \"categories\",\n      \"type\": \"category\",\n      \"options\": [\n        {\n          \"id\": \"ctg_EfhxLZ9ck8\",\n          \"name\": \"Shirts\",\n          \"permalink\": \"taxonomy-27/taxon-34/shirts\",\n          \"count\": 2\n        }\n      ]\n    }\n  ],\n  \"sort_options\": [\n    {\n      \"id\": \"manual\"\n    },\n    {\n      \"id\": \"best_selling\"\n    },\n    {\n      \"id\": \"price\"\n    },\n    {\n      \"id\": \"-price\"\n    },\n    {\n      \"id\": \"-available_on\"\n    },\n    {\n      \"id\": \"available_on\"\n    },\n    {\n      \"id\": \"name\"\n    },\n    {\n      \"id\": \"-name\"\n    }\n  ],\n  \"default_sort\": \"manual\",\n  \"total_count\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8642119-7bdb-4cb2-9869-11ced70d9fba",
+              "name": "unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "store",
+                    "products",
+                    "filters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q[name_cont]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-spree-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Publishable API key",
+                    "key": "x-spree-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_token\",\n    \"message\": \"Valid API key required\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost:3000",
+      "key": "defaultHost"
+    },
+    {
+      "type": "string",
+      "value": "http://{{defaultHost}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ee088da8-ea16-4fa8-aaee-911ea293e77b",
+    "name": "Admin Account / Address Product Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n\n\nContact Support:\n Name: Spree Commerce\n Email: hello@spreecommerce.org",
+      "type": "text/plain"
+    }
+  }
+}

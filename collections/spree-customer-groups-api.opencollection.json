@@ -1,0 +1,229 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Admin Account / Address Customer Groups API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customer Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List customer groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/customer_groups",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page"
+              },
+              {
+                "name": "q[name_cont]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name (contains)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort by field. Prefix with `-` for descending (e.g., `-created_at`)."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include. id is always included."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the customer groups configured for the current store. Groups\nsegment customers for targeted promotions (see the `customer_group`\npromotion rule) and reporting. The list endpoint never embeds the\nmember list — fetch a single group with `?expand=customers` if you\nneed them inline, or query `/admin/customers?customer_group_id_in=…`\nfor paginated membership.\n\n\n**Required scope:** `read_customers` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Create a customer group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/admin/customer_groups",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a customer group in the current store. `customer_ids` is\noptional; when present, customers are attached at create time.\nPass prefixed IDs (e.g. `cus_…`) — the server decodes them\nautomatically.\n\n\n**Required scope:** `write_customers` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Get a customer group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/customer_groups/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer group prefixed ID"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated associations to embed. Supported: `customers`."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include. id is always included."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a single customer group. Pass `?expand=customers` to embed\nthe full member list inline (recommended only for single-record\nreads — embed cost scales with membership size).\n\n\n**Required scope:** `read_customers` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Update a customer group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://{defaultHost}/api/v3/admin/customer_groups/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer group prefixed ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates name, description, or membership. `customer_ids` is a\nfull-set replacement — the server reconciles the membership to\nmatch the array, adding new IDs and removing ones not present.\nSend `customer_ids: []` to clear all members.\n\n\n**Required scope:** `write_customers` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Delete a customer group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{defaultHost}/api/v3/admin/customer_groups/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer group prefixed ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Soft-deletes the group. Member users are not deleted; their `customer_group_users` rows are dropped.\n\n**Required scope:** `write_customers` (for API-key authentication)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

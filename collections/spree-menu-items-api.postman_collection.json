@@ -1,0 +1,1698 @@
+{
+  "item": [
+    {
+      "id": "96872fba-14bb-48f5-85f5-b371b497d9e0",
+      "name": "Menu Items",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9654ef0c-1d79-4e4e-8d11-6af357965cc6",
+          "name": "Return a list of Menu Items",
+          "request": {
+            "name": "Return a list of Menu Items",
+            "description": {
+              "content": "Returns a list of Menu Items",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "menu_items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[name_eq]",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1d2219ff-6d58-4850-8626-b476536bfad6",
+              "name": "Records returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "50"
+                    },
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    },
+                    {
+                      "key": "filter[name_eq]",
+                      "value": "T-Shirts"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"2\",\n      \"type\": \"menu_item\",\n      \"attributes\": {\n        \"name\": \"Link no. 1 To Somewhere\",\n        \"subtitle\": null,\n        \"destination\": null,\n        \"new_window\": false,\n        \"item_type\": \"Link\",\n        \"linked_resource_type\": \"Spree::Linkable::Uri\",\n        \"code\": null,\n        \"lft\": 2,\n        \"rgt\": 3,\n        \"depth\": 1,\n        \"created_at\": \"2022-11-08T19:34:23.401Z\",\n        \"updated_at\": \"2022-11-08T19:34:23.404Z\",\n        \"link\": null,\n        \"is_container\": false,\n        \"is_root\": false,\n        \"is_child\": true,\n        \"is_leaf\": true\n      },\n      \"relationships\": {\n        \"icon\": {\n          \"data\": {\n            \"id\": \"13\",\n            \"type\": \"icon\"\n          }\n        },\n        \"menu\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu\"\n          }\n        },\n        \"parent\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu_item\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": null\n        },\n        \"children\": {\n          \"data\": []\n        }\n      }\n    },\n    {\n      \"id\": \"3\",\n      \"type\": \"menu_item\",\n      \"attributes\": {\n        \"name\": \"Link no. 2 To Somewhere\",\n        \"subtitle\": null,\n        \"destination\": null,\n        \"new_window\": false,\n        \"item_type\": \"Link\",\n        \"linked_resource_type\": \"Spree::Linkable::Uri\",\n        \"code\": null,\n        \"lft\": 4,\n        \"rgt\": 5,\n        \"depth\": 1,\n        \"created_at\": \"2022-11-08T19:34:23.425Z\",\n        \"updated_at\": \"2022-11-08T19:34:23.428Z\",\n        \"link\": null,\n        \"is_container\": false,\n        \"is_root\": false,\n        \"is_child\": true,\n        \"is_leaf\": true\n      },\n      \"relationships\": {\n        \"icon\": {\n          \"data\": {\n            \"id\": \"14\",\n            \"type\": \"icon\"\n          }\n        },\n        \"menu\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu\"\n          }\n        },\n        \"parent\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu_item\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": null\n        },\n        \"children\": {\n          \"data\": []\n        }\n      }\n    },\n    {\n      \"id\": \"4\",\n      \"type\": \"menu_item\",\n      \"attributes\": {\n        \"name\": \"Link no. 3 To Somewhere\",\n        \"subtitle\": null,\n        \"destination\": null,\n        \"new_window\": false,\n        \"item_type\": \"Link\",\n        \"linked_resource_type\": \"Spree::Linkable::Uri\",\n        \"code\": null,\n        \"lft\": 6,\n        \"rgt\": 7,\n        \"depth\": 1,\n        \"created_at\": \"2022-11-08T19:34:23.446Z\",\n        \"updated_at\": \"2022-11-08T19:34:23.449Z\",\n        \"link\": null,\n        \"is_container\": false,\n        \"is_root\": false,\n        \"is_child\": true,\n        \"is_leaf\": true\n      },\n      \"relationships\": {\n        \"icon\": {\n          \"data\": {\n            \"id\": \"15\",\n            \"type\": \"icon\"\n          }\n        },\n        \"menu\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu\"\n          }\n        },\n        \"parent\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu_item\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": null\n        },\n        \"children\": {\n          \"data\": []\n        }\n      }\n    },\n    {\n      \"id\": \"5\",\n      \"type\": \"menu_item\",\n      \"attributes\": {\n        \"name\": \"Link no. 4 To Somewhere\",\n        \"subtitle\": null,\n        \"destination\": null,\n        \"new_window\": false,\n        \"item_type\": \"Link\",\n        \"linked_resource_type\": \"Spree::Linkable::Uri\",\n        \"code\": null,\n        \"lft\": 8,\n        \"rgt\": 9,\n        \"depth\": 1,\n        \"created_at\": \"2022-11-08T19:34:23.468Z\",\n        \"updated_at\": \"2022-11-08T19:34:23.471Z\",\n        \"link\": null,\n        \"is_container\": false,\n        \"is_root\": false,\n        \"is_child\": true,\n        \"is_leaf\": true\n      },\n      \"relationships\": {\n        \"icon\": {\n          \"data\": {\n            \"id\": \"16\",\n            \"type\": \"icon\"\n          }\n        },\n        \"menu\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu\"\n          }\n        },\n        \"parent\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu_item\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": null\n        },\n        \"children\": {\n          \"data\": []\n        }\n      }\n    },\n    {\n      \"id\": \"6\",\n      \"type\": \"menu_item\",\n      \"attributes\": {\n        \"name\": \"Link no. 5 To Somewhere\",\n        \"subtitle\": null,\n        \"destination\": null,\n        \"new_window\": false,\n        \"item_type\": \"Link\",\n        \"linked_resource_type\": \"Spree::Linkable::Uri\",\n        \"code\": null,\n        \"lft\": 10,\n        \"rgt\": 11,\n        \"depth\": 1,\n        \"created_at\": \"2022-11-08T19:34:23.491Z\",\n        \"updated_at\": \"2022-11-08T19:34:23.494Z\",\n        \"link\": null,\n        \"is_container\": false,\n        \"is_root\": false,\n        \"is_child\": true,\n        \"is_leaf\": true\n      },\n      \"relationships\": {\n        \"icon\": {\n          \"data\": {\n            \"id\": \"17\",\n            \"type\": \"icon\"\n          }\n        },\n        \"menu\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu\"\n          }\n        },\n        \"parent\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu_item\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": null\n        },\n        \"children\": {\n          \"data\": []\n        }\n      }\n    },\n    {\n      \"id\": \"7\",\n      \"type\": \"menu_item\",\n      \"attributes\": {\n        \"name\": \"Link no. 6 To Somewhere\",\n        \"subtitle\": null,\n        \"destination\": null,\n        \"new_window\": false,\n        \"item_type\": \"Link\",\n        \"linked_resource_type\": \"Spree::Linkable::Uri\",\n        \"code\": null,\n        \"lft\": 12,\n        \"rgt\": 13,\n        \"depth\": 1,\n        \"created_at\": \"2022-11-08T19:34:23.515Z\",\n        \"updated_at\": \"2022-11-08T19:34:23.518Z\",\n        \"link\": null,\n        \"is_container\": false,\n        \"is_root\": false,\n        \"is_child\": true,\n        \"is_leaf\": true\n      },\n      \"relationships\": {\n        \"icon\": {\n          \"data\": {\n            \"id\": \"18\",\n            \"type\": \"icon\"\n          }\n        },\n        \"menu\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu\"\n          }\n        },\n        \"parent\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu_item\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": null\n        },\n        \"children\": {\n          \"data\": []\n        }\n      }\n    },\n    {\n      \"id\": \"8\",\n      \"type\": \"menu_item\",\n      \"attributes\": {\n        \"name\": \"Link no. 7 To Somewhere\",\n        \"subtitle\": null,\n        \"destination\": null,\n        \"new_window\": false,\n        \"item_type\": \"Link\",\n        \"linked_resource_type\": \"Spree::Linkable::Uri\",\n        \"code\": null,\n        \"lft\": 14,\n        \"rgt\": 15,\n        \"depth\": 1,\n        \"created_at\": \"2022-11-08T19:34:23.535Z\",\n        \"updated_at\": \"2022-11-08T19:34:23.537Z\",\n        \"link\": null,\n        \"is_container\": false,\n        \"is_root\": false,\n        \"is_child\": true,\n        \"is_leaf\": true\n      },\n      \"relationships\": {\n        \"icon\": {\n          \"data\": {\n            \"id\": \"19\",\n            \"type\": \"icon\"\n          }\n        },\n        \"menu\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu\"\n          }\n        },\n        \"parent\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu_item\"\n          }\n        },\n        \"linked_resource\": {\n          \"data\": null\n        },\n        \"children\": {\n          \"data\": []\n        }\n      }\n    },\n    {\n      \"id\": \"1\",\n      \"type\": \"menu_item\",\n      \"attributes\": {\n        \"name\": \"Neque a rem deserunt beatae.\",\n        \"subtitle\": null,\n        \"destination\": null,\n        \"new_window\": false,\n        \"item_type\": \"Container\",\n        \"linked_resource_type\": \"Spree::Linkable::Uri\",\n        \"code\": null,\n        \"lft\": 1,\n        \"rgt\": 16,\n        \"depth\": 0,\n        \"created_at\": \"2022-11-08T19:34:23.379Z\",\n        \"updated_at\": \"2022-11-08T19:34:23.545Z\",\n        \"link\": null,\n        \"is_container\": true,\n        \"is_root\": true,\n        \"is_child\": false,\n        \"is_leaf\": false\n      },\n      \"relationships\": {\n        \"icon\": {\n          \"data\": null\n        },\n        \"menu\": {\n          \"data\": {\n            \"id\": \"1\",\n            \"type\": \"menu\"\n          }\n        },\n        \"parent\": {\n          \"data\": null\n        },\n        \"linked_resource\": {\n          \"data\": null\n        },\n        \"children\": {\n          \"data\": [\n            {\n              \"id\": \"2\",\n              \"type\": \"menu_item\"\n            },\n            {\n              \"id\": \"3\",\n              \"type\": \"menu_item\"\n            },\n            {\n              \"id\": \"4\",\n              \"type\": \"menu_item\"\n            },\n            {\n              \"id\": \"5\",\n              \"type\": \"menu_item\"\n            },\n            {\n              \"id\": \"6\",\n              \"type\": \"menu_item\"\n            },\n            {\n              \"id\": \"7\",\n              \"type\": \"menu_item\"\n            },\n            {\n              \"id\": \"8\",\n              \"type\": \"menu_item\"\n            }\n          ]\n        }\n      }\n    }\n  ],\n  \"meta\": {\n    \"count\": 8,\n    \"total_count\": 8,\n    \"total_pages\": 1\n  },\n  \"links\": {\n    \"self\": \"http://www.example.com/api/v2/platform/menu_items?page=1&per_page=&include=&filter[name_eq]=\",\n    \"next\": \"http://www.example.com/api/v2/platform/menu_items?filter%5Bname_eq%5D=&include=&page=1&per_page=\",\n    \"prev\": \"http://www.example.com/api/v2/platform/menu_items?filter%5Bname_eq%5D=&include=&page=1&per_page=\",\n    \"last\": \"http://www.example.com/api/v2/platform/menu_items?filter%5Bname_eq%5D=&include=&page=1&per_page=\",\n    \"first\": \"http://www.example.com/api/v2/platform/menu_items?filter%5Bname_eq%5D=&include=&page=1&per_page=\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "540d14c2-7ed0-4ff2-8115-bf4b12d1284f",
+              "name": "Authentication Failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "50"
+                    },
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    },
+                    {
+                      "key": "filter[name_eq]",
+                      "value": "T-Shirts"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The access token is invalid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ba239e5-a1cf-4474-820a-44706d013423",
+          "name": "Create a Menu Item",
+          "request": {
+            "name": "Create a Menu Item",
+            "description": {
+              "content": "Creates a Menu Item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "menu_items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"menu_item\": {\n    \"name\": \"<string>\",\n    \"menu_id\": \"<integer>\",\n    \"code\": \"<string>\",\n    \"subtitle\": \"<string>\",\n    \"destination\": \"<string>\",\n    \"new_window\": \"<boolean>\",\n    \"item_type\": \"<string>\",\n    \"linked_resource_type\": \"<string>\",\n    \"linked_resource_id\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "81d085da-164a-43e9-ba92-559c1af11022",
+              "name": "Record created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"name\": \"T-Shirts\",\n    \"menu_id\": 1,\n    \"code\": \"MEN-TS\",\n    \"subtitle\": \"Shop men's T-Shirts\",\n    \"destination\": \"https://getvendo.com\",\n    \"new_window\": \"<boolean>\",\n    \"item_type\": \"<string>\",\n    \"linked_resource_type\": \"<string>\",\n    \"linked_resource_id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"21\",\n    \"type\": \"menu_item\",\n    \"attributes\": {\n      \"name\": \"Link no. 18 To Somewhere\",\n      \"subtitle\": null,\n      \"destination\": null,\n      \"new_window\": false,\n      \"item_type\": \"Link\",\n      \"linked_resource_type\": \"Spree::Linkable::Uri\",\n      \"code\": null,\n      \"lft\": 8,\n      \"rgt\": 9,\n      \"depth\": 1,\n      \"created_at\": \"2022-11-08T19:34:24.333Z\",\n      \"updated_at\": \"2022-11-08T19:34:24.336Z\",\n      \"link\": null,\n      \"is_container\": false,\n      \"is_root\": false,\n      \"is_child\": true,\n      \"is_leaf\": true\n    },\n    \"relationships\": {\n      \"icon\": {\n        \"data\": null\n      },\n      \"menu\": {\n        \"data\": {\n          \"id\": \"3\",\n          \"type\": \"menu\"\n        }\n      },\n      \"parent\": {\n        \"data\": {\n          \"id\": \"17\",\n          \"type\": \"menu_item\"\n        }\n      },\n      \"linked_resource\": {\n        \"data\": null\n      },\n      \"children\": {\n        \"data\": []\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39ccf8da-5922-4a52-9bd3-0f3e0b9eb525",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"name\": \"T-Shirts\",\n    \"menu_id\": 1,\n    \"code\": \"MEN-TS\",\n    \"subtitle\": \"Shop men's T-Shirts\",\n    \"destination\": \"https://getvendo.com\",\n    \"new_window\": \"<boolean>\",\n    \"item_type\": \"<string>\",\n    \"linked_resource_type\": \"<string>\",\n    \"linked_resource_id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Name can't be blank, Menu can't be blank, and Item type is not included in the list\",\n  \"errors\": {\n    \"name\": [\n      \"can't be blank\"\n    ],\n    \"menu\": [\n      \"can't be blank\"\n    ],\n    \"item_type\": [\n      \"is not included in the list\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7044b6cd-cf7e-4c0b-bd6e-03aefe587979",
+          "name": "Return a Menu Item",
+          "request": {
+            "name": "Return a Menu Item",
+            "description": {
+              "content": "Returns a Menu Item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "menu_items",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "991c48df-db67-4461-abcd-3c9b5344aef3",
+              "name": "Record found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"30\",\n    \"type\": \"menu_item\",\n    \"attributes\": {\n      \"name\": \"Link no. 25 To Somewhere\",\n      \"subtitle\": null,\n      \"destination\": null,\n      \"new_window\": false,\n      \"item_type\": \"Link\",\n      \"linked_resource_type\": \"Spree::Linkable::Uri\",\n      \"code\": null,\n      \"lft\": 8,\n      \"rgt\": 9,\n      \"depth\": 1,\n      \"created_at\": \"2022-11-08T19:34:24.785Z\",\n      \"updated_at\": \"2022-11-08T19:34:24.788Z\",\n      \"link\": null,\n      \"is_container\": false,\n      \"is_root\": false,\n      \"is_child\": true,\n      \"is_leaf\": true\n    },\n    \"relationships\": {\n      \"icon\": {\n        \"data\": {\n          \"id\": \"36\",\n          \"type\": \"icon\"\n        }\n      },\n      \"menu\": {\n        \"data\": {\n          \"id\": \"5\",\n          \"type\": \"menu\"\n        }\n      },\n      \"parent\": {\n        \"data\": {\n          \"id\": \"26\",\n          \"type\": \"menu_item\"\n        }\n      },\n      \"linked_resource\": {\n        \"data\": null\n      },\n      \"children\": {\n        \"data\": []\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f04a6693-dc6c-46f7-8b35-55c3dce71cba",
+              "name": "Authentication Failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The access token is invalid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7caaa2e0-9fb4-443f-b27d-1332cd185a59",
+              "name": "Record not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The resource you were looking for could not be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8d6502f5-06a1-443e-9007-92c46446a4c8",
+          "name": "Update a Menu Item",
+          "request": {
+            "name": "Update a Menu Item",
+            "description": {
+              "content": "Updates a Menu Item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "menu_items",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Select which associated resources you would like to fetch, see: <a href=\"https://jsonapi.org/format/#fetching-includes\">https://jsonapi.org/format/#fetching-includes</a>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"menu_item\": {\n    \"name\": \"<string>\",\n    \"code\": \"<string>\",\n    \"subtitle\": \"<string>\",\n    \"destination\": \"<string>\",\n    \"menu_id\": \"<integer>\",\n    \"new_window\": \"<boolean>\",\n    \"item_type\": \"<string>\",\n    \"linked_resource_type\": \"<string>\",\n    \"linked_resource_id\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92335e97-a166-4ee3-9e8e-dd5fa675a783",
+              "name": "Record updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"name\": \"T-Shirts\",\n    \"code\": \"MEN-TS\",\n    \"subtitle\": \"Shop men's T-Shirts\",\n    \"destination\": \"https://getvendo.com\",\n    \"menu_id\": 1,\n    \"new_window\": \"<boolean>\",\n    \"item_type\": \"<string>\",\n    \"linked_resource_type\": \"<string>\",\n    \"linked_resource_id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"44\",\n    \"type\": \"menu_item\",\n    \"attributes\": {\n      \"name\": \"Menu Item One\",\n      \"subtitle\": null,\n      \"destination\": null,\n      \"new_window\": false,\n      \"item_type\": \"Link\",\n      \"linked_resource_type\": \"Spree::Linkable::Uri\",\n      \"code\": null,\n      \"lft\": 8,\n      \"rgt\": 9,\n      \"depth\": 1,\n      \"created_at\": \"2022-11-08T19:34:25.609Z\",\n      \"updated_at\": \"2022-11-08T19:34:25.857Z\",\n      \"link\": null,\n      \"is_container\": false,\n      \"is_root\": false,\n      \"is_child\": true,\n      \"is_leaf\": true\n    },\n    \"relationships\": {\n      \"icon\": {\n        \"data\": {\n          \"id\": \"47\",\n          \"type\": \"icon\"\n        }\n      },\n      \"menu\": {\n        \"data\": {\n          \"id\": \"8\",\n          \"type\": \"menu\"\n        }\n      },\n      \"parent\": {\n        \"data\": {\n          \"id\": \"40\",\n          \"type\": \"menu_item\"\n        }\n      },\n      \"linked_resource\": {\n        \"data\": null\n      },\n      \"children\": {\n        \"data\": []\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fb09aa1-3353-434b-b40b-496648a699d2",
+              "name": "Authentication Failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"name\": \"T-Shirts\",\n    \"code\": \"MEN-TS\",\n    \"subtitle\": \"Shop men's T-Shirts\",\n    \"destination\": \"https://getvendo.com\",\n    \"menu_id\": 1,\n    \"new_window\": \"<boolean>\",\n    \"item_type\": \"<string>\",\n    \"linked_resource_type\": \"<string>\",\n    \"linked_resource_id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The access token is invalid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6551d2fd-1d3c-4bb3-aee1-4f31c88d670e",
+              "name": "Record not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"name\": \"T-Shirts\",\n    \"code\": \"MEN-TS\",\n    \"subtitle\": \"Shop men's T-Shirts\",\n    \"destination\": \"https://getvendo.com\",\n    \"menu_id\": 1,\n    \"new_window\": \"<boolean>\",\n    \"item_type\": \"<string>\",\n    \"linked_resource_type\": \"<string>\",\n    \"linked_resource_id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The resource you were looking for could not be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8706d38-aba9-480c-afef-c811574a2c00",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "menu,icon,parent,children,linked_resource"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"name\": \"T-Shirts\",\n    \"code\": \"MEN-TS\",\n    \"subtitle\": \"Shop men's T-Shirts\",\n    \"destination\": \"https://getvendo.com\",\n    \"menu_id\": 1,\n    \"new_window\": \"<boolean>\",\n    \"item_type\": \"<string>\",\n    \"linked_resource_type\": \"<string>\",\n    \"linked_resource_id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Name can't be blank\",\n  \"errors\": {\n    \"name\": [\n      \"can't be blank\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf86ebe0-6111-4383-9ca7-b8481bc8e31f",
+          "name": "Delete a Menu Item",
+          "request": {
+            "name": "Delete a Menu Item",
+            "description": {
+              "content": "Deletes a Menu Item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "menu_items",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a082963d-50df-4bc3-a5aa-67071a50a81e",
+              "name": "Record deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "80d4316d-8862-46f8-9969-2d2d5660aa5f",
+              "name": "Authentication Failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The access token is invalid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31db0a7b-dde3-4d30-ad61-012a01c11c87",
+              "name": "Record not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The resource you were looking for could not be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ec4cce5-72d8-480d-acfa-d7aebbb11ea8",
+          "name": "Reposition a Menu Item",
+          "request": {
+            "name": "Reposition a Menu Item",
+            "description": {
+              "content": "Reposition a Menu Item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "platform",
+                "menu_items",
+                ":id",
+                "reposition"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{defaultHost}}",
+                  "key": "defaultHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"menu_item\": {\n    \"new_parent_id\": \"<integer>\",\n    \"new_position_idx\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bf7e5cc1-fa5c-440b-b6b9-2a28cf808a13",
+              "name": "Record updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id",
+                    "reposition"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"new_parent_id\": 1,\n    \"new_position_idx\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"77\",\n    \"type\": \"menu_item\",\n    \"attributes\": {\n      \"name\": \"Link no. 62 To Somewhere\",\n      \"subtitle\": null,\n      \"destination\": null,\n      \"new_window\": false,\n      \"item_type\": \"Link\",\n      \"linked_resource_type\": \"Spree::Linkable::Uri\",\n      \"code\": null,\n      \"lft\": 5,\n      \"rgt\": 6,\n      \"depth\": 2,\n      \"created_at\": \"2022-11-08T19:34:27.610Z\",\n      \"updated_at\": \"2022-11-08T19:34:27.858Z\",\n      \"link\": null,\n      \"is_container\": false,\n      \"is_root\": false,\n      \"is_child\": true,\n      \"is_leaf\": true\n    },\n    \"relationships\": {\n      \"icon\": {\n        \"data\": {\n          \"id\": \"73\",\n          \"type\": \"icon\"\n        }\n      },\n      \"menu\": {\n        \"data\": {\n          \"id\": \"15\",\n          \"type\": \"menu\"\n        }\n      },\n      \"parent\": {\n        \"data\": {\n          \"id\": \"75\",\n          \"type\": \"menu_item\"\n        }\n      },\n      \"linked_resource\": {\n        \"data\": null\n      },\n      \"children\": {\n        \"data\": []\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab857b20-26ad-45b7-9769-9de7779e5c8b",
+              "name": "Authentication Failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id",
+                    "reposition"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"new_parent_id\": 1,\n    \"new_position_idx\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The access token is invalid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd1acd82-f401-4b45-91f1-c159b999a7e0",
+              "name": "Record not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "platform",
+                    "menu_items",
+                    ":id",
+                    "reposition"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{defaultHost}}",
+                      "key": "defaultHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"new_parent_id\": 1,\n    \"new_position_idx\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The resource you were looking for could not be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost:3000",
+      "key": "defaultHost"
+    },
+    {
+      "type": "string",
+      "value": "http://{{defaultHost}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "07172b23-e975-49ff-89d5-ad90260bd7a2",
+    "name": "Admin Account / Address Menu Items API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n\n\nContact Support:\n Name: Spree Commerce\n Email: hello@spreecommerce.org",
+      "type": "text/plain"
+    }
+  }
+}

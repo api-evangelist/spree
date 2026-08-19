@@ -1,0 +1,223 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Admin Account / Address Allowed Origins API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Allowed Origins",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List allowed origins",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/allowed_origins",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page"
+              },
+              {
+                "name": "q[origin_cont]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by origin (contains)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort by field. Prefix with `-` for descending (e.g., `-created_at`)."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include. id is always included."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the CORS allowlist for the current store. Each entry is a\nbare `scheme://host[:port]` permitted to call the admin API from a\nbrowser. Backs the `Rack::Cors` allowlist and the CSRF boundary of\nthe admin cookie session (see\n`docs/plans/5.5-admin-auth-cookie-refresh.md`).\n\n\n**Required scope:** `read_settings` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Create an allowed origin",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/admin/allowed_origins",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Adds an origin to the admin CORS allowlist. The value must be a bare\n`scheme://host[:port]` (no path, query, or fragment) and use `http` or\n`https`.\n\n\n**Required scope:** `write_settings` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Get an allowed origin",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/allowed_origins/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Allowed origin ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include. id is always included."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a single allowed origin by prefixed ID.\n\n**Required scope:** `read_settings` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Update an allowed origin",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://{defaultHost}/api/v3/admin/allowed_origins/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Allowed origin ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates an existing allowed origin.\n\n**Required scope:** `write_settings` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Delete an allowed origin",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{defaultHost}/api/v3/admin/allowed_origins/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Allowed origin ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removes an origin from the admin CORS allowlist. After deletion the\nadmin SPA running at that origin will no longer be able to call the\nadmin API from a browser.\n\n\n**Required scope:** `write_settings` (for API-key authentication)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

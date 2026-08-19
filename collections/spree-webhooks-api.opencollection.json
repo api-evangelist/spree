@@ -1,0 +1,497 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Admin Account / Address Webhooks API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List webhook deliveries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints/:webhook_endpoint_id/deliveries",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhook_endpoint_id",
+                "value": "",
+                "type": "path",
+                "description": "Parent webhook endpoint ID"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page"
+              },
+              {
+                "name": "q[event_name_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by event name (exact)"
+              },
+              {
+                "name": "q[success_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by success flag"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort by field. Prefix with `-` for descending (e.g., `-delivered_at`)."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include. id is always included."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns delivery attempts for the given endpoint, most recent first.\nEach row carries the original request payload, the response code\n(when the receiver replied), the execution time, and any transport\nerror — everything needed to audit failures and decide whether to\nredeliver.\n\n\n**Required scope:** `read_webhooks` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Get a webhook delivery",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints/:webhook_endpoint_id/deliveries/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhook_endpoint_id",
+                "value": "",
+                "type": "path",
+                "description": "Parent webhook endpoint ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook delivery ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include. id is always included."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a single delivery attempt with the full request payload and\nthe response body the receiver returned. Use this for ad-hoc debug\nof failed deliveries.\n\n\n**Required scope:** `read_webhooks` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Redeliver a webhook delivery",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints/:webhook_endpoint_id/deliveries/:id/redeliver",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhook_endpoint_id",
+                "value": "",
+                "type": "path",
+                "description": "Parent webhook endpoint ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook delivery ID to redeliver"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new delivery row with the same payload + event_name and\nqueues it. The original row is preserved for audit history.\n\n\n**Required scope:** `write_webhooks` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "List webhook endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page"
+              },
+              {
+                "name": "q[name_cont]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name (contains)"
+              },
+              {
+                "name": "q[url_cont]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by URL (contains)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort by field. Prefix with `-` for descending (e.g., `-created_at`)."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include. id is always included."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns outbound webhook subscriptions for the current store. Each\nendpoint receives a signed POST when any subscribed event fires.\n`secret_key` is `null` on list reads — the plaintext is delivered\nexactly once on create.\n\n\n**Required scope:** `read_webhooks` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Create a webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new outbound webhook subscription. The plaintext\n`secret_key` is returned **once** in this response — persist it\nimmediately to verify incoming webhook signatures. Subsequent reads\nreturn `null` for the secret. Pass an empty `subscriptions` array or\nomit it to receive every event.\n\n\n**Required scope:** `write_webhooks` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Get a webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include. id is always included."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a single webhook endpoint by prefixed ID.\n\n**Required scope:** `read_webhooks` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Update a webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates name, URL, active flag, or the event subscription list.\nToggling `active` here is equivalent to calling `disable`/`enable`\nwithout an audit reason.\n\n\n**Required scope:** `write_webhooks` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Delete a webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints/:id",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Soft-deletes the endpoint and stops future deliveries.\n\n**Required scope:** `write_webhooks` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Send a test delivery",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints/:id/send_test",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a `webhook.test` delivery record and queues it. Use this to\nverify the endpoint is reachable and your signature verification\naccepts Spree's payloads.\n\n\n**Required scope:** `write_webhooks` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Re-enable a webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints/:id/enable",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Re-enables an endpoint that was manually or automatically disabled.\n\n**Required scope:** `write_webhooks` (for API-key authentication)."
+        },
+        {
+          "info": {
+            "name": "Disable a webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://{defaultHost}/api/v3/admin/webhook_endpoints/:id/disable",
+            "headers": [
+              {
+                "name": "x-spree-api-key",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-spree-api-key",
+              "value": "{{x-spree-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Manually pauses an endpoint. Unlike auto-disable (triggered after\nrepeated delivery failures), no notification email is sent.\n\n\n**Required scope:** `write_webhooks` (for API-key authentication)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
