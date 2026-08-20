@@ -23,6 +23,16 @@ specificationVersion: '0.23'
 tags:
   - E-Commerce
   - Headless Commerce
+  - Product
+  - Order
+  - Inventory
+  - Payments
+  - Promotions
+  - Open-Source
+  - Ruby on Rails
+tags_raw:
+  - E-Commerce
+  - Headless Commerce
   - Products
   - Orders
   - Inventory
@@ -134,6 +144,8 @@ apis:
   humanURL: https://spreecommerce.org/docs/api-reference/introduction
   baseURL: https://yourdomain.com/api/v3/store
   tags:
+  - APIKeys
+  tags_raw:
   - API Keys
   properties:
   - type: OpenAPI
@@ -206,6 +218,8 @@ apis:
   humanURL: https://spreecommerce.org/docs/api-reference/introduction
   baseURL: https://yourdomain.com/api/v3/store
   tags:
+  - Cart
+  tags_raw:
   - Carts
   properties:
   - type: OpenAPI
@@ -438,6 +452,8 @@ apis:
   humanURL: https://spreecommerce.org/docs/api-reference/introduction
   baseURL: https://yourdomain.com/api/v3/store
   tags:
+  - Export
+  tags_raw:
   - Exports
   properties:
   - type: OpenAPI
@@ -570,6 +586,8 @@ apis:
   humanURL: https://spreecommerce.org/docs/api-reference/introduction
   baseURL: https://yourdomain.com/api/v3/store
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -666,6 +684,8 @@ apis:
   humanURL: https://spreecommerce.org/docs/api-reference/introduction
   baseURL: https://yourdomain.com/api/v3/store
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -933,6 +953,8 @@ apis:
   humanURL: https://spreecommerce.org/docs/api-reference/introduction
   baseURL: https://yourdomain.com/api/v3/store
   tags:
+  - taxonomies
+  tags_raw:
   - Taxonomies
   properties:
   - type: OpenAPI
@@ -957,6 +979,8 @@ apis:
   humanURL: https://spreecommerce.org/docs/api-reference/introduction
   baseURL: https://yourdomain.com/api/v3/store
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -1018,6 +1042,8 @@ apis:
   humanURL: https://spreecommerce.org/docs/api-reference/introduction
   baseURL: https://yourdomain.com/api/v3/store
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
