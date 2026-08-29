@@ -2,6 +2,18 @@ aid: spree
 name: Spree Commerce
 description: Open-source headless e-commerce framework with a REST API for managing products, variants, orders, customers, inventory, promotions, and payment processing. Spree provides two OpenAPI 3.0-documented APIs — a Store API for customer-facing operations and an Admin API for back-office management — along with a TypeScript SDK, CLI, and Next.js storefront starter.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -1100,6 +1112,9 @@ apis:
   - type: Documentation
     url: https://spreecommerce.org/docs/api-reference/introduction
 common:
+  - type: CapabilityMap
+    url: capabilities/spree-capability-edges.yml
+    name: Spree Commerce Business Capability Map
   - type: AgenticAccess
     url: agentic-access/spree-agentic-access.yml
   - type: DomainSecurity
