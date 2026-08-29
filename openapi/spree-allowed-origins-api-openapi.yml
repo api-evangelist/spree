@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Admin Account / Address Allowed Origins API
+  title: Admin Allowed Origins API
   contact:
     name: Spree Commerce
     url: https://spreecommerce.org
@@ -371,6 +371,43 @@ components:
       - created_at
       - updated_at
       x-typelizer: true
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type:
+              - object
+              - 'null'
+              description: Field-specific validation errors
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
     PaginationMeta:
       type: object
       properties:
@@ -401,13 +438,15 @@ components:
           example: 25
           description: Number of records on this page
         previous:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: null
           description: Previous page number
         next:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: 2
           description: Next page number
       required:
@@ -418,42 +457,6 @@ components:
       - from
       - to
       - in
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              example: record_not_found
-            message:
-              type: string
-              example: Record not found
-            details:
-              type: object
-              description: Field-specific validation errors
-              nullable: true
-              example:
-                name:
-                - is too short
-                - is required
-                email:
-                - is invalid
-          required:
-          - code
-          - message
-      required:
-      - error
-      example:
-        error:
-          code: validation_error
-          message: Validation failed
-          details:
-            name:
-            - is too short
-            email:
-            - is invalid
   securitySchemes:
     api_key:
       type: apiKey

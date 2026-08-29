@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Admin Account / Address Settings API
+  title: Admin Settings API
   contact:
     name: Spree Commerce
     url: https://spreecommerce.org
@@ -405,6 +405,43 @@ paths:
                   message: taggable_type must be one of Spree::Product, Spree::Order, Spree::LegacyUser
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type:
+              - object
+              - 'null'
+              description: Field-specific validation errors
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
     Store:
       type: object
       properties:
@@ -419,19 +456,23 @@ components:
         default_locale:
           type: string
         mail_from_address:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         customer_support_email:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         new_order_notifications_email:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         preferred_send_consumer_transactional_emails:
           type: boolean
         preferred_admin_locale:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         preferred_timezone:
           type: string
         preferred_weight_unit:
@@ -453,11 +494,13 @@ components:
           items:
             type: string
         logo_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         mailer_logo_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - id
       - metadata
@@ -530,13 +573,15 @@ components:
           example: 25
           description: Number of records on this page
         previous:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: null
           description: Previous page number
         next:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: 2
           description: Next page number
       required:
@@ -547,42 +592,6 @@ components:
       - from
       - to
       - in
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              example: record_not_found
-            message:
-              type: string
-              example: Record not found
-            details:
-              type: object
-              description: Field-specific validation errors
-              nullable: true
-              example:
-                name:
-                - is too short
-                - is required
-                email:
-                - is invalid
-          required:
-          - code
-          - message
-      required:
-      - error
-      example:
-        error:
-          code: validation_error
-          message: Validation failed
-          details:
-            name:
-            - is too short
-            email:
-            - is invalid
   securitySchemes:
     api_key:
       type: apiKey

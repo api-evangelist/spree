@@ -1,12 +1,12 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Admin Account / Address Markets API
+  title: Spree Markets API
+  version: v3
   contact:
     name: Spree Commerce
     url: https://spreecommerce.org
     email: hello@spreecommerce.org
-  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
-  version: v3
+  description: 'Operations tagged Markets across 2 of this provider''s published API definitions: spree-admin-api.yaml, spree-store-api.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: http://{defaultHost}
   variables:
@@ -227,6 +227,11 @@ paths:
               - currency
               - default_locale
               - country_isos
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/admin/markets/{id}:
     parameters:
     - name: id
@@ -429,6 +434,11 @@ paths:
                 error:
                   code: validation_error
                   message: Market cannot be deleted
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/store/countries:
     get:
       summary: List countries
@@ -489,6 +499,11 @@ paths:
                   message: Valid API key required
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/store/countries/{iso}:
     get:
       summary: Get a country
@@ -559,6 +574,11 @@ paths:
                   message: Country not found
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/store/currencies:
     get:
       summary: List supported currencies
@@ -615,6 +635,11 @@ paths:
                   message: Valid API key required
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/store/locales:
     get:
       summary: List supported locales
@@ -669,6 +694,11 @@ paths:
                   message: Valid API key required
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/store/markets:
     get:
       summary: List markets
@@ -758,6 +788,11 @@ paths:
                   message: Valid API key required
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/store/markets/{id}:
     get:
       summary: Get a market
@@ -830,6 +865,11 @@ paths:
                   message: Market not found
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/store/markets/resolve:
     get:
       summary: Resolve market by country
@@ -902,6 +942,11 @@ paths:
                   message: Country not found
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/store/markets/{market_id}/countries:
     get:
       summary: List countries in a market
@@ -956,6 +1001,11 @@ paths:
                     type: array
                 required:
                 - data
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/store/markets/{market_id}/countries/{id}:
     get:
       summary: Get a country in a market
@@ -1015,8 +1065,192 @@ paths:
                   message: Country not found
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
 components:
   schemas:
+    Market:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        currency:
+          type: string
+        default_locale:
+          type: string
+        tax_inclusive:
+          type: boolean
+        default:
+          type: boolean
+        country_isos:
+          type: array
+          items:
+            type: string
+        supported_locales:
+          type: array
+          items:
+            type: string
+        countries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Country'
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - id
+      - name
+      - currency
+      - default_locale
+      - tax_inclusive
+      - default
+      - country_isos
+      - supported_locales
+      - created_at
+      - updated_at
+      x-typelizer: true
+    Country:
+      type: object
+      properties:
+        iso:
+          type: string
+        iso3:
+          type: string
+        name:
+          type: string
+        states_required:
+          type: boolean
+        zipcode_required:
+          type: boolean
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/State'
+        market:
+          allOf:
+          - $ref: '#/components/schemas/Market'
+        created_at:
+          type: object
+        updated_at:
+          type: object
+      required:
+      - iso
+      - iso3
+      - name
+      - states_required
+      - zipcode_required
+      - created_at
+      - updated_at
+      x-typelizer: true
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 25
+        count:
+          type: integer
+          example: 100
+          description: Total number of records
+        pages:
+          type: integer
+          example: 4
+          description: Total number of pages
+        from:
+          type: integer
+          example: 1
+          description: Index of first record on this page
+        to:
+          type: integer
+          example: 25
+          description: Index of last record on this page
+        in:
+          type: integer
+          example: 25
+          description: Number of records on this page
+        previous:
+          type:
+          - integer
+          - 'null'
+          example: null
+          description: Previous page number
+        next:
+          type:
+          - integer
+          - 'null'
+          example: 2
+          description: Next page number
+      required:
+      - page
+      - limit
+      - count
+      - pages
+      - from
+      - to
+      - in
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: record_not_found
+            message:
+              type: string
+              example: Record not found
+            details:
+              type:
+              - object
+              - 'null'
+              description: Field-specific validation errors
+              example:
+                name:
+                - is too short
+                - is required
+                email:
+                - is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      example:
+        error:
+          code: validation_error
+          message: Validation failed
+          details:
+            name:
+            - is too short
+            email:
+            - is invalid
+    State:
+      type: object
+      properties:
+        abbr:
+          type: string
+        name:
+          type: string
+        created_at:
+          type: object
+        updated_at:
+          type: object
+      required:
+      - abbr
+      - name
+      - created_at
+      - updated_at
+      x-typelizer: true
     Market_2:
       type: object
       properties:
@@ -1088,30 +1322,12 @@ components:
         market:
           allOf:
           - $ref: '#/components/schemas/Market_2'
-          nullable: true
       required:
       - iso
       - iso3
       - name
       - states_required
       - zipcode_required
-      x-typelizer: true
-    State:
-      type: object
-      properties:
-        abbr:
-          type: string
-        name:
-          type: string
-        created_at:
-          type: object
-        updated_at:
-          type: object
-      required:
-      - abbr
-      - name
-      - created_at
-      - updated_at
       x-typelizer: true
     Locale:
       type: object
@@ -1124,132 +1340,6 @@ components:
       - code
       - name
       x-typelizer: true
-    Market:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        currency:
-          type: string
-        default_locale:
-          type: string
-        tax_inclusive:
-          type: boolean
-        default:
-          type: boolean
-        country_isos:
-          type: array
-          items:
-            type: string
-        supported_locales:
-          type: array
-          items:
-            type: string
-        countries:
-          type: array
-          items:
-            $ref: '#/components/schemas/Country'
-        created_at:
-          type: string
-        updated_at:
-          type: string
-      required:
-      - id
-      - name
-      - currency
-      - default_locale
-      - tax_inclusive
-      - default
-      - country_isos
-      - supported_locales
-      - created_at
-      - updated_at
-      x-typelizer: true
-    PaginationMeta:
-      type: object
-      properties:
-        page:
-          type: integer
-          example: 1
-        limit:
-          type: integer
-          example: 25
-        count:
-          type: integer
-          example: 100
-          description: Total number of records
-        pages:
-          type: integer
-          example: 4
-          description: Total number of pages
-        from:
-          type: integer
-          example: 1
-          description: Index of first record on this page
-        to:
-          type: integer
-          example: 25
-          description: Index of last record on this page
-        in:
-          type: integer
-          example: 25
-          description: Number of records on this page
-        previous:
-          type: integer
-          nullable: true
-          example: null
-          description: Previous page number
-        next:
-          type: integer
-          nullable: true
-          example: 2
-          description: Next page number
-      required:
-      - page
-      - limit
-      - count
-      - pages
-      - from
-      - to
-      - in
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              example: record_not_found
-            message:
-              type: string
-              example: Record not found
-            details:
-              type: object
-              description: Field-specific validation errors
-              nullable: true
-              example:
-                name:
-                - is too short
-                - is required
-                email:
-                - is invalid
-          required:
-          - code
-          - message
-      required:
-      - error
-      example:
-        error:
-          code: validation_error
-          message: Validation failed
-          details:
-            name:
-            - is too short
-            email:
-            - is invalid
     State_2:
       type: object
       properties:
@@ -1260,40 +1350,6 @@ components:
       required:
       - abbr
       - name
-      x-typelizer: true
-    Country:
-      type: object
-      properties:
-        iso:
-          type: string
-        iso3:
-          type: string
-        name:
-          type: string
-        states_required:
-          type: boolean
-        zipcode_required:
-          type: boolean
-        states:
-          type: array
-          items:
-            $ref: '#/components/schemas/State'
-        market:
-          allOf:
-          - $ref: '#/components/schemas/Market'
-          nullable: true
-        created_at:
-          type: object
-        updated_at:
-          type: object
-      required:
-      - iso
-      - iso3
-      - name
-      - states_required
-      - zipcode_required
-      - created_at
-      - updated_at
       x-typelizer: true
   securitySchemes:
     api_key:
@@ -1306,6 +1362,9 @@ components:
       scheme: bearer
       bearerFormat: JWT
       description: JWT token for admin user authentication
+x-refined-from:
+- spree-admin-api.yaml
+- spree-store-api.yaml
 x-tagGroups:
 - name: Authentication
   tags:

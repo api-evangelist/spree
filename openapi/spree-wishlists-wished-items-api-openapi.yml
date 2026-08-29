@@ -1,17 +1,23 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Admin Account / Address Wishlists / Wished Items API
+  version: 2.0.0
+  title: Storefront Wishlists / Wished Items API
+  description: 'Storefront API is a modern REST API based on the [JSON API spec](https://jsonapi.org/) which provides you with all the necessary endpoints to build amazing user interfaces either in JavaScript frameworks or native mobile libraries.
+
+
+    Import to [Postman](https://raw.githubusercontent.com/spree/spree/main/docs/api-reference/storefront.yaml)'
   contact:
-    name: Spree Commerce
+    name: Vendo Connect Inc.
     url: https://spreecommerce.org
     email: hello@spreecommerce.org
-  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
-  version: v3
+  license:
+    name: BSD-3-Clause
+    url: https://github.com/spree/spree/blob/main/LICENSE.md
 servers:
-- url: http://{defaultHost}
-  variables:
-    defaultHost:
-      default: localhost:3000
+- url: https://demo.spreecommerce.org
+  description: demo
+- url: http://localhost:3000
+  description: localhost
 tags:
 - name: Wishlists / Wished Items
 paths:
@@ -224,107 +230,6 @@ paths:
       - Wishlists / Wished Items
 components:
   schemas:
-    Relation:
-      type: object
-      nullable: true
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-      required:
-      - id
-      - type
-      x-internal: false
-      description: ''
-    WishedItem:
-      type: object
-      x-internal: false
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          default: wished_item
-        attributes:
-          type: object
-          properties:
-            quantity:
-              type: integer
-            price:
-              type: string
-            total:
-              type: string
-            display_price:
-              type: string
-            display_total:
-              type: string
-        relationships:
-          type: object
-          properties:
-            variant:
-              type: object
-              properties:
-                data:
-                  $ref: '#/components/schemas/Relation'
-      required:
-      - id
-      - type
-      - attributes
-      - relationships
-    Wishlist:
-      description: ''
-      type: object
-      title: Wishlist
-      x-internal: false
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          default: wishlist
-        attributes:
-          type: object
-          properties:
-            token:
-              type: string
-            name:
-              type: string
-            is_private:
-              type: boolean
-            is_default:
-              type: boolean
-            variant_included:
-              type: boolean
-              description: Returns `true` or `false` depending on the variant ID passed in through the `is_variant_included` query param.
-        relationships:
-          type: object
-          properties:
-            wished_items:
-              type: object
-              properties:
-                data:
-                  type: array
-                  items:
-                    allOf:
-                    - $ref: '#/components/schemas/Relation'
-      required:
-      - id
-      - type
-      - attributes
-      - relationships
-    WishlistIncludes:
-      x-internal: false
-      title: Wishlist Includes
-      allOf:
-      - $ref: '#/components/schemas/WishedItem'
-    Error:
-      x-internal: false
-      title: Error
-      type: object
-      properties:
-        error:
-          type: string
     Variant:
       title: Variant
       description: 'Variant records track the individual variants of a Product. Variants are of two types: master variants and normal variants.'
@@ -354,21 +259,25 @@ components:
               type: string
               example: $15.99
             weight:
-              type: string
+              type:
+              - string
+              - 'null'
               example: '10'
-              nullable: true
             height:
-              type: string
+              type:
+              - string
+              - 'null'
               example: '10'
-              nullable: true
             width:
-              type: string
+              type:
+              - string
+              - 'null'
               example: '10'
-              nullable: true
             depth:
-              type: string
+              type:
+              - string
+              - 'null'
               example: '10'
-              nullable: true
             is_master:
               type: boolean
               description: Indicates if Variant is the master Variant
@@ -421,12 +330,141 @@ components:
       - type
       - attributes
       - relationships
+    Error:
+      x-internal: false
+      title: Error
+      type: object
+      properties:
+        error:
+          type: string
+    WishedItem:
+      type: object
+      x-internal: false
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          default: wished_item
+        attributes:
+          type: object
+          properties:
+            quantity:
+              type: integer
+            price:
+              type: string
+            total:
+              type: string
+            display_price:
+              type: string
+            display_total:
+              type: string
+        relationships:
+          type: object
+          properties:
+            variant:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/Relation'
+      required:
+      - id
+      - type
+      - attributes
+      - relationships
+    Relation:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+      required:
+      - id
+      - type
+      x-internal: false
+      description: ''
+    Wishlist:
+      description: ''
+      type: object
+      title: Wishlist
+      x-internal: false
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          default: wishlist
+        attributes:
+          type: object
+          properties:
+            token:
+              type: string
+            name:
+              type: string
+            is_private:
+              type: boolean
+            is_default:
+              type: boolean
+            variant_included:
+              type: boolean
+              description: Returns `true` or `false` depending on the variant ID passed in through the `is_variant_included` query param.
+        relationships:
+          type: object
+          properties:
+            wished_items:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    allOf:
+                    - $ref: '#/components/schemas/Relation'
+      required:
+      - id
+      - type
+      - attributes
+      - relationships
     WishedItemIncludes:
       x-internal: false
       title: Wished Item Includes
       allOf:
       - $ref: '#/components/schemas/Variant'
+    WishlistIncludes:
+      x-internal: false
+      title: Wishlist Includes
+      allOf:
+      - $ref: '#/components/schemas/WishedItem'
   responses:
+    403Forbidden:
+      description: 403 Forbidden - You are not authorized to access this page.
+      content:
+        application/vnd.api+json:
+          schema:
+            properties:
+              error:
+                type: string
+                example: You are not authorized to access this page.
+                default: You are not authorized to access this page.
+          examples:
+            403 Example:
+              value:
+                error: You are not authorized to access this page.
+    422UnprocessableEntity:
+      description: 422 Unprocessable Entity
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            422 Example:
+              value:
+                error: Example is invalid
+                errors:
+                  example:
+                  - Example is invalid
     Wishlist:
       description: 200 Success - Returns the `wishlist` object.
       content:
@@ -493,33 +531,6 @@ components:
                       data:
                         id: '28'
                         type: wishlist
-    403Forbidden:
-      description: 403 Forbidden - You are not authorized to access this page.
-      content:
-        application/vnd.api+json:
-          schema:
-            properties:
-              error:
-                type: string
-                example: You are not authorized to access this page.
-                default: You are not authorized to access this page.
-          examples:
-            403 Example:
-              value:
-                error: You are not authorized to access this page.
-    422UnprocessableEntity:
-      description: 422 Unprocessable Entity
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            422 Example:
-              value:
-                error: Example is invalid
-                errors:
-                  example:
-                  - Example is invalid
     WishedItem:
       description: 200 Success - Returns an array of `wished_item` objects.
       content:
@@ -625,54 +636,18 @@ components:
         type: string
       example: vmJtMiMozBdFtn1VkdJ8dYen
   securitySchemes:
-    api_key:
-      type: apiKey
-      name: x-spree-api-key
-      in: header
-      description: Secret API key for admin access
-    bearer_auth:
+    bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT
-      description: JWT token for admin user authentication
-x-tagGroups:
-- name: Authentication
-  tags:
-  - Authentication
-- name: Products & Catalog
-  tags:
-  - Products
-  - Variants
-  - Option Types
-  - Custom Fields
-  - Channels
-- name: Pricing
-  tags:
-  - Pricing
-  - Markets
-- name: Orders & Fulfillment
-  tags:
-  - Orders
-  - Payments
-  - Fulfillments
-  - Refunds
-- name: Customers
-  tags:
-  - Customers
-  - Customer Groups
-- name: Promotions & Gift Cards
-  tags:
-  - Promotions
-  - Gift Cards
-- name: Data
-  tags:
-  - Exports
-- name: Configuration
-  tags:
-  - Settings
-  - Stock Locations
-  - Payment Methods
-  - Staff
-  - API Keys
-  - Allowed Origins
-  - Webhooks
+      description: 'User token to authorize Cart and Checkout requests.
+
+
+        It is required to associate Cart with the User.'
+    orderToken:
+      type: apiKey
+      in: header
+      description: 'Order token to authorize Cart and Checkout requests.
+
+
+        [How to obtain X-Spree-Order-Token](../authentication#for-guest-users)'
+      name: X-Spree-Order-Token

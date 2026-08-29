@@ -1,12 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Admin Account / Address Payment Methods API
-  contact:
-    name: Spree Commerce
-    url: https://spreecommerce.org
-    email: hello@spreecommerce.org
-  description: "Spree Admin API v3 - Administrative API for managing products, orders, and store settings.\n\n## Authentication\n\nThe Admin API requires a secret API key passed in the `x-spree-api-key` header.\nSecret API keys can be generated in the Spree admin dashboard.\n\n## Response Format\n\nAll responses are JSON. List endpoints return paginated responses with `data` and `meta` keys.\nSingle resource endpoints return a flat JSON object.\n\n## Resource IDs\n\nEvery resource is identified by an opaque string ID (e.g. `prod_86Rf07xd4z`,\n`variant_k5nR8xLq`, `or_UkLWZg9DAJ`). Use these IDs everywhere — URL paths,\nrequest bodies, and Ransack filters all accept them directly.\n\n## Error Handling\n\nErrors return a consistent format:\n```json\n{\n  \"error\": {\n    \"code\": \"validation_error\",\n    \"message\": \"Validation failed\",\n    \"details\": { \"name\": [\"can't be blank\"] }\n  }\n}\n```\n"
-  version: v3
+  title: Spree Payment Methods API
+  version: '1.0'
+  description: 'Operations tagged Payment Methods across 2 of this provider''s published API definitions: spree-admin-api.yaml, spree-platform-api.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: http://{defaultHost}
   variables:
@@ -87,6 +83,11 @@ paths:
                   in: 1
                   previous: null
                   next: null
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/admin/payment_methods/types:
     get:
       summary: List available payment provider types
@@ -135,6 +136,11 @@ paths:
                   label: Custom Payment Source Method
                   description: null
                   preference_schema: []
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v3/admin/payment_methods/{id}:
     get:
       summary: Show a payment method
@@ -200,6 +206,11 @@ paths:
                 updated_at: '2026-06-12T17:24:52.126Z'
                 preferences: {}
                 preference_schema: []
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v2/platform/payment_methods:
     get:
       summary: Return a list of Payment Methods
@@ -444,6 +455,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/create_payment_method_params'
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
   /api/v2/platform/payment_methods/{id}:
     get:
       summary: Return a Payment Method
@@ -652,8 +668,29 @@ paths:
                     error: The access token is invalid
               schema:
                 $ref: '#/components/schemas/error'
+    servers:
+    - url: http://{defaultHost}
+      variables:
+        defaultHost:
+          default: localhost:3000
 components:
   schemas:
+    resource_properties:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        attributes:
+          type: object
+        relationships:
+          type: object
+      required:
+      - id
+      - type
+      - attributes
+      x-internal: false
     create_payment_method_params:
       type: object
       properties:
@@ -698,30 +735,49 @@ components:
       required:
       - payment_method
       x-internal: false
-    resource_properties:
+    update_payment_method_params:
       type: object
       properties:
-        id:
-          type: string
-        type:
-          type: string
-        attributes:
+        payment_method:
           type: object
-        relationships:
-          type: object
+          properties:
+            name:
+              type: string
+              example: Test Payment Method
+            active:
+              type: boolean
+            auto_capture:
+              type: boolean
+            description:
+              type: string
+              example: This is a test payment method
+            type:
+              type: string
+              example: Spree::Gateway::Bogus
+              enum:
+              - Spree::Gateway::Bogus
+              - Spree::PaymentMethod::Check
+            display_on:
+              type: string
+              example: both
+              enum:
+              - both
+              - back_end
+              - front_end
+            store_ids:
+              type: array
+              items:
+                allOf:
+                - type: string
+                  example: '2'
+            public_metadata:
+              type: object
+            private_metadata:
+              type: object
       required:
-      - id
-      - type
-      - attributes
+      - payment_method
       x-internal: false
-    error:
-      type: object
-      properties:
-        error:
-          type: string
-      required:
-      - error
-      x-internal: false
+      title: Update Payment Method
     resources_list:
       type: object
       properties:
@@ -767,49 +823,33 @@ components:
       - meta
       - links
       x-internal: false
-    update_payment_method_params:
+    validation_errors:
       type: object
       properties:
-        payment_method:
+        error:
+          type: string
+        errors:
           type: object
-          properties:
-            name:
-              type: string
-              example: Test Payment Method
-            active:
-              type: boolean
-            auto_capture:
-              type: boolean
-            description:
-              type: string
-              example: This is a test payment method
-            type:
-              type: string
-              example: Spree::Gateway::Bogus
-              enum:
-              - Spree::Gateway::Bogus
-              - Spree::PaymentMethod::Check
-            display_on:
-              type: string
-              example: both
-              enum:
-              - both
-              - back_end
-              - front_end
-            store_ids:
-              type: array
-              items:
-                allOf:
-                - type: string
-                  example: '2'
-            public_metadata:
-              type: object
-            private_metadata:
-              type: object
       required:
-      - payment_method
+      - error
+      - errors
       x-internal: false
-      title: Update Payment Method
+    resource:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/resource_properties'
+      required:
+      - data
+      x-internal: false
+    error:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      x-internal: false
     update_payment_method_params_bogus_gateway:
       type: object
       properties:
@@ -828,25 +868,6 @@ components:
       - payment_method
       x-internal: false
       title: Update Bogus Gateway
-    resource:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/resource_properties'
-      required:
-      - data
-      x-internal: false
-    validation_errors:
-      type: object
-      properties:
-        error:
-          type: string
-        errors:
-          type: object
-      required:
-      - error
-      - errors
-      x-internal: false
   securitySchemes:
     api_key:
       type: apiKey
@@ -858,6 +879,9 @@ components:
       scheme: bearer
       bearerFormat: JWT
       description: JWT token for admin user authentication
+x-refined-from:
+- spree-admin-api.yaml
+- spree-platform-api.yaml
 x-tagGroups:
 - name: Authentication
   tags:

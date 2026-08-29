@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Admin Account / Address Channels API
+  title: Admin Channels API
   contact:
     name: Spree Commerce
     url: https://spreecommerce.org
@@ -319,14 +319,16 @@ paths:
                   items:
                     type: string
                 published_at:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   format: date-time
-                  nullable: true
                   description: When the publications go live. `null` means immediately.
                 unpublished_at:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   format: date-time
-                  nullable: true
                   description: When the publications come down. `null` means never.
   /api/v3/admin/channels/{id}/remove_products:
     parameters:
@@ -397,8 +399,9 @@ components:
         default:
           type: boolean
         preferred_order_routing_strategy:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         created_at:
           type: string
         updated_at:
@@ -443,13 +446,15 @@ components:
           example: 25
           description: Number of records on this page
         previous:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: null
           description: Previous page number
         next:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: 2
           description: Next page number
       required:

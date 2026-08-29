@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Admin Account / Address Webhooks API
+  title: Admin Webhooks API
   contact:
     name: Spree Commerce
     url: https://spreecommerce.org
@@ -973,9 +973,10 @@ components:
               type: string
               example: Record not found
             details:
-              type: object
+              type:
+              - object
+              - 'null'
               description: Field-specific validation errors
-              nullable: true
               example:
                 name:
                 - is too short
