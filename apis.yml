@@ -526,6 +526,8 @@ apis:
   humanURL: https://spreecommerce.org/docs/api-reference/introduction
   baseURL: https://yourdomain.com/api/v3/store
   tags:
+  - menu-items
+  tags_raw:
   - Menu Items
   properties:
   - type: OpenAPI
