@@ -1,28 +1,31 @@
-# Kin Score artifact — spree — 2026-08-03T161012
+# Kin Score artifact — spree — 2026-09-01T222808
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: spree
-  schema_version: 0.9
-  scored_at: '2026-08-03'
-  run_ts: 2026-08-03T161012
-  composite: 45.0
+  schema_version: 0.18.0
+  scored_at: '2026-09-01'
+  run_ts: 2026-09-01T222808
+  composite: 42.4
   band: developing
   facets:
     discoverability: 68.5
-    contract_quality: 66.6
-    governance: 58.3
+    contract_quality: 62.9
+    governance: 9.8
     operational_transparency: 42.1
-    developer_ergonomics: 21.7
+    developer_ergonomics: 31.0
     commercial_clarity: 39.5
+    contract_governance: 9.8
+    access_clarity: 39.5
   agent_readiness:
-    score: 56.8
+    score: 45.0
     band: agent-native
     dimensions:
       spec_presence: true
       agentic_access: derived
+      reversibility_documented: verified
       mcp_server: false
-      auth_clarity: true
+      auth_clarity: bearer
       idempotency: verified
       error_semantics: verified
       openapi_examples: verified
@@ -33,6 +36,10 @@ kin_score:
       consent_identity: false
       agent_card: false
       dry_run_mode: false
+      delegated_identity: false
+      protected_resource_metadata: false
+      dynamic_client_registration: false
+      agentic_commerce: false
   regulatory:
     applies: true
     regime: Payments
@@ -45,4 +52,4 @@ kin_score:
       total: 86
       derived: 0
       coverage: 0.0
-      callable: 0.0
+      callable: 33.7
